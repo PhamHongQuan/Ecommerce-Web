@@ -1,34 +1,30 @@
-import React, {useEffect} from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
 import './App.css';
-import Hello from "./component/Hello";
-import {useDispatch} from "react-redux";
-import {products} from "./data/ProductData";
-import ProductList from "./component/ProductList";
-import {loadProduct} from "./store/Action";
+import { useDispatch } from 'react-redux';
+import { loadProduct } from './store/Action';
 import 'bootstrap/dist/css/bootstrap.css';
-
-
-
-
-// import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css'
-import Navbar from "./component/Navigation/navbar";
-
+import Navbar from './component/Navigation/navbar';
+import {BrowserRouter, Outlet, Route, RouterProvider, Routes} from 'react-router-dom';
+import Router from "./Router/web";
+import ProductList from "./component/ListProduct/ProductList";
+import ProductDetail from "./component/ListProduct/ProductDetail";
+import Error from "./component/Error";
 
 function App() {
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(loadProduct(products));
-        // dispatch(loadProduct(products));
-    })
+
+    // useEffect(() => {
+    //     // Giả sử 'products' là dữ liệu bạn muốn load từ một nguồn nào đó
+    //     // dispatch(loadProduct(products));
+    // }, [dispatch]);
+
     return (
         <div className="App">
-
-            <Navbar></Navbar>
-            {/* eslint-disable-next-line react/jsx-no-undef */}
-            <ProductList/>
+            <Navbar />
+            <Outlet />
         </div>
     );
+
 }
 
 export default App;
