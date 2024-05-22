@@ -7,12 +7,12 @@ import {products} from "./data/ProductData";
 import ProductList from "./component/ProductList";
 import {loadProduct} from "./store/Action";
 import 'bootstrap/dist/css/bootstrap.css';
-
-
-
-
-// import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css'
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import '../node_modules/font-awesome/css/font-awesome.min.css';
 import Navbar from "./component/Navigation/navbar";
+import Slideshow from "./component/Slideshow/slideshow";
+import Footers from "./component/Footer/Footers";
+import 'mdb-react-ui-kit'
 
 
 function App() {
@@ -23,10 +23,13 @@ function App() {
     })
     return (
         <div className="App">
-
             <Navbar></Navbar>
+            <Slideshow></Slideshow>
+            <Footers></Footers>
+
+
             {/* eslint-disable-next-line react/jsx-no-undef */}
-            <ProductList/>
+            {/*<ProductList/>*/}
         </div>
     );
 }
