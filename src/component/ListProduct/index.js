@@ -6,17 +6,17 @@ function ProductListDefaultPage() {
     return (
         <MDBContainer className="my-5">
             <MDBRow>
-                <navbar />
                 <MDBCol md="3">
                     <Sidebar />
                 </MDBCol>
                 <MDBCol md="9">
-                    <div className="content">
-                        <Outlet/> {/* Sử dụng Outlet để hiển thị các thành phần con */}
+                    <div className="content" style={{ marginTop: "-100px" }}>
+                        <Outlet/>
                     </div>
                 </MDBCol>
             </MDBRow>
         </MDBContainer>
+
     );
 }
 

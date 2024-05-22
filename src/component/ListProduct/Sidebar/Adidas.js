@@ -16,7 +16,7 @@ export default function Nike() {
         fetch("http://localhost:9000/products")
             .then((response) => response.json())
             .then((data) => {
-                const nikeProducts = data.filter(product => product.type === "Nike");
+                const nikeProducts = data.filter(product => product.type === "Adidas");
                 setProducts(nikeProducts);
             });
     }, []);

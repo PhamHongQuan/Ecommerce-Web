@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from "mdb-react-ui-kit";
-import '../Styles/ProductListStyles.css';
-// import { addCart } from "../../store/actions";
-import {Link, useNavigate} from 'react-router-dom';
-
-
-
+import '../Styles/ProductListStyles.css'; // Import the CSS file
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function ProductList() {
     const [products, setProducts] = useState([]);
