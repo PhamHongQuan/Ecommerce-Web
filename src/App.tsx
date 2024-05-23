@@ -9,6 +9,11 @@ import Router from "./Router/web";
 import ProductList from "./component/ListProduct/ProductList";
 import ProductDetail from "./component/ListProduct/ProductDetail";
 import Error from "./component/Error";
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import '../node_modules/font-awesome/css/font-awesome.min.css';
+import Slideshow from "./component/Slideshow/slideshow";
+import Footers from "./component/Footer/Footers";
+import 'mdb-react-ui-kit'
 
 function App() {
     const dispatch = useDispatch();
@@ -22,6 +27,14 @@ function App() {
         <div className="App">
             <Navbar />
             <Outlet />
+            <Navbar></Navbar>
+            <Slideshow></Slideshow>
+
+            <Footers></Footers>
+
+
+            {/* eslint-disable-next-line react/jsx-no-undef */}
+            {/*<ProductList/>*/}
         </div>
     );
 
