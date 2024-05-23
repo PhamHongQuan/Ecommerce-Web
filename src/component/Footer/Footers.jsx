@@ -5,7 +5,7 @@ const Footers =() =>{
         <div>
             <footer className="text-center text-lg-start bg-body-tertiary text-muted ">
                 <section className="">
-                    <div className="container text-center text-md-start mt-5">
+                    <div className="container text-center text-md-start mt-2 pt-3">
                         <div className="row mt-3">
                             <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                                 <h6 className="text-uppercase fw-bold fs-4 ">

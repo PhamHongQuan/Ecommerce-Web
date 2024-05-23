@@ -25,6 +25,7 @@ function App() {
         <div className="App">
             <Navbar></Navbar>
             <Slideshow></Slideshow>
+
             <Footers></Footers>
 
 
