@@ -6,16 +6,18 @@ import AliceCarousel from "react-alice-carousel";
 import Homes from "../Home/Homes";
 const slideshow = () =>{
     const items = mainCarouselData.map((item)=> <img className='cursor-pointer'
-      role='presentation' src={item.image} alt="" style={{ width: '100%', height: '600px' }}/>)
+                                                     role='presentation' src={item.image} alt="" style={{ width: '100%', height: '600px' }}/>)
     return (
-        <><AliceCarousel
+        <>
+            <AliceCarousel
             items={items}
             disableButtonsControls
             autoPlay
             autoPlayInterval={1000}
-            infinite/><Homes/></>
+            infinite/>
+            <Homes/>
+        </>
     );
 
 }
 export default  slideshow;
-

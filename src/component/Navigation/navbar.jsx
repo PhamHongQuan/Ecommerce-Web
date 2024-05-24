@@ -1,11 +1,16 @@
 import React from "react";
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import * as mdb from 'mdb-ui-kit'; // lib
-import {Dropdown, Collapse, initMDB, Ripple} from "mdb-ui-kit";
-initMDB({Dropdown, Ripple});
+import { Dropdown, Collapse, initMDB, Ripple } from "mdb-ui-kit";
+import { Link, useLocation } from "react-router-dom";
+
+initMDB({ Dropdown, Ripple });
 initMDB({ Dropdown, Collapse });
 window.mdb = mdb;
+
 const Navbar = () => {
+    const location = useLocation();
+
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm">
@@ -19,19 +24,32 @@ const Navbar = () => {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="#">Trang chủ</a>
+                                <Link className="nav-link" aria-current="page" to="/">Trang chủ</Link>
                             </li>
 
                             <li className="nav-item dropdown">
-                                <a
-                                    data-mdb-dropdown-init
-                                    className="nav-link dropdown-toggle d-flex align-items-center"
-                                    href="#"
-                                    id="navbarDropdownMenuLink"
-                                    role="button"
-                                    aria-expanded="false"
-                                > Danh sách
-                                </a>
+                                {location.pathname.includes("list-product") ? (
+                                    <span
+                                        className="nav-link dropdown-toggle d-flex align-items-center"
+                                        id="navbarDropdownMenuLink"
+                                        role="button"
+                                        aria-expanded="false"
+                                        style={{ cursor: "default" }}
+                                    >
+                                        Danh sách
+                                    </span>
+                                ) : (
+                                    <Link
+                                        data-mdb-dropdown-init
+                                        className="nav-link dropdown-toggle d-flex align-items-center"
+                                        to="list-product"
+                                        id="navbarDropdownMenuLink"
+                                        role="button"
+                                        aria-expanded="false"
+                                    >
+                                        Danh sách
+                                    </Link>
+                                )}
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <li>
                                         <a className="dropdown-item" href="#">Bitis</a>

@@ -123,7 +123,7 @@ const Homes = () => {
                         <>
                             <div className="col-md-3 pb-3">
                                 <div className="card ms-3 h-100 w-80">
-                                    <div className="bg-image hover-overlay w-100" data-mdb-ripple-init
+                                    <div className="bg-image hover-overlay w-100" data-mdb-ripple-init=""
                                          data-mdb-ripple-color="light">
                                         <img src={products.img} alt={products.title}
                                              className="img-fluid"/>
@@ -132,10 +132,10 @@ const Homes = () => {
                                         <h5 className="card-title h-50">{products.name}</h5>
                                         <div className="btn-group shadow-0 mt-3 d-flex justify-content-center" role="group" aria-label="Basic example">
                                             <p className="btn btn-outline-black me-1"
-                                                    data-mdb-color="dark" data-mdb-ripple-init>{products.price} Đ
+                                                    data-mdb-color="dark" data-mdb-ripple-init="">{products.price} Đ
                                             </p>
                                             <a href=""><button type="button" className="btn btn-danger h-75"
-                                                    data-mdb-color="dark" data-mdb-ripple-init><i className="fa fa-cart-plus me-2" aria-hidden="true"></i>Thêm
+                                                    data-mdb-color="dark" data-mdb-ripple-init=""><i className="fa fa-cart-plus me-2" aria-hidden="true"></i>Thêm
                                             </button></a>
                                         </div>
                                     </div>
@@ -144,23 +144,23 @@ const Homes = () => {
                         </>
                     )
                 })}
-                <nav aria-label="Page navigation example">
-                    <ul className="pagination justify-content-center mt-2">
-                        <li className="page-item">
-                            <a className="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li className="page-item"><a className="page-link" href="#">1</a></li>
-                        <li className="page-item"><a className="page-link" href="#">2</a></li>
-                        <li className="page-item"><a className="page-link" href="#">3</a></li>
-                        <li className="page-item">
-                            <a className="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                {/*<nav aria-label="Page navigation example">*/}
+                {/*    <ul className="pagination justify-content-center mt-2">*/}
+                {/*        <li className="page-item">*/}
+                {/*            <a className="page-link" href="#" aria-label="Previous">*/}
+                {/*            <span aria-hidden="true">&laquo;</span>*/}
+                {/*            </a>*/}
+                {/*        </li>*/}
+                {/*        <li className="page-item"><a className="page-link" href="#">1</a></li>*/}
+                {/*        <li className="page-item"><a className="page-link" href="#">2</a></li>*/}
+                {/*        <li className="page-item"><a className="page-link" href="#">3</a></li>*/}
+                {/*        <li className="page-item">*/}
+                {/*            <a className="page-link" href="#" aria-label="Next">*/}
+                {/*                <span aria-hidden="true">&raquo;</span>*/}
+                {/*            </a>*/}
+                {/*        </li>*/}
+                {/*    </ul>*/}
+                {/*</nav>*/}
             </>
         );
     }

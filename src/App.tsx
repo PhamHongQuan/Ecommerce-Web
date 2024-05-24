@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import { useDispatch } from 'react-redux';
 import { loadProduct } from './store/Action';
@@ -14,6 +14,7 @@ import '../node_modules/font-awesome/css/font-awesome.min.css';
 import Slideshow from "./component/Slideshow/slideshow";
 import Footers from "./component/Footer/Footers";
 import 'mdb-react-ui-kit'
+import Homes from "./component/Home/Homes";
 
 function App() {
     const dispatch = useDispatch();
@@ -25,13 +26,10 @@ function App() {
 
     return (
         <div className="App">
-            <Navbar />
             <Outlet />
             <Navbar></Navbar>
             <Slideshow></Slideshow>
-
             <Footers></Footers>
-
 
             {/* eslint-disable-next-line react/jsx-no-undef */}
             {/*<ProductList/>*/}
