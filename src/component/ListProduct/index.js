@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { MDBContainer, MDBRow, MDBCol } from 'mdbreact';
 import Sidebar from './Sidebar/Sidebar';
 import Navbar from '../../component/Navigation/navbar';
-
+import Footers from "../Footer/Footers";
 function ProductListDefaultPage() {
     return (
         <MDBContainer className="my-5">
@@ -18,6 +18,7 @@ function ProductListDefaultPage() {
                     </div>
                 </MDBCol>
             </MDBRow>
+            <Footers></Footers>
         </MDBContainer>
 
     );

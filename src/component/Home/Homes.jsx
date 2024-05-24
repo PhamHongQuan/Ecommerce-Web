@@ -37,35 +37,6 @@ const Homes = () => {
             </>
         );
     }
-    // const ShowProducts = () => {
-    //   return(
-    //     <>
-    //         {filter.map((products)=>{
-    //             return(
-    //                 <>
-    //                     <div className="col-md-2 p-3 ms-3">
-    //                         <div className="card h-100 w-100">
-    //                             <div className="bg-image hover-overlay" data-mdb-ripple-init
-    //                                  data-mdb-ripple-color="light">
-    //                                 <img src={products.img} alt={products.title}
-    //                                      className="img-fluid h-75"/>
-    //                                 <a href="#!">
-    //                                     <div className="mask"></div>
-    //                                 </a>
-    //                             </div>
-    //                             <div className="card-body">
-    //                                 <h5 className="card-title">{products.title}</h5>
-    //                                 <p className="card-text">{products.price}</p>
-    //                                 <a href="#!" className="btn btn-primary" data-mdb-ripple-init>Button</a>
-    //                             </div>
-    //                         </div>
-    //                     </div>
-    //                 </>
-    //             )
-    //         })}
-    //     </>
-    //   );
-    // }
 
 
     const ShowProducts = () => {
@@ -144,23 +115,7 @@ const Homes = () => {
                         </>
                     )
                 })}
-                {/*<nav aria-label="Page navigation example">*/}
-                {/*    <ul className="pagination justify-content-center mt-2">*/}
-                {/*        <li className="page-item">*/}
-                {/*            <a className="page-link" href="#" aria-label="Previous">*/}
-                {/*            <span aria-hidden="true">&laquo;</span>*/}
-                {/*            </a>*/}
-                {/*        </li>*/}
-                {/*        <li className="page-item"><a className="page-link" href="#">1</a></li>*/}
-                {/*        <li className="page-item"><a className="page-link" href="#">2</a></li>*/}
-                {/*        <li className="page-item"><a className="page-link" href="#">3</a></li>*/}
-                {/*        <li className="page-item">*/}
-                {/*            <a className="page-link" href="#" aria-label="Next">*/}
-                {/*                <span aria-hidden="true">&raquo;</span>*/}
-                {/*            </a>*/}
-                {/*        </li>*/}
-                {/*    </ul>*/}
-                {/*</nav>*/}
+
             </>
         );
     }
