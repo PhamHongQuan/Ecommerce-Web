@@ -9,7 +9,7 @@ import Lacoste from '../component/ListProduct/Sidebar/Lacoste';
 import Puma from '../component/ListProduct/Sidebar/Puma';
 import HomeLayout from "../component/Home/HomeLayout";
 import Homes from "../component/Home/Homes";
-
+import Cart from "../component/cart/Cart";
 const Router = () => (
     <BrowserRouter>
         <Routes>
@@ -23,6 +23,7 @@ const Router = () => (
                 <Route path="lacoste" element={<Lacoste />} />
                 <Route path="puma" element={<Puma />} />
             </Route>
+            <Route path="cart" element={<Cart />} />
             <Route index element={<ProductDetail />} />
             <Route index element={<Error />} />
         </Routes>
