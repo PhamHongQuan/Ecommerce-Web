@@ -26,9 +26,9 @@ function App() {
 
     return (
         <div className="App">
-            <Outlet />
             <Navbar></Navbar>
             <Slideshow></Slideshow>
+            <Outlet />
             <Footers></Footers>
 
             {/* eslint-disable-next-line react/jsx-no-undef */}

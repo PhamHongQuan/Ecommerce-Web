@@ -34,7 +34,7 @@ const Navbar = () => {
                                         id="navbarDropdownMenuLink"
                                         role="button"
                                         aria-expanded="false"
-                                        style={{ cursor: "default" }}
+                                        style={{cursor: "default"}}
                                     >
                                         Danh sách
                                     </span>
@@ -50,20 +50,6 @@ const Navbar = () => {
                                         Danh sách
                                     </Link>
                                 )}
-                                <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <li>
-                                        <a className="dropdown-item" href="#">Bitis</a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Adidas</a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Puma</a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Nike</a>
-                                    </li>
-                                </ul>
                             </li>
 
                             <li className="nav-item">
