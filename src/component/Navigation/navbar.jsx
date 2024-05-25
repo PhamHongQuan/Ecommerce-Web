@@ -3,6 +3,7 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import * as mdb from 'mdb-ui-kit'; // lib
 import { Dropdown, Collapse, initMDB, Ripple } from "mdb-ui-kit";
 import { Link, useLocation } from "react-router-dom";
+import {CartInfo} from "../cart/CartInfo";
 
 initMDB({ Dropdown, Ripple });
 initMDB({ Dropdown, Collapse });
@@ -55,7 +56,8 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <div className="buttons">
                                     <a href="" className="nav-link">
-                                        <i className="fa fa-cart-plus me-1"></i>Giỏ hàng(0)</a>
+                                        <Link to="/cart"> <i
+                                            className="fa fa-cart-plus me-1"></i><CartInfo></CartInfo></Link></a>
                                 </div>
                             </li>
 

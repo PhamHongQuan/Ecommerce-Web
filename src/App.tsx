@@ -26,6 +26,7 @@ function App() {
 
     return (
         <div className="App">
+            <Outlet/>
             <Navbar></Navbar>
             <Slideshow></Slideshow>
             <Outlet />
