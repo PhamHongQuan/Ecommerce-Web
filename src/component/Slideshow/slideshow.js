@@ -6,7 +6,7 @@ import AliceCarousel from "react-alice-carousel";
 import Homes from "../Home/Homes";
 const slideshow = () =>{
     const items = mainCarouselData.map((item)=> <img className='cursor-pointer'
-                                                     role='presentation' src={item.image} alt="" style={{ width: '100%', height: '600px' }}/>)
+                                                     role='presentation' src={item.image} alt="" style={{ width: '100%', height: '400px' }}/>)
     return (
         <>
             <AliceCarousel

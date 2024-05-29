@@ -42,7 +42,7 @@ const Navbar = () => {
                                 ) : (
                                     <Link
                                         data-mdb-dropdown-init
-                                        className="nav-link dropdown-toggle d-flex align-items-center"
+                                        className="nav-link d-flex align-items-center"
                                         to="list-product"
                                         id="navbarDropdownMenuLink"
                                         role="button"
@@ -55,9 +55,9 @@ const Navbar = () => {
 
                             <li className="nav-item">
                                 <div className="buttons">
-                                    <a href="" className="nav-link">
-                                        <Link to="/cart"> <i
-                                            className="fa fa-cart-plus me-1"></i><CartInfo></CartInfo></Link></a>
+                                    <Link to="/cart"><i className="fa fa-cart-plus d-flex mt-2 fs-5"><CartInfo></CartInfo></i></Link>
+                                    {/*<a href="" className="nav-link bg-dark d-flex align-items-center">*/}
+                                    {/*    <Link to="/cart"> <i className="fa fa-cart-plus"></i><CartInfo></CartInfo></Link></a>*/}
                                 </div>
                             </li>
 
