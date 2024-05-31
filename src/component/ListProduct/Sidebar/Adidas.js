@@ -1,57 +1,84 @@
-import { useDispatch } from "react-redux";
-import React, { useEffect, useState } from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBBtn } from "mdb-react-ui-kit";
-import { Link, useNavigate } from 'react-router-dom';
-import {Button} from "react-bootstrap";
-import "../../Styles/PaginationInProduct.css"
-
+import React, { useEffect, useState } from 'react';
+import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from 'mdb-react-ui-kit';
+import { useOutletContext } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import '../../Styles/PaginationInProduct.css';
 
 const ITEMS_PER_PAGE = 8;
 
-export default function Nike() {
+const Adidas = () => {
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [filterValues] = useOutletContext();
 
     useEffect(() => {
-        fetch("http://localhost:9000/products")
-            .then((response) => response.json())
-            .then((data) => {
-                const nikeProducts = data.filter(product => product.type === "Adidas");
-                setProducts(nikeProducts);
+        fetch('http://localhost:9000/products')
+            .then(response => response.json())
+            .then(data => {
+                const adidasProducts = data.filter(product => product.type === 'Adidas');
+                setProducts(adidasProducts);
             });
     }, []);
 
-    // Tính toán các sản phẩm cho trang hiện tại
+    const applyFilters = (products) => {
+        return products.filter(product => {
+            // Kiểm tra giới tính
+            if (filterValues.adidas.price === 'above' && product.price <= 2000000) return false;
+            if (filterValues.adidas.price === 'below' && product.price > 2000000) return false;
+
+            // Lọc sản phẩm theo giới tính
+            if (filterValues.adidas.gender && filterValues.adidas.gender !== 'all' && product.gender !== filterValues.adidas.gender) {
+                return false;
+            }
+            // Lọc sản phẩm theo kích thước
+            if (filterValues.adidas.size && filterValues.adidas.size !== 'all') {
+                const { size } = product;
+                if (filterValues.adidas.size === 'small' && (size < 35 || size > 37)) {
+                    return false;
+                }
+                if (filterValues.adidas.size === 'medium' && (size < 38 || size > 41)) {
+                    return false;
+                }
+                if (filterValues.adidas.size === 'large' && (size < 42 || size > 45)) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+    };
+
+
+    const filteredProducts = applyFilters(products);
     const indexOfLastProduct = currentPage * ITEMS_PER_PAGE;
     const indexOfFirstProduct = indexOfLastProduct - ITEMS_PER_PAGE;
-    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+    const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
 
-    // Xử lý thay đổi trang
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-
-    // Tính tổng số trang
-    const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
 
     return (
         <MDBContainer className="my-5">
             <MDBRow>
                 <MDBRow className="gy-4">
-                    {currentProducts.map((product) => (
+                    {currentProducts.map(product => (
                         <Product
                             key={product.id}
                             id={product.id}
                             name={product.name}
                             img={product.img}
-                            des={product.des}
                             price={product.price}
-                            isBuying={product.isBuying}
+                            gender={product.gender}
+                            size={product.size}
                         />
                     ))}
                 </MDBRow>
             </MDBRow>
-            <br></br>
+            <br />
             <MDBRow>
                 <Pagination
                     currentPage={currentPage}
@@ -63,11 +90,10 @@ export default function Nike() {
     );
 };
 
-const Product = ({ id, name, img, des, price }) => {
+const Product = ({ id, name, img, des, price, size, gender }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // Định dạng giá thành định dạng tiền tệ VND
     const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
 
     const handleAddToCart = () => {
@@ -83,8 +109,9 @@ const Product = ({ id, name, img, des, price }) => {
             <MDBCard className="product-card" onClick={handleViewDetail} style={{ cursor: 'pointer' }}>
                 <MDBCardImage src={img} alt={name} position="top" />
                 <MDBCardBody>
-                    <MDBCardTitle className="truncate-name">{name}</MDBCardTitle>
-                    <MDBCardText className="truncate-description">{des}</MDBCardText>
+                    <MDBCardTitle className="truncate-name"><b>{name}</b></MDBCardTitle>
+                    <MDBCardTitle className="truncate-name">Size: {size}</MDBCardTitle>
+                    <MDBCardTitle className="truncate-name">Giới tính:{gender}</MDBCardTitle>
                 </MDBCardBody>
                 <div className="card-footer">
                     <span className="text-danger">{formattedPrice}</span>
@@ -101,7 +128,6 @@ const Product = ({ id, name, img, des, price }) => {
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     const pageNumbers = [];
-
     for (let i = 1; i <= totalPages; i++) {
         pageNumbers.push(i);
     }
@@ -134,3 +160,5 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         </MDBCol>
     );
 };
+
+export default Adidas;

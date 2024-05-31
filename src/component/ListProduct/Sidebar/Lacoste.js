@@ -1,38 +1,63 @@
 import { useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBBtn } from "mdb-react-ui-kit";
-import { Link, useNavigate } from 'react-router-dom';
+import {Link, useNavigate, useOutletContext} from 'react-router-dom';
 import {Button} from "react-bootstrap";
 import "../../Styles/PaginationInProduct.css"
 
 
 const ITEMS_PER_PAGE = 8;
 
-export default function Nike() {
+export default function Lacoste() {
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [filterValues] = useOutletContext();
 
     useEffect(() => {
         fetch("http://localhost:9000/products")
             .then((response) => response.json())
             .then((data) => {
-                const nikeProducts = data.filter(product => product.type === "Lacoste");
-                setProducts(nikeProducts);
+                const LacosteProducts = data.filter(product => product.type === "Lacoste");
+                setProducts(LacosteProducts);
             });
     }, []);
 
-    // Tính toán các sản phẩm cho trang hiện tại
+    const applyFilters = (products) => {
+        return products.filter(product => {
+            // Kiểm tra giới tính
+            if (filterValues.lacoste.price === 'above' && product.price <= 2000000) return false;
+            if (filterValues.lacoste.price === 'below' && product.price > 2000000) return false;
+
+            // Lọc sản phẩm theo giới tính
+            if (filterValues.lacoste.gender && filterValues.lacoste.gender !== 'all' && product.gender !== filterValues.lacoste.gender) {
+                return false;
+            }
+            // Lọc sản phẩm theo kích thước
+            if (filterValues.lacoste.size && filterValues.lacoste.size !== 'all') {
+                const { size } = product;
+                if (filterValues.lacoste.size === 'small' && (size < 35 || size > 37)) {
+                    return false;
+                }
+                if (filterValues.lacoste.size === 'medium' && (size < 38 || size > 41)) {
+                    return false;
+                }
+                if (filterValues.lacoste.size === 'large' && (size < 42 || size > 45)) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+    };
+    const filteredProducts = applyFilters(products);
     const indexOfLastProduct = currentPage * ITEMS_PER_PAGE;
     const indexOfFirstProduct = indexOfLastProduct - ITEMS_PER_PAGE;
-    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+    const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
 
-    // Xử lý thay đổi trang
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-
-    // Tính tổng số trang
-    const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
 
     return (
         <MDBContainer className="my-5">
@@ -44,9 +69,9 @@ export default function Nike() {
                             id={product.id}
                             name={product.name}
                             img={product.img}
-                            des={product.des}
                             price={product.price}
-                            isBuying={product.isBuying}
+                            gender={product.gender}
+                            size={product.size}
                         />
                     ))}
                 </MDBRow>
@@ -63,7 +88,7 @@ export default function Nike() {
     );
 };
 
-const Product = ({ id, name, img, des, price }) => {
+const Product = ({ id, name, img, des, price, size, gender }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -83,8 +108,9 @@ const Product = ({ id, name, img, des, price }) => {
             <MDBCard className="product-card" onClick={handleViewDetail} style={{ cursor: 'pointer' }}>
                 <MDBCardImage src={img} alt={name} position="top" />
                 <MDBCardBody>
-                    <MDBCardTitle className="truncate-name">{name}</MDBCardTitle>
-                    <MDBCardText className="truncate-description">{des}</MDBCardText>
+                    <MDBCardTitle className="truncate-name"><b>{name}</b></MDBCardTitle>
+                    <MDBCardTitle className="truncate-name">Size: {size}</MDBCardTitle>
+                    <MDBCardTitle className="truncate-name">Giới tính:{gender}</MDBCardTitle>
                 </MDBCardBody>
                 <div className="card-footer">
                     <span className="text-danger">{formattedPrice}</span>
