@@ -15,7 +15,7 @@ const Navbar = () => {
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm">
-                <div className="container">
+                <div className="container ">
                     <a className="navbar-brand fw-bold fs-4" href="#">Shop Shoes</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -106,6 +106,7 @@ const Navbar = () => {
                 </div>
             </nav>
         </div>
+
     );
 }
 export default Navbar;

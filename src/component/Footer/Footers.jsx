@@ -2,7 +2,7 @@ import React from "react";
 import 'font-awesome/css/font-awesome.css'
 const Footers =() =>{
     return(
-        <div>
+        <div className="">
             <footer className="text-center text-lg-start bg-body-tertiary text-muted ">
                 <section className="">
                     <div className="container text-center text-md-start mt-2 pt-3">

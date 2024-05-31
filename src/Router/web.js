@@ -10,6 +10,8 @@ import Puma from '../component/ListProduct/Sidebar/Puma';
 import HomeLayout from "../component/Home/HomeLayout";
 import Homes from "../component/Home/Homes";
 import Cart from "../component/cart/Cart";
+import ProductDetails from "../component/ProductDetail/ProductDetails";
+
 const Router = () => (
     <BrowserRouter>
         <Routes>
@@ -25,6 +27,8 @@ const Router = () => (
             </Route>
             <Route path="cart" element={<Cart />} />
             <Route index element={<ProductDetail />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="productdetails" element={<ProductDetails/>} />
             <Route index element={<Error />} />
         </Routes>
     </BrowserRouter>
