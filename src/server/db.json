@@ -2,9 +2,21 @@
   "products": [
     {
       "id": 1,
-      "name": "GIÀY NIKE AIR WINFLO ",
+      "name": "GIÀY NIKE AIR WINFLO XÁM ",
       "img": "https://myshoes.vn/image/cache/catalog/2024/nike/nk3/giay-nike-air-winflo-11-nam-xam-01-800x800.jpg",
+      "additionalImages": [
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk3/giay-nike-air-winflo-11-nam-xam-03-200x200.jpg",
+        "https://myshoes.vn/image/catalog/2024/nike/nk3/giay-nike-air-winflo-11-nam-xam-05.jpg",
+        "https://myshoes.vn/image/catalog/2024/nike/nk3/giay-nike-air-winflo-11-myshoes-nam-xam-05.jpg"
+      ],
       "type": "Nike",
+      "description": "Phần upper với chất liệu mesh cao cấp, mềm mại linh hoạt và rất thoáng khí. Phần đế ngoài hình dạng Waffle làm bằng chất liệu cao su cao cấp cho độ bám và khả năng chống mài mòn tuyệt vời.",
+      "size": [
+        "30", "31", "40"
+      ],
+      "tint": [
+        "Đen", "Trắng"
+      ],
       "price": 2890000
     },
     {
