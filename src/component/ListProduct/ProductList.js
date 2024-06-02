@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from "mdb-react-ui-kit";
-import '../Styles/ProductListStyles.css';
-import {  useNavigate } from 'react-router-dom';
-import {addCart} from "../../store/Action";
+import '../Styles/ProductListStyles.css'; // Import the CSS file
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function ProductList() {
     const [products, setProducts] = useState([]);
@@ -39,7 +38,7 @@ const Product = ({ id, name, img, des, price }) => {
     const navigate = useNavigate();
 
     const handleAddToCart = () => {
-         dispatch(addCart({ id, name, img, des, price }));
+        // dispatch(addCart({ id, name, img, des, price }));
     };
 
     const handleViewDetail = () => {

@@ -2,7 +2,12 @@ import React from "react";
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import * as mdb from 'mdb-ui-kit'; // lib
 import { Dropdown, Collapse, initMDB, Ripple } from "mdb-ui-kit";
-import { Link, useLocation } from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {CartInfo} from "../cart/CartInfo";
+import {AccountInfo} from "../account/AccountInfo";
+import "../Styles/Register.css";
+import {useDispatch, useSelector} from "react-redux";
+import {loginSuccess, logout} from "../../store/Action";
 
 initMDB({ Dropdown, Ripple });
 initMDB({ Dropdown, Collapse });
@@ -10,11 +15,19 @@ window.mdb = mdb;
 
 const Navbar = () => {
     const location = useLocation();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
+    const currentUser = useSelector(state => state.currentUser);
+    const logoutFunction  = ()=>{
+        dispatch(logout());
+        navigate('/');
+        window.location.reload();
+    }
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm">
-                <div className="container">
+                <div className="container ">
                     <a className="navbar-brand fw-bold fs-4" href="#">Shop Shoes</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -34,14 +47,14 @@ const Navbar = () => {
                                         id="navbarDropdownMenuLink"
                                         role="button"
                                         aria-expanded="false"
-                                        style={{ cursor: "default" }}
+                                        style={{cursor: "default"}}
                                     >
                                         Danh sách
                                     </span>
                                 ) : (
                                     <Link
                                         data-mdb-dropdown-init
-                                        className="nav-link dropdown-toggle d-flex align-items-center"
+                                        className="nav-link d-flex align-items-center"
                                         to="list-product"
                                         id="navbarDropdownMenuLink"
                                         role="button"
@@ -50,30 +63,19 @@ const Navbar = () => {
                                         Danh sách
                                     </Link>
                                 )}
-                                <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <li>
-                                        <a className="dropdown-item" href="#">Bitis</a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Adidas</a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Puma</a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Nike</a>
-                                    </li>
-                                </ul>
                             </li>
 
                             <li className="nav-item">
                                 <div className="buttons">
-                                    <a href="" className="nav-link">
-                                        <i className="fa fa-cart-plus me-1"></i>Giỏ hàng(0)</a>
+                                    <Link to="/cart"><i className="fa fa-cart-plus d-flex mt-2 fs-5"><CartInfo></CartInfo></i></Link>
+                                    {/*<a href="" className="nav-link bg-dark d-flex align-items-center">*/}
+                                    {/*    <Link to="/cart"> <i className="fa fa-cart-plus"></i><CartInfo></CartInfo></Link></a>*/}
                                 </div>
                             </li>
 
                             <li className="nav-item dropdown">
+                                {/*<Link to="/register"><i className="fa fa-cart-plus d-flex mt-2 fs-5"></i></Link>*/}
+
                                 <a
                                     data-mdb-dropdown-init
                                     className="nav-link dropdown-toggle d-flex align-items-center"
@@ -97,15 +99,21 @@ const Navbar = () => {
                                     <li>
                                         <a className="dropdown-item" href="#">Lịch sử đơn hàng</a>
                                     </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Đăng nhập</a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Đăng ký</a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Đăng xuất</a>
-                                    </li>
+                                    {currentUser ? (
+                                        <a className="dropdown-item" onClick={logoutFunction}>
+                                            Đăng xuất
+                                        </a>
+                                    ) : (
+                                        <>
+                                            <a className="dropdown-item">
+                                            <Link to="/login">Đăng nhập </Link>
+                                            </a>
+                                            <a className="dropdown-item">
+                                                <Link to="/register">Đăng ký  </Link>
+                                            </a>
+                                        </>
+                                    )}
+
                                 </ul>
                             </li>
                         </ul>
@@ -118,6 +126,7 @@ const Navbar = () => {
                 </div>
             </nav>
         </div>
+
     );
 }
 export default Navbar;

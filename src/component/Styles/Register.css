@@ -1,0 +1,16 @@
+.container-register {
+    margin-left: 500px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+.container-register * {
+
+    margin-top: 10px;
+
+}
+.nav-item:hover .dropdown-menu{
+    display: block;
+}
+a {
+    color: black;
+}
