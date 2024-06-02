@@ -5,8 +5,11 @@ import {mainCarouselData} from "./MainCaroselData";
 import AliceCarousel from "react-alice-carousel";
 import Homes from "../Home/Homes";
 const slideshow = () =>{
-    const items = mainCarouselData.map((item)=> <img className='cursor-pointer'
-                                                     role='presentation' src={item.image} alt="" style={{ width: '100%', height: '400px' }}/>)
+    const items = mainCarouselData.map((item)=>
+        <img className='cursor-pointer img-fluid'
+          role='presentation'
+             src={item.image} alt=""
+             style={{width:'100%', maxHeight: "400px"}}/>)
     return (
         <>
             <AliceCarousel
@@ -21,3 +24,5 @@ const slideshow = () =>{
 
 }
 export default  slideshow;
+
+
