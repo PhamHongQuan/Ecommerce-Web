@@ -2,9 +2,18 @@
 const loadCart=()=>{
     return JSON.parse(localStorage.getItem('cart'))??[];
 }
+const  loadUsers =()=>{
+    return JSON.parse(localStorage.getItem('users'))??[];
+}
 const initState={
     products:[],
-     cart:loadCart()
+     cart:loadCart(),
+    registering: false,
+    logging: false,
+    user:null,
+    currentUser: null,
+    users: loadUsers(),
+    error: null,
 }
 export const root=(state= initState,action)=>{
     switch (action.type){
@@ -92,6 +101,73 @@ export const root=(state= initState,action)=>{
                 ...state,
                 cart: [ ...cart ]
             }
+        }
+        case "user/register":{
+            return {
+                ...state,
+                registering: true,
+                user: action.payload,
+                error: null,
+            };
+        }
+        case "user/registerSuccess":{
+            const user = action.payload;
+            const users = [...state.users];
+            users.push({ ...user});
+            localStorage.setItem('users', JSON.stringify(users));
+            return {
+                ...state,
+                registering: false,
+               user,
+                users
+            };
+        }
+        case "user/registerFail":{
+
+            return {
+                ...state,
+                registering: false,
+                error: action.payload,
+            };
+        }
+        case "user/login":{
+            return {
+                ...state,
+                logging: true,
+                currentUser: action.payload,
+                error: null,
+            };
+        }
+        case "user/loginSuccess":{
+            const currentUser = action.payload;
+
+            localStorage.setItem("currentUser",JSON.stringify(currentUser))
+            return {
+                ...state,
+                logging: false,
+                currentUser,
+                users: action.payload,
+                error: null
+            };
+        }
+        case "user/loginFail":{
+            return {
+                ...state,
+               logging: false,
+                error: action.payload,
+                users: action.payload
+
+            };
+        }
+        case "user/logout":{
+            localStorage.removeItem("currentUser")
+            return {
+                ...state,
+                logging: true,
+                error: action.payload,
+                users: action.payload
+
+            };
         }
         default: return state;
     }

@@ -10,6 +10,9 @@ import Puma from '../component/ListProduct/Sidebar/Puma';
 import HomeLayout from "../component/Home/HomeLayout";
 import Homes from "../component/Home/Homes";
 import Cart from "../component/cart/Cart";
+import Register  from "../component/account/Register";
+import Login from "../component/account/Login";
+
 const Router = () => (
     <BrowserRouter>
         <Routes>
@@ -25,6 +28,8 @@ const Router = () => (
             </Route>
             <Route path="cart" element={<Cart />} />
             <Route index element={<ProductDetail />} />
+            <Route path="register" element={<Register />} />
+            <Route path="login" element={<Login />} />
             <Route index element={<Error />} />
         </Routes>
     </BrowserRouter>
