@@ -4,7 +4,7 @@ import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import Sidebar from './Sidebar/Sidebar';
 import Navbar from '../../component/Navigation/navbar';
 import Footers from "../Footer/Footers";
-
+// json-server db.json --port 9000 --watch
 function ProductListDefaultPage() {
     const [filterValues, setFilterValues] = useState({
         nike: { price: '', size: '', gender: '' },
