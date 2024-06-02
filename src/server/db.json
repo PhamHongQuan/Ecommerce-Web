@@ -15,7 +15,7 @@
         "30", "31", "40"
       ],
       "tint": [
-        "Đen", "Trắng"
+        "Đen", "Xám"
       ],
       "price": 2890000
     },
@@ -23,98 +23,266 @@
       "id": 2,
       "name": "GIÀY NIKE AIR WINFLO 11 ",
       "img": "https://myshoes.vn/image/cache/catalog/2024/nike/nk3/giay-nike-air-winflo-11-nam-den-den-01-800x800.jpg",
+      "additionalImages": [
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk4/giay-nike-air-winflo-11-nam-den-den-myshoes-04-200x200.jpg",
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk4/giay-nike-air-winflo-11-nam-den-den-myshoes-03-200x200.jpg",
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk3/giay-nike-air-winflo-11-nam-den-den-03-200x200.jpg"
+      ],
       "type": "Nike",
+      "description": "Phần upper với chất liệu mesh cao cấp, mềm mại linh hoạt và rất thoáng khí. Phần đế ngoài hình dạng Waffle làm bằng chất liệu cao su cao cấp cho độ bám và khả năng chống mài mòn tuyệt vời.",
+      "size": [
+        "39", "40", "41","42"
+      ],
+      "tint": [
+        "Đen", "Xám"
+      ],
       "price": 2890000
     },
     {
       "id": 3,
       "name": "GIÀY NIKE AIR ZOOM STRUCTURE 25",
       "img": "https://myshoes.vn/image/cache/catalog/2024/nike/nk2/giay-nike-air-zoom-structure-25-nam-trang-xanh-do-01-800x800.jpg",
+      "additionalImages": [
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk4/giay-nike-air-winflo-11-nam-den-den-myshoes-04-200x200.jpg",
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk4/giay-nike-air-winflo-11-nam-den-den-myshoes-03-200x200.jpg",
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk3/giay-nike-air-winflo-11-nam-den-den-03-200x200.jpg"
+      ],
       "type": "Nike",
+      "description": "Phần upper với chất liệu mesh cao cấp, mềm mại linh hoạt và rất thoáng khí. Phần đế ngoài hình dạng Waffle làm bằng chất liệu cao su cao cấp cho độ bám và khả năng chống mài mòn tuyệt vời.",
+      "size": [
+        "39", "40", "41","42"
+      ],
+      "tint": [
+        "Đen", "Xám"
+      ],
       "price": 3490000
     },
     {
       "id": 4,
       "name": "GIÀY NIKE AIR ZOOM PEGASUS 40",
       "img": "https://myshoes.vn/image/cache/catalog/2024/nike/nk2/giay-nike-air-zoom-pegasus-40-nam-trang-xanh-01-800x800.jpg",
+      "additionalImages": [
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk4/giay-nike-air-zoom-pegasus-40-nam-trang-xanh-myshoes-03-200x200.jpg",
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk4/giay-nike-air-zoom-pegasus-40-nam-trang-xanh-myshoes-04-200x200.jpg",
+        "https://myshoes.vn/image/catalog/2024/nike/nk2/giay-nike-air-zoom-pegasus-40-nam-nau-dong-06.jpg"
+      ],
       "type": "Nike",
+      "description": "Phần Upper của giày được là từ chất liệu Mesh dày dặn và có độ đàn hồi tốt hơn nhưng rất khoáng khí, khiến form giày được giữ rất tốt trong quá trình sử dụng. Thiết kế upper khiến cảm giác lên chân cực kỳ thoải mái vừa vặn và hấp dẫn. Phần đế giữa với sự kế hợp 2 công nghệ đỉnh cao của Nike đó là React và Air Zoom tạo lên độ đàn hồi và êm ái tuyệt vời. Bạn có thể sử dụng Giày Nike Air Zoom Pegasus 40 cho các cuộc chạy đường dài như Marathon hay chạy ngắn tốc độ cao đều rất phù hợp.",
+      "size": [
+        "40", "41","42","43"
+      ],
+      "tint": [
+        "Trắng Xanh", "Nâu Đồng"
+      ],
       "price": 3390000
     },
     {
       "id": 5,
       "name": "GIÀY NIKE DOWNSHIFTER 13",
       "img": "https://myshoes.vn/image/cache/catalog/2024/nike/nk2/giay-nike-downshifter-13-nam-den-trang-01-800x800.jpg",
+      "additionalImages": [
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk4/giay-nike-downshifter-13-nu-den-trang-04-200x200.jpg",
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk4/giay-nike-downshifter-13-nu-den-trang-06-200x200.jpg",
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk4/giay-nike-downshifter-13-nu-den-trang-03-200x200.jpg"
+      ],
       "type": "Nike",
+      "description": "Nike DownShifter 13 với phần Upper được là từ chất liệu nhẹ cực kỳ thoáng khí, đế giữa được cải tiến khiến cho đôi giày trở lên êm, nhẹ cảm giác lên chân tuyệt vời.",
+      "size": [
+        "35", "36","37","38", "40", "42","43"
+      ],
+      "tint": [
+        "Đen Trắng"
+      ],
       "price": 2150000
     },
     {
       "id": 6,
       "name": "GIÀY NIKE RUN SWIFT 3 ",
       "img": "https://myshoes.vn/image/cache/catalog/2024/nike/nk2/giay-nike-run-swift-3-nam-trang-gold-01-800x800.jpg",
+      "additionalImages": [
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk2/giay-nike-run-swift-3-nam-trang-gold-04-200x200.jpg",
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk2/giay-nike-run-swift-3-nam-trang-gold-03-200x200.jpg",
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk01/giay-nike-run-swift-3-nam-den-nau-04-200x200.jpg"
+      ],
       "type": "Nike",
+      "description": "Với phần upper làm bằng chất liệu vải mesh mềm mại và thoáng giúp vận động thoải mái. Phần đế giữa bằng vật liệu siêu nhẹ khiến cho Nike Run Swift 3 là mẫu giày rất được yêu thích.",
+      "size": [
+        "36","37","38", "40", "42","43"
+      ],
+      "tint": [
+        "Trắng Gold","Đen Nâu"
+      ],
       "price": 2090000
     },
     {
       "id": 7,
       "name": "GIÀY NIKE AIR ZOOM PEGASUS 40",
       "img": "https://myshoes.vn/image/cache/catalog/2024/nike/nk2/giay-nike-air-zoom-pegasus-40-nam-nau-dong-01-800x800.jpg",
+      "additionalImages": [
+        "https://myshoes.vn/image/catalog/2024/nike/nk2/giay-nike-air-zoom-pegasus-40-nam-nau-dong-03.jpg",
+        "https://myshoes.vn/image/catalog/2024/nike/nk2/giay-nike-air-zoom-pegasus-40-nam-nau-dong-06.jpg",
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk4/giay-nike-air-zoom-pegasus-40-nam-trang-xanh-myshoes-02-200x200.jpg"
+      ],
       "type": "Nike",
+      "description": "Phần Upper của giày được là từ chất liệu Mesh dày dặn và có độ đàn hồi tốt hơn nhưng rất khoáng khí, khiến form giày được giữ rất tốt trong quá trình sử dụng. Thiết kế upper khiến cảm giác lên chân cực kỳ thoải mái vừa vặn và hấp dẫn. Phần đế giữa với sự kế hợp 2 công nghệ đỉnh cao của Nike đó là React và Air Zoom tạo lên độ đàn hồi và êm ái tuyệt vời. Bạn có thể sử dụng Giày Nike Air Zoom Pegasus 40 cho các cuộc chạy đường dài như Marathon hay chạy ngắn tốc độ cao đều rất phù hợp.",
+      "size": [
+        "35", "36","38", "40", "42","43"
+      ],
+      "tint": [
+        "Nâu Đồng", "Trắng Xanh"
+      ],
       "price": 1400000
     },
     {
       "id": 8,
       "name": "GIÀY NIKE AIR MAX INTRLK ",
       "img": "https://myshoes.vn/image/cache/catalog/2024/nike/nk2/giay-nike-air-max-intrlk-lite-nu-trang-tim-hong-01-800x800.jpg",
+      "additionalImages": [
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk2/giay-nike-air-max-intrlk-lite-nu-trang-tim-hong-03-1600x1600.jpg",
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk2/giay-nike-air-max-intrlk-lite-nu-trang-tim-hong-05-1000x1000.jpg",
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk2/giay-nike-air-max-intrlk-lite-nu-trang-tim-hong-06-1000x1000.jpg"
+      ],
       "type": "Nike",
+      "description": "Phần đế giữa của Nike Air Max INTRLK được thiết kế rất hợp lý mềm mại với công nghệ tiên tiến nhất của Nike. Chắc chắn đây là mẫu giày mà bất cứ fan Sneaker không thể bỏ qua",
+      "size": [
+        "35", "36","37","38"
+      ],
+      "tint": [
+        "Tím Hồng"
+      ],
       "price": 2050000
     },
     {
       "id": 9,
       "name": "GIÀY NIKE RUN SWIFT 3",
       "img": "https://myshoes.vn/image/cache/catalog/2024/nike/nk01/giay-nike-run-swift-3-nam-den-nau-01-800x800.jpg",
+      "additionalImages": [
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk01/giay-nike-run-swift-3-nam-den-nau-04-200x200.jpg",
+        "https://myshoes.vn/image/catalog/2024/nike/nk01/giay-nike-run-swift-3-nam-den-nau-06.jpg",
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk2/giay-nike-run-swift-3-nam-trang-gold-03-200x200.jpg"
+      ],
       "type": "Nike",
+      "description": "Với phần upper làm bằng chất liệu vải mesh mềm mại và thoáng giúp vận động thoải mái. Phần đế giữa bằng vật liệu siêu nhẹ khiến cho Nike Run Swift 3 là mẫu giày rất được yêu thích.",
+      "size": [
+        "36","37","38", "40", "42","43"
+      ],
+      "tint": [
+        "Trắng Gold","Đen Nâu"
+      ],
       "price": 1790000
     },
     {
       "id": 10,
       "name": "GIÀY NIKE AIR MAX EXCEE",
       "img": "https://myshoes.vn/image/cache/catalog/2024/nike/nk01/giay-nike-air-max-excee-nu-trang-xanh-01-800x800.jpg",
+      "additionalImages": [
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk01/giay-nike-air-max-excee-nu-trang-xanh-04-1000x1000.jpg",
+        "https://myshoes.vn/image/cache/catalog/2024/nike/nk01/giay-nike-air-max-excee-nu-trang-xanh-03-1600x1600.jpg",
+        "https://myshoes.vn/image/cache/catalog/2023/nike/nike01/giay-nike-air-max-excee-nam-xam-vang-04-200x200.jpg"
+      ],
       "type": "Nike",
+      "description": "",
+      "size": [
+        "35", "36","37","38", "40", "42"
+      ],
+      "tint": [
+        "Trắng Xanh", "Xám Vàng"
+      ],
       "price": 2290000
     },
     {
       "id": 11,
       "name": "GIÀY NIKE AIR MAX AP ",
       "img": "https://myshoes.vn/image/cache/catalog/2024/nike/nk01/giay-nike-air-max-ap-nu-trang-cam-01-800x800.jpg",
+      "additionalImages": [
+        "",
+        "",
+        ""
+      ],
       "type": "Nike",
+      "description": "",
+      "size": [
+        "35", "36","37","38", "40", "42","43"
+      ],
+      "tint": [
+        "Đen Trắng"
+      ],
       "price": 2490000
     },
     {
       "id": 12,
       "name": "GIÀY NIKE AIR JORDAN 1 LOW ",
       "img": "https://myshoes.vn/image/cache/catalog/2023/nike/nike02/giay-air-jordan-1-low-nam-xanh-den-01-800x800.jpg",
+      "additionalImages": [
+        "",
+        "",
+        ""
+      ],
       "type": "Nike",
+      "description": "",
+      "size": [
+        "35", "36","37","38", "40", "42","43"
+      ],
+      "tint": [
+        "Đen Trắng"
+      ],
       "price": 3390000
     },
     {
       "id": 13,
       "name": "GIÀY NIKE AIR MAX EXCEE ",
       "img": "https://myshoes.vn/image/cache/catalog/2023/nike/nike01/giay-nike-air-max-excee-nam-xam-vang-01-800x800.jpg",
+      "additionalImages": [
+        "",
+        "",
+        ""
+      ],
       "type": "Nike",
+      "description": "",
+      "size": [
+        "35", "36","37","38", "40", "42","43"
+      ],
+      "tint": [
+        "Đen Trắng"
+      ],
       "price": 2290000
     },
     {
       "id": 14,
       "name": "GIÀY NIKE AIR WINFLO 10",
       "img": "https://myshoes.vn/image/cache/catalog/2023/nike/nk1/giay-nike-air-winflo-10-nu-trang-tim-01-800x800.jpg",
+      "additionalImages": [
+        "",
+        "",
+        ""
+      ],
       "type": "Nike",
+      "description": "",
+      "size": [
+        "35", "36","37","38", "40", "42","43"
+      ],
+      "tint": [
+        "Đen Trắng"
+      ],
       "price": 2390000
     },
     {
       "id": 15,
       "name": "GIÀY NIKE AIR MAX SC ",
       "img": "https://myshoes.vn/image/cache/catalog/2023/nike/nk011/giay-nike-air-max-sc-nam-trang-xanh-la-01-800x800.jpg",
+      "additionalImages": [
+        "",
+        "",
+        ""
+      ],
       "type": "Nike",
+      "description": "",
+      "size": [
+        "35", "36","37","38", "40", "42","43"
+      ],
+      "tint": [
+        "Đen Trắng"
+      ],
       "price": 2050000
     },
     {
