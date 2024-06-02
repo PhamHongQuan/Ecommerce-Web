@@ -11,6 +11,8 @@ import HomeLayout from "../component/Home/HomeLayout";
 import Homes from "../component/Home/Homes";
 import Cart from "../component/cart/Cart";
 import ProductDetails from "../component/ProductDetail/ProductDetails";
+import Register  from "../component/account/Register";
+import Login from "../component/account/Login";
 
 const Router = () => (
     <BrowserRouter>
@@ -29,6 +31,8 @@ const Router = () => (
             <Route index element={<ProductDetail />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="productdetails" element={<ProductDetails/>} />
+            <Route path="register" element={<Register />} />
+            <Route path="login" element={<Login />} />
             <Route index element={<Error />} />
         </Routes>
     </BrowserRouter>

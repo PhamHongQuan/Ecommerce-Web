@@ -29,7 +29,7 @@ const Cart = () => {
             <Navbar></Navbar>
             <MDBRow>
                 {cart.length === 0 ? (
-                    <p>Your cart is empty</p>
+                    <p>Giỏ hàng của bạn trống</p>
                 ) : (
                     cart.map((product) => (
                         <MDBCol md="4" lg="3" key={product.id}>
