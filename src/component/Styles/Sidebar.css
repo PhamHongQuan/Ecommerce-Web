@@ -1,4 +1,4 @@
-.list-group-item:hover {
+.list-group-item:hover{
     background-color: #f0f0f0;
     cursor: pointer;
 }
@@ -6,4 +6,36 @@
     background-color: #f0f0f0;
     color: #000;
     border-left: 4px solid #007bff;
+}
+.parent-item {
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.child-item {
+    font-size: 1rem;
+    margin-left: 10px;
+}
+
+.sub-item-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 5px 0 5px 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.sub-item-box:hover {
+    background-color: #e0e0e0;
+    border-color: #b3b3b3;
+}
+
+.sub-item-heading {
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
 }

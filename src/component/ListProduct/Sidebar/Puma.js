@@ -1,38 +1,84 @@
 import { useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBBtn } from "mdb-react-ui-kit";
-import { Link, useNavigate } from 'react-router-dom';
+import {Link, useNavigate, useOutletContext} from 'react-router-dom';
 import {Button} from "react-bootstrap";
 import "../../Styles/PaginationInProduct.css"
-
+import {addCart} from "../../../store/Action";
 
 const ITEMS_PER_PAGE = 8;
 
-export default function Nike() {
+export default function Puma() {
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-
+    const [filterValues] = useOutletContext();
     useEffect(() => {
         fetch("http://localhost:9000/products")
             .then((response) => response.json())
             .then((data) => {
-                const nikeProducts = data.filter(product => product.type === "Puma");
-                setProducts(nikeProducts);
+                const pumaProducts = data.filter(product => product.type === "Puma");
+                setProducts(pumaProducts);
             });
     }, []);
+    const applyFilters = (products) => {
+        return products.filter(product => {
+            // Kiểm tra giới tính
+            if (filterValues.puma.price === 'above' && product.price <= 2000000) return false;
+            if (filterValues.puma.price === 'below' && product.price > 2000000) return false;
 
-    // Tính toán các sản phẩm cho trang hiện tại
+            // Lọc sản phẩm theo giới tính
+            if (filterValues.puma.gender && filterValues.puma.gender !== 'all' && product.gender !== filterValues.puma.gender) {
+                return false;
+            }
+            // Lọc sản phẩm theo kích thước
+            if (filterValues.puma.size && filterValues.puma.size !== 'all') {
+                const { size } = product;
+
+                // Kiểm tra nếu kích thước sản phẩm là một mảng
+                if (Array.isArray(size)) {
+                    // Xác định khoảng kích thước cần lọc
+                    let sizeRange;
+                    if (filterValues.puma.size === 'small') {
+                        sizeRange = [35, 37];
+                    } else if (filterValues.puma.size === 'medium') {
+                        sizeRange = [38, 41];
+                    } else if (filterValues.puma.size === 'large') {
+                        sizeRange = [42, 45];
+                    }
+
+                    // Kiểm tra nếu có ít nhất một kích thước nằm trong khoảng cần lọc
+                    const sizeInRange = size.some(s => s >= sizeRange[0] && s <= sizeRange[1]);
+
+                    // Nếu không có kích thước nào phù hợp, trả về false
+                    if (!sizeInRange) {
+                        return false;
+                    }
+                } else {
+                    // Nếu kích thước không phải là mảng, xử lý như bình thường
+                    if (filterValues.puma.size === 'small' && (size < 35 || size > 37)) {
+                        return false;
+                    }
+                    if (filterValues.puma.size === 'medium' && (size < 38 || size > 41)) {
+                        return false;
+                    }
+                    if (filterValues.puma.size === 'large' && (size < 42 || size > 45)) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        });
+    };
+    const filteredProducts = applyFilters(products);
     const indexOfLastProduct = currentPage * ITEMS_PER_PAGE;
     const indexOfFirstProduct = indexOfLastProduct - ITEMS_PER_PAGE;
-    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+    const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
 
-    // Xử lý thay đổi trang
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-
-    // Tính tổng số trang
-    const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
 
     return (
         <MDBContainer className="my-5">
@@ -44,9 +90,10 @@ export default function Nike() {
                             id={product.id}
                             name={product.name}
                             img={product.img}
-                            des={product.des}
                             price={product.price}
-                            isBuying={product.isBuying}
+                            gender={product.gender}
+                            size={product.size}
+                            tint={product.tint}
                         />
                     ))}
                 </MDBRow>
@@ -63,7 +110,7 @@ export default function Nike() {
     );
 };
 
-const Product = ({ id, name, img, des, price }) => {
+const Product = ({ id, name, img, des, price, size, gender, tint }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -71,7 +118,7 @@ const Product = ({ id, name, img, des, price }) => {
     const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
 
     const handleAddToCart = () => {
-        // dispatch(addCart({ id, name, img, des, price }));
+        dispatch(addCart({ id, name, img, des, price }));
     };
 
     const handleViewDetail = () => {
@@ -83,8 +130,9 @@ const Product = ({ id, name, img, des, price }) => {
             <MDBCard className="product-card" onClick={handleViewDetail} style={{ cursor: 'pointer' }}>
                 <MDBCardImage src={img} alt={name} position="top" />
                 <MDBCardBody>
-                    <MDBCardTitle className="truncate-name">{name}</MDBCardTitle>
-                    <MDBCardText className="truncate-description">{des}</MDBCardText>
+                    <MDBCardTitle className="truncate-name"><b>{name}</b></MDBCardTitle>
+                    <MDBCardTitle className="truncate-name"><b>Size:</b> {size.join(', ')}</MDBCardTitle>
+                    <MDBCardTitle className="truncate-name"><b>Màu sắc:</b>{tint.join(', ')}</MDBCardTitle>
                 </MDBCardBody>
                 <div className="card-footer">
                     <span className="text-danger">{formattedPrice}</span>
