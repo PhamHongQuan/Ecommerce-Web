@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ProductList from '../component/ListProduct/ProductList';
 import ProductDetail from '../component/ListProduct/ProductDetail';
 import Error from '../component/Error';
-import ProductListDefaultPage from '../component/ListProduct/index';
+import ProductListDefaultPage from '../component/ListProduct';
 import Nike from '../component/ListProduct/Sidebar/Nike';
 import Adidas from '../component/ListProduct/Sidebar/Adidas';
 import Lacoste from '../component/ListProduct/Sidebar/Lacoste';
