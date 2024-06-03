@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from 'mdb-react-ui-kit';
 import { useSelector } from 'react-redux';
 import { delCart, decreasement,increaseCart} from "../../store/Action";
-import Navbar from '../../component/Navigation/navbar';
+import Navbar from '../Navigation/navbar';
 import Footers from "../Footer/Footers";
 
 const Cart = () => {
