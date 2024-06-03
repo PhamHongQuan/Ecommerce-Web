@@ -4,7 +4,7 @@ import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCa
 import {Link, useNavigate, useOutletContext} from 'react-router-dom';
 import {Button} from "react-bootstrap";
 import "../../Styles/PaginationInProduct.css"
-
+import {addCart} from "../../../store/Action";
 
 const ITEMS_PER_PAGE = 8;
 
@@ -35,14 +35,37 @@ export default function Lacoste() {
             // Lọc sản phẩm theo kích thước
             if (filterValues.lacoste.size && filterValues.lacoste.size !== 'all') {
                 const { size } = product;
-                if (filterValues.lacoste.size === 'small' && (size < 35 || size > 37)) {
-                    return false;
-                }
-                if (filterValues.lacoste.size === 'medium' && (size < 38 || size > 41)) {
-                    return false;
-                }
-                if (filterValues.lacoste.size === 'large' && (size < 42 || size > 45)) {
-                    return false;
+
+                // Kiểm tra nếu kích thước sản phẩm là một mảng
+                if (Array.isArray(size)) {
+                    // Xác định khoảng kích thước cần lọc
+                    let sizeRange;
+                    if (filterValues.lacoste.size === 'small') {
+                        sizeRange = [35, 37];
+                    } else if (filterValues.lacoste.size === 'medium') {
+                        sizeRange = [38, 41];
+                    } else if (filterValues.lacoste.size === 'large') {
+                        sizeRange = [42, 45];
+                    }
+
+                    // Kiểm tra nếu có ít nhất một kích thước nằm trong khoảng cần lọc
+                    const sizeInRange = size.some(s => s >= sizeRange[0] && s <= sizeRange[1]);
+
+                    // Nếu không có kích thước nào phù hợp, trả về false
+                    if (!sizeInRange) {
+                        return false;
+                    }
+                } else {
+                    // Nếu kích thước không phải là mảng, xử lý như bình thường
+                    if (filterValues.lacoste.size === 'small' && (size < 35 || size > 37)) {
+                        return false;
+                    }
+                    if (filterValues.lacoste.size === 'medium' && (size < 38 || size > 41)) {
+                        return false;
+                    }
+                    if (filterValues.lacoste.size === 'large' && (size < 42 || size > 45)) {
+                        return false;
+                    }
                 }
             }
 
@@ -72,6 +95,7 @@ export default function Lacoste() {
                             price={product.price}
                             gender={product.gender}
                             size={product.size}
+                            tint={product.tint}
                         />
                     ))}
                 </MDBRow>
@@ -88,7 +112,7 @@ export default function Lacoste() {
     );
 };
 
-const Product = ({ id, name, img, des, price, size, gender }) => {
+const Product = ({ id, name, img, des, price, size, gender, tint }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -96,7 +120,7 @@ const Product = ({ id, name, img, des, price, size, gender }) => {
     const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
 
     const handleAddToCart = () => {
-        // dispatch(addCart({ id, name, img, des, price }));
+        dispatch(addCart({ id, name, img, des, price }));
     };
 
     const handleViewDetail = () => {
@@ -109,8 +133,8 @@ const Product = ({ id, name, img, des, price, size, gender }) => {
                 <MDBCardImage src={img} alt={name} position="top" />
                 <MDBCardBody>
                     <MDBCardTitle className="truncate-name"><b>{name}</b></MDBCardTitle>
-                    <MDBCardTitle className="truncate-name">Size: {size}</MDBCardTitle>
-                    <MDBCardTitle className="truncate-name">Giới tính:{gender}</MDBCardTitle>
+                    <MDBCardTitle className="truncate-name"><b>Size:</b> {size.join(', ')}</MDBCardTitle>
+                    <MDBCardTitle className="truncate-name"><b>Màu sắc:</b>{tint.join(', ')}</MDBCardTitle>
                 </MDBCardBody>
                 <div className="card-footer">
                     <span className="text-danger">{formattedPrice}</span>
