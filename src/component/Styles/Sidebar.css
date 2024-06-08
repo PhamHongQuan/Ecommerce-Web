@@ -39,3 +39,65 @@
     margin-bottom: 5px;
     font-size: 1.1rem;
 }
+
+
+.MDBContainer {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.MDBListGroup {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.parent-item {
+    background-color: #ffffff;
+    color: #333;
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.parent-item:hover {
+    background-color: #e9ecef;
+}
+
+.parent-item.active {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.child-item {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.sub-item-box {
+    margin-bottom: 10px;
+}
+
+.sub-item-heading {
+    font-weight: bold;
+    margin-bottom: 5px;
+    cursor: pointer;
+    color: #007bff;
+}
+
+.sub-item-heading:hover {
+    text-decoration: underline;
+}
+
+.MDBRadio {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.MDBRadio input[type="radio"] {
+    margin-right: 5px;
+}

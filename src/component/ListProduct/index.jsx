@@ -4,7 +4,7 @@ import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import Sidebar from './Sidebar/Sidebar';
 import Navbar from '../../component/Navigation/navbar';
 import Footers from "../Footer/Footers";
-// json-server db.json --port 9000 --watch
+
 function ProductListDefaultPage() {
     const [filterValues, setFilterValues] = useState({
         nike: { price: '', size: '', gender: '' },
@@ -18,21 +18,22 @@ function ProductListDefaultPage() {
     };
 
     return (
-        <MDBContainer className="my-5">
+        <div>
             <Navbar />
-            <br />
-            <MDBRow>
-                <MDBCol md="3">
-                    <Sidebar onFilterChange={handleFilterChange} />
-                </MDBCol>
-                <MDBCol md="9">
-                    <div className="content" style={{ marginTop: "-100px" }}>
-                        <Outlet context={[filterValues]} />
-                    </div>
-                </MDBCol>
-            </MDBRow>
+            <MDBContainer className="my-5">
+                <MDBRow>
+                    <MDBCol md="3">
+                        <Sidebar onFilterChange={handleFilterChange} />
+                    </MDBCol>
+                    <MDBCol md="9">
+                        <div className="content">
+                            <Outlet context={[filterValues]} />
+                        </div>
+                    </MDBCol>
+                </MDBRow>
+            </MDBContainer>
             <Footers />
-        </MDBContainer>
+        </div>
     );
 }
 
