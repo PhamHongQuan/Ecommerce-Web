@@ -2,7 +2,9 @@ import React, {useState, useEffect} from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import {Ripple, initMDB} from "mdb-ui-kit";
 import {products} from "../../data/ProductData";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {addCart} from "../../store/Action";
 
 
 initMDB({Ripple});
@@ -11,6 +13,60 @@ const Homes = () => {
     const [filter, setFilter] = useState(data);
     const [loading, setLoading] = useState(false);
     let componentMounted = true;
+    const dispatch = useDispatch();
+
+    const handleAddToCart =({id, name, img, des,price}) =>{
+        dispatch(addCart({id, name, img, des, price}));
+    };
+    const [buttonColors, setButtonColors] = useState({});
+    useEffect(() => {
+        // Lấy màu sắc từ localStorage khi component được render
+        const storedColors = JSON.parse(localStorage.getItem('buttonColors')) || {};
+        setButtonColors(storedColors);
+    }, []);
+
+    const [isAddedToCart, setIsAddedToCart] = useState(false);
+
+
+
+
+    const changeButtonColor = (productId) => {
+        if (buttonColors[productId]) {
+            // Nếu nút đã được nhấn, hiển thị thông báo
+            alert('Sản phẩm này đã có trong giỏ hàng bạn có muốn thêm vào không!');
+        } else {
+            // Nếu nút chưa được nhấn, thay đổi màu sắc và lưu vào localStorage
+            const newColors = {
+                ...buttonColors,
+                [productId]: 'btn-primary' // Thay đổi màu sắc thành màu
+            };
+            setButtonColors(newColors);
+            localStorage.setItem('buttonColors', JSON.stringify(newColors));
+        }
+    };
+    const handleRemoveFromCart = (productId) => {
+        // Logic để xóa sản phẩm khỏi giỏ hàng
+        console.log('Xóa sản phẩm khỏi giỏ hàng', productId);
+        alert('Xóa sản phẩm khỏi giỏ hàng');
+
+        // Cập nhật lại trạng thái và localStorage khi sản phẩm bị xóa
+        const newColors = { ...buttonColors };
+        delete newColors[productId];
+        setButtonColors(newColors);
+        localStorage.setItem('buttonColors', JSON.stringify(newColors));
+    };
+    const toggleCartStatus = (productId) => {
+        if (isAddedToCart) {
+            handleRemoveFromCart(productId);
+        } else {
+            handleAddToCart(productId);
+        }
+        setIsAddedToCart(!isAddedToCart);
+    };
+
+
+
+
 
     useEffect(() => {
         const getProduct = async () => {
@@ -108,17 +164,24 @@ const Homes = () => {
 
                 {/*san pham*/}
                 <div className="d-flex justify-content-center fw-bold fs-5"><p>SẢN PHẨM MỚI</p></div>
-                {products.map((products) => {
-                    const formattedPrice = new Intl.NumberFormat('vi-VN',{style:'currency',currency:'VND'}).format(products.price);
-                    return (
-                        <>
-                            <div className="col-3 col-6 col-sm-6 col-lg-3 pb-lg-2 mb-3">
+                <div className="row">
+                    {products.map((product) => {
+                        const formattedPrice = new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(product.price);
+                        const buttonColor = buttonColors[product.id] || 'btn-danger'; // Lấy màu sắc từ state hoặc màu mặc định
+
+
+
+
+
+                        return (
+                            <div key={product.id} className="col-3 col-6 col-sm-6 col-lg-3 pb-lg-2 mb-3">
                                 <div className="card ms-3 h-100 border">
                                     <div className="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                                        <NavLink to={`/product/${products.id}`} style={{display: 'block', overflow: 'hidden'}}>
+                                        <NavLink to={`/product/${product.id}`}
+                                                 style={{display: 'block', overflow: 'hidden'}}>
                                             <img
-                                                src={products.img}
-                                                alt={products.title}
+                                                src={product.img}
+                                                alt={product.title}
                                                 className="img-fluid w-100"
                                                 style={{transition: 'transform 0.3s ease'}}
                                                 onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.15)'}
@@ -127,29 +190,38 @@ const Homes = () => {
                                         </NavLink>
                                     </div>
                                     <div className="card-body text-center">
-                                        <h5 className=" fs-6 h-50">{products.name}</h5>
+                                        <h5 className="fs-6 h-50">{product.name}</h5>
                                         <div className="d-flex justify-content-center">
                                             <div className="btn-group shadow-0 mt-3 flex-column flex-md-row"
-                                                 role="group"
-                                                 aria-label="Basic example">
-                                                <p className="btn btn-outline-black  me-md-1 mb-2 mb-md-0"
-                                                   data-mdb-color="dark" data-mdb-ripple-init="">{formattedPrice}
+                                                 role="group" aria-label="Basic example">
+                                                <p className="btn btn-outline-black me-md-1 mb-2 mb-md-0"
+                                                   data-mdb-color="dark" data-mdb-ripple-init="">
+                                                    {formattedPrice}
                                                 </p>
-                                                <NavLink to="">
-                                                    <button type="button"
-                                                            className="btn btn-danger d-flex align-items-center mb-2 mb-md-0"
-                                                            data-mdb-color="dark" data-mdb-ripple-init=""><i
-                                                        className="fa fa-cart-plus me-2" aria-hidden="true"></i> Thêm
-                                                    </button>
-                                                </NavLink>
+
+                                                <button
+                                                    type="button"
+                                                    className={`btn ${buttonColor} d-flex align-items-center mb-2 mb-md-0`}
+                                                    data-mdb-color="dark" data-mdb-ripple-init=""
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleAddToCart(product);
+                                                        changeButtonColor(product.id); // Đổi màu khi nhấp chuột
+                                                        // handleRemoveFromCart(product.id);
+                                                    }}>
+                                                    <i className="fa fa-cart-plus me-2" aria-hidden="true"></i> Thêm
+                                                </button>
+
+
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </>
-                    )
-                })}
+                        );
+                    })}
+                </div>
                 {/*tin moi nhat*/}
                 <div className="w-100 mt-5 mb-5">
                     <div className="text-center">
@@ -180,8 +252,10 @@ const Homes = () => {
                                     </div>
                                     <p className="fw-bold fs-4">Lưu ý</p>
                                     <p>Chiều dài thực của bàn chân (Centimet).</p>
-                                    <p>– Thời gian tốt nhất để đo cỡ giày của bạn là vào lúc cuối ngày, khi đôi chân của bạn được thư giãn hoàn toàn.</p>
-                                    <p>– Nếu có sai số giữa hai bàn chân, bạn hãy chọn đôi giày có cỡ bằng với chân lớn hơn của bạn.</p>
+                                    <p>– Thời gian tốt nhất để đo cỡ giày của bạn là vào lúc cuối ngày, khi đôi chân của
+                                        bạn được thư giãn hoàn toàn.</p>
+                                    <p>– Nếu có sai số giữa hai bàn chân, bạn hãy chọn đôi giày có cỡ bằng với chân lớn
+                                        hơn của bạn.</p>
                                 </div>
                             </div>
                             {/*khuyen mai*/}
@@ -261,7 +335,7 @@ const Homes = () => {
                         </div>
                         <div
                             className="multi-carousel-item border-2 w-50 d-flex justify-content-center align-items-center">
-                        <img
+                            <img
                                 src="https://seeklogo.com/images/P/Puma-logo-65565A474D-seeklogo.com.png"
                                 alt="Place Royale Bruxelles"
                                 className="w-50 h-50 img-fluid m-2"

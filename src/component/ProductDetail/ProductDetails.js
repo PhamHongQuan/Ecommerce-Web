@@ -4,10 +4,13 @@ import {products} from "../../data/ProductData";
 import Navbar from "../Navigation/navbar";
 import Footers from "../Footer/Footers";
 import { FaTimes } from 'react-icons/fa';
+import {useDispatch} from "react-redux";
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import { MDBPopover, MDBPopoverBody, MDBPopoverHeader, MDBBtn } from 'mdb-react-ui-kit';
 import {NavLink} from "react-router-dom";
 import {Carousel} from "react-bootstrap";
+import {addCart} from "../../store/Action";
+
 
 
 
@@ -16,6 +19,31 @@ const ProductDetails = () => {
     const {id} = useParams();
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [buttonColors, setButtonColors] = useState({});
+    useEffect(() => {
+        // Lấy màu sắc từ localStorage khi component được render
+        const storedColors = JSON.parse(localStorage.getItem('buttonColors')) || {};
+        setButtonColors(storedColors);
+    }, []);
+
+
+
+
+
+    const changeButtonColor = (productId) => {
+        if (buttonColors[productId]) {
+            // Nếu nút đã được nhấn, hiển thị thông báo
+            alert('Sản phẩm này đã có trong giỏ hàng bạn có muốn thêm vào không!');
+        } else {
+            // Nếu nút chưa được nhấn, thay đổi màu sắc và lưu vào localStorage
+            const newColors = {
+                ...buttonColors,
+                [productId]: 'btn-primary' // Thay đổi màu sắc thành màu
+            };
+            setButtonColors(newColors);
+            localStorage.setItem('buttonColors', JSON.stringify(newColors));
+        }
+    };
 
 
     useEffect(() => {
@@ -74,6 +102,35 @@ const ProductDetails = () => {
             const value = Math.max(1, Math.min(parseInt(event.target.value, 10) || 1, 9999));
             setQuantity(value);
         };
+        const dispatch = useDispatch();
+        const handleAddToCart =({id, name, img, des,price}) =>{
+            dispatch(addCart({id, name, img, des, price}));
+        };
+        const [buttonColors, setButtonColors] = useState({});
+
+        const [selectedColor, setSelectedColor] = useState(
+            localStorage.getItem("selectedColor") || null
+        );
+        const [selectedSize, setSelectedSize] = useState(
+            localStorage.getItem("selectedSize") || null
+        );
+
+        useEffect(() => {
+            localStorage.setItem("selectedColor", selectedColor);
+        }, [selectedColor]);
+
+        useEffect(() => {
+            localStorage.setItem("selectedSize", selectedSize);
+        }, [selectedSize]);
+
+        const handleColorClick = (tint) => {
+            setSelectedColor(tint);
+        };
+        const handleColorClickSize = (size) => {
+            setSelectedSize(size);
+        };
+
+
 
 
         return(
@@ -92,7 +149,7 @@ const ProductDetails = () => {
                                onClick={() => handleImageClick(image)}/>
                       ))}
                   </div>
-                  
+
               </div>
               <div className="col-md-7 ms-5 mt-5">
                   <h1 className="fw-bold">{product.name}</h1>
@@ -117,8 +174,14 @@ const ProductDetails = () => {
                           <p className="fw-bold mt-2">Màu Sắc</p>
                           <div className="ms-4" role="group" aria-label="">
                               {Array.isArray(product.tint) && product.tint.map((tint, index) => (
-                                  <button key={index} type="button"
-                                          className="btn btn-outline-black me-2">{tint}</button>
+                                  <button
+                                      key={index}
+                                      type="button"
+                                      className={`btn ${selectedColor === tint ? "btn-primary" : "btn-outline-black"} me-2`}
+                                      onClick={() => handleColorClick(tint)}
+                                  >
+                                      {tint}
+                                  </button>
                               ))}
                           </div>
                       </div>
@@ -127,8 +190,14 @@ const ProductDetails = () => {
                           <p className="fw-bold mt-2">Chọn Size</p>
                           <div className="ms-3" role="group" aria-label="First group">
                               {Array.isArray(product.size) && product.size.map((size, index) => (
-                                  <button key={index} type="button"
-                                          className="btn btn-outline-black me-2 mb-2">{size}</button>
+                                  <button
+                                      key={index}
+                                      type="button"
+                                      className={`btn ${selectedSize === size ? "btn-primary" : "btn-outline-black"} me-2`}
+                                      onClick={() => handleColorClickSize(size)}
+                                  >
+                                      {size}
+                                  </button>
                               ))}
                           </div>
                       </div>
@@ -140,9 +209,15 @@ const ProductDetails = () => {
                                      inputMode="numeric"  onChange={handleChange} />
                               <input type="button" value="+" className="plus button is-form"  onClick={handleIncrement} />
                           </div>
-                          <button type="submit" className="ms-4 border bg-danger rounded-2"><i
-                              className="fa fa-cart-plus me-2"></i>Thêm vào giỏ hàng
-                          </button>
+                          <NavLink to="">
+                              <button type="button" className="btn btn-danger d-flex align-items-center ms-2 mb-2 mb-md-0"
+                                      data-mdb-color="dark" data-mdb-ripple-init="" onClick={(e) => {
+                                  e.stopPropagation();handleAddToCart(product); changeButtonColor(product.id)}} >
+                                  <i className="fa fa-cart-plus me-2" aria-hidden="true"></i> Thêm vào giỏ hàng
+                              </button>
+                          </NavLink>
+
+
                       </div>
                       <div style={{marginTop:"20px", position: 'relative', display: 'inline-block'}}>
                           <MDBPopoverBody

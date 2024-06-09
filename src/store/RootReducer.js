@@ -1,4 +1,4 @@
-
+import {useLocalStorage} from "../Hook/useLocalStorega";
 const loadCart=()=>{
     return JSON.parse(localStorage.getItem('cart'))??[];
 }
@@ -25,11 +25,11 @@ export const root=(state= initState,action)=>{
             lop1:for (const p of products) {
                 for (const c of cart) {
                     if(p.id===c.id){
-                        out.push({...p,isBuying:true});
+                        out.push({...p,isBuying:true, color:'red' });
                         continue lop1;
                     }
                 }
-                    out.push({...p,isBuying:false});
+                    out.push({...p,isBuying:false, color: 'blue'});
             }
             return {
                 ...state,
