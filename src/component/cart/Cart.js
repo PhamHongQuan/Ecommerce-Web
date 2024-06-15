@@ -33,7 +33,7 @@ const Cart = () => {
 
 
 
-    const productsOfCart = userCart.prs;
+    const productsOfCart = userCart.products;
 
 
 

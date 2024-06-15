@@ -24,7 +24,7 @@ export const root=(state= initState,action)=>{
             let cart=loadCart();
             let products=action.payload;
             let out=[];
-            //
+
             lop1:for (const p of products) {
                 for (const c of cart) {
                     if(p.id===c.id){
@@ -50,9 +50,9 @@ export const root=(state= initState,action)=>{
             const existProductIndex = productsUser.findIndex(item => item.id === product.id);
 
             if (existProductIndex >= 0) {
-                cart[userCartIndex].prs[existProductIndex].quantity += 1;
+                cart[userCartIndex].products[existProductIndex].quantity += 1;
             } else {
-                cart[userCartIndex].prs.push({ ...product, quantity: 1 });
+                cart[userCartIndex].products.push({ ...product, quantity: 1 });
             }
 
             localStorage.setItem('cart', JSON.stringify(cart));
@@ -71,12 +71,12 @@ export const root=(state= initState,action)=>{
             const userCartIndex = cart.findIndex(item=>item.username===currentUser.username);
 
 
-            const productsUser = cart[userCartIndex].prs;
+            const productsUser = cart[userCartIndex].products;
             const existProductIndex = productsUser.findIndex(item => item.id === productId);
 
 
             if (existProductIndex >= 0) {
-                cart[userCartIndex].prs[existProductIndex].quantity += 1;
+                cart[userCartIndex].products[existProductIndex].quantity += 1;
                 localStorage.setItem('cart', JSON.stringify(cart));
 
             }
@@ -92,10 +92,10 @@ export const root=(state= initState,action)=>{
             const userCartIndex = cart.findIndex(item=>item.username===currentUser.username);
 
 
-            const productsUser = cart[userCartIndex].prs;
+            const productsUser = cart[userCartIndex].products;
             const existProductIndex = productsUser.findIndex(item => item.id === productId);
-            if (existProductIndex >= 0 &&  cart[userCartIndex].prs[existProductIndex].quantity>= 1) {
-                cart[userCartIndex].prs[existProductIndex].quantity -= 1;
+            if (existProductIndex >= 0 &&  cart[userCartIndex].products[existProductIndex].quantity>= 1) {
+                cart[userCartIndex].products[existProductIndex].quantity -= 1;
 
                 localStorage.setItem('cart', JSON.stringify(cart));
             }
@@ -112,9 +112,9 @@ export const root=(state= initState,action)=>{
             const userCartIndex = cart.findIndex(item=>item.username===currentUser.username);
 
 
-            const productsUser = cart[userCartIndex].prs;
+            const productsUser = cart[userCartIndex].products;
             const updatedProducts = productsUser.filter(item => item.id !== productId);
-            cart[userCartIndex].prs = updatedProducts;
+            cart[userCartIndex].products = updatedProducts;
             localStorage.setItem('cart', JSON.stringify(cart));
             return {
                 ...state,
