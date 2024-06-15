@@ -5,13 +5,16 @@ const loadCart=()=>{
 const  loadUsers =()=>{
     return JSON.parse(localStorage.getItem('users'))??[];
 }
+const loadCurrentUser = ()=>{
+    return JSON.parse(localStorage.getItem('currentUser'));
+}
 const initState={
     products:[],
      cart:loadCart(),
     registering: false,
     logging: false,
     user:null,
-    currentUser: null,
+    currentUser: loadCurrentUser(),
     users: loadUsers(),
     error: null,
 }
@@ -38,53 +41,61 @@ export const root=(state= initState,action)=>{
         }
         case 'cart/add': {
             const product = action.payload;
-            const cart = [...state.cart];
-            const existProduct = cart.findIndex(item => item.id === product.id);
+            const cart = loadCart();
+            const currentUser = loadCurrentUser();
+            const userCartIndex = cart.findIndex(item=>item.username===currentUser.username);
 
-            if (existProduct >= 0) {
-                cart[existProduct] = {
-                    ...cart[existProduct],
-                    quantity: cart[existProduct].quantity + 1
-                };
+
+            const productsUser = cart[userCartIndex].products;
+            const existProductIndex = productsUser.findIndex(item => item.id === product.id);
+
+            if (existProductIndex >= 0) {
+                cart[userCartIndex].prs[existProductIndex].quantity += 1;
             } else {
-                cart.push({ ...product, quantity: 1 });
+                cart[userCartIndex].prs.push({ ...product, quantity: 1 });
             }
 
             localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
             return {
                 ...state,
-                cart
+                cart,
+                currentUser
             };
         }
         case 'cart/increasement':{
             const productId = action.payload;
-            const cart = [...state.cart];
-            const existProductIndex = cart.findIndex(item => item.id === productId);
+            const cart = loadCart();
+            const currentUser = loadCurrentUser();
+            const userCartIndex = cart.findIndex(item=>item.username===currentUser.username);
 
-            if (existProductIndex >= 0 && cart[existProductIndex].quantity >= 0) {
-                cart[existProductIndex] = {
-                    ...cart[existProductIndex],
-                    quantity: cart[existProductIndex].quantity + 1
-                };
 
+            const productsUser = cart[userCartIndex].prs;
+            const existProductIndex = productsUser.findIndex(item => item.id === productId);
+
+
+            if (existProductIndex >= 0) {
+                cart[userCartIndex].prs[existProductIndex].quantity += 1;
                 localStorage.setItem('cart', JSON.stringify(cart));
-            }
 
+            }
             return {
                 ...state,
-                cart
+                cart: cart
             };
         }
         case 'cart/decreasement':{
             const productId = action.payload;
-            const cart = [...state.cart];
-            const existProductIndex = cart.findIndex(item => item.id === productId);
+            const cart = loadCart();
+            const currentUser = loadCurrentUser();
+            const userCartIndex = cart.findIndex(item=>item.username===currentUser.username);
 
-            if (existProductIndex >= 0 && cart[existProductIndex].quantity >= 1) {
-                cart[existProductIndex] = {
-                    ...cart[existProductIndex],
-                    quantity: cart[existProductIndex].quantity - 1
-                };
+
+            const productsUser = cart[userCartIndex].prs;
+            const existProductIndex = productsUser.findIndex(item => item.id === productId);
+            if (existProductIndex >= 0 &&  cart[userCartIndex].prs[existProductIndex].quantity>= 1) {
+                cart[userCartIndex].prs[existProductIndex].quantity -= 1;
 
                 localStorage.setItem('cart', JSON.stringify(cart));
             }
@@ -95,11 +106,19 @@ export const root=(state= initState,action)=>{
             };
         }
         case "cart/del":{
-            const cart = state.cart.filter(item => item.id !== action.payload);
+            const productId = action.payload;
+            const cart = loadCart();
+            const currentUser = loadCurrentUser();
+            const userCartIndex = cart.findIndex(item=>item.username===currentUser.username);
+
+
+            const productsUser = cart[userCartIndex].prs;
+            const updatedProducts = productsUser.filter(item => item.id !== productId);
+            cart[userCartIndex].prs = updatedProducts;
             localStorage.setItem('cart', JSON.stringify(cart));
             return {
                 ...state,
-                cart: [ ...cart ]
+                cart
             }
         }
         case "user/register":{
@@ -113,13 +132,17 @@ export const root=(state= initState,action)=>{
         case "user/registerSuccess":{
             const user = action.payload;
             const users = [...state.users];
+            const cart = [...state.cart];
             users.push({ ...user});
+            cart.push({username: user.username, products: []});
             localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('cart', JSON.stringify(cart));
             return {
                 ...state,
                 registering: false,
                user,
-                users
+                users,
+                cart
             };
         }
         case "user/registerFail":{
@@ -141,11 +164,12 @@ export const root=(state= initState,action)=>{
         case "user/loginSuccess":{
             const currentUser = action.payload;
 
+
             localStorage.setItem("currentUser",JSON.stringify(currentUser))
             return {
                 ...state,
                 logging: false,
-                currentUser,
+                currentUser: action.payload,
                 users: action.payload,
                 error: null
             };
@@ -165,7 +189,8 @@ export const root=(state= initState,action)=>{
                 ...state,
                 logging: true,
                 error: action.payload,
-                users: action.payload
+                users: action.payload,
+                currentUser: action.payload
 
             };
         }
