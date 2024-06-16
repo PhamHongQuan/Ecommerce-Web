@@ -14,3 +14,26 @@
 a {
     color: black;
 }
+h2{
+    margin-left: 100px;
+}
+.button-submit{
+    margin-top: 30px;
+    margin-left: 100px;
+    background-color: white;
+    border:2px lightblue solid;
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+
+}
+.button-submit:hover{
+    background-color: deepskyblue;
+    color: white;
+}
+.error-mess{
+    color:red;
+    margin-left: 40px;
+}
+.register-link{
+    color: orangered;
+}
