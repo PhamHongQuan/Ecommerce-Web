@@ -27,17 +27,8 @@ const Cart = () => {
             <Footers></Footers>
         </MDBContainer>);
     }
-
-
     const userCart = cart.find(item => item.username === currentUser.username);
-
-
-
     const productsOfCart = userCart.products;
-
-
-
-
     const handleRemoveFromCart = (productId) => {
         dispatch(delCart(productId));
     };
@@ -50,7 +41,6 @@ const Cart = () => {
     };
 
     return (
-
         <MDBContainer className="my-5">
             <Navbar></Navbar>
             <MDBRow>

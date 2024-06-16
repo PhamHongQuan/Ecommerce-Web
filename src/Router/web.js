@@ -13,6 +13,8 @@ import Cart from "../component/cart/Cart";
 import ProductDetails from "../component/ProductDetail/ProductDetails";
 import Register  from "../component/account/Register";
 import Login from "../component/account/Login";
+import ForgotPassword from "../component/account/ForgotPassword/ForgotPassword";
+import ResetPasswordPage from "../component/account/ForgotPassword/ResetPassword";
 
 const Router = () => (
     <BrowserRouter>
@@ -33,6 +35,8 @@ const Router = () => (
             <Route path="productdetails" element={<ProductDetails/>} />
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:username" element={<ResetPasswordPage />} />
             <Route index element={<Error />} />
         </Routes>
     </BrowserRouter>

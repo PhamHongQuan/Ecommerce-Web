@@ -12,7 +12,7 @@ import "../Styles/Register.css"
 const Login = () => {
     const [user, setUser] = useState({ username: '', password: '' });
     const dispatch = useDispatch();
-    const  logging = useSelector((state) => state.logging);
+    const logging = useSelector((state) => state.logging);
     const error = useSelector((state) => state.error);
     const navigate = useNavigate();
     const handleChange = (e) => {

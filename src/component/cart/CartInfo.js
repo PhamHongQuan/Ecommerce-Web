@@ -1,8 +1,11 @@
 import {useSelector} from "react-redux";
 import React from "react";
+import "../Styles/CartInfo.css";
+
 const loadCart=()=>{
     return JSON.parse(localStorage.getItem('cart'))??[];
 }
+
 export function CartInfo() {
     const cart = useSelector(state => state.cart);
     const currentUser = useSelector(state => state.currentUser);
@@ -17,8 +20,4 @@ export function CartInfo() {
     }else {
         return ( <p className="ms-2">Giỏ hàng</p>);
     }
-
-
-
-
 }

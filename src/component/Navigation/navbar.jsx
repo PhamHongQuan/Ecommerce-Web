@@ -6,6 +6,7 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import {CartInfo} from "../cart/CartInfo";
 import {AccountInfo} from "../account/AccountInfo";
 import "../Styles/Register.css";
+import "../Styles/Navbar.css";
 import {useDispatch, useSelector} from "react-redux";
 import {loginSuccess, logout} from "../../store/Action";
 
@@ -37,40 +38,21 @@ const Navbar = () => {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <Link className="nav-link" aria-current="page" to="/">Trang chủ</Link>
+                                <Link className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
+                                      aria-current="page" to="/">Trang chủ</Link>
                             </li>
 
                             <li className="nav-item dropdown">
-                                {location.pathname.includes("list-product") ? (
-                                    <span
-                                        className="nav-link dropdown-toggle d-flex align-items-center"
-                                        id="navbarDropdownMenuLink"
-                                        role="button"
-                                        aria-expanded="false"
-                                        style={{cursor: "default"}}
-                                    >
-                                        Danh sách
-                                    </span>
-                                ) : (
-                                    <Link
-                                        data-mdb-dropdown-init
-                                        className="nav-link d-flex align-items-center"
-                                        to="list-product"
-                                        id="navbarDropdownMenuLink"
-                                        role="button"
-                                        aria-expanded="false"
-                                    >
-                                        Danh sách
-                                    </Link>
-                                )}
+                                <Link
+                                    className={`nav-link ${location.pathname.includes("list-product") ? 'active' : ''}`}
+                                    to="/list-product">Danh sách</Link>
                             </li>
 
                             <li className="nav-item">
-                                <div className="buttons">
-                                    <Link to="/cart"><i className="fa fa-cart-plus d-flex mt-2 fs-5"><CartInfo></CartInfo></i></Link>
-                                    {/*<a href="" className="nav-link bg-dark d-flex align-items-center">*/}
-                                    {/*    <Link to="/cart"> <i className="fa fa-cart-plus"></i><CartInfo></CartInfo></Link></a>*/}
-                                </div>
+                                <Link className={`nav-link ${location.pathname === '/cart' ? 'active' : ''}`}
+                                      to="/cart">
+                                    <i className="fa fa-cart-plus  fs-5 d-inline-flex"><CartInfo/></i>
+                                </Link>
                             </li>
 
                             <li className="nav-item dropdown">
@@ -106,10 +88,10 @@ const Navbar = () => {
                                     ) : (
                                         <>
                                             <a className="dropdown-item">
-                                            <Link to="/login">Đăng nhập </Link>
+                                                <Link to="/login">Đăng nhập </Link>
                                             </a>
                                             <a className="dropdown-item">
-                                                <Link to="/register">Đăng ký  </Link>
+                                                <Link to="/register">Đăng ký </Link>
                                             </a>
                                         </>
                                     )}
