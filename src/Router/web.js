@@ -35,8 +35,8 @@ const Router = () => (
             <Route path="productdetails" element={<ProductDetails/>} />
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
-            <Route path="forgot-password" element={<ForgotPassword />} />
-            <Route path="reset-password" element={<ResetPasswordPage />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:username" element={<ResetPasswordPage />} />
             <Route index element={<Error />} />
         </Routes>
     </BrowserRouter>
