@@ -10,7 +10,7 @@ import Footers from "../Footer/Footers";
 import "../Styles/Register.css"
 
 const Register = () => {
-    const [user, setUser] = useState({ username: '', password: '' });
+    const [user, setUser] = useState({ username: '', email: '',password: '' });
     const dispatch = useDispatch();
     const registering = useSelector((state) => state.registering);
     const error = useSelector((state) => state.error);
@@ -67,6 +67,13 @@ const Register = () => {
                             name="username"
                             value={user.username}
                             onChange={handleChange}/>
+                    </div>
+                    <div>
+                        <label>Email:</label>
+                        <input className="email" type="email"
+                        name="email"
+                        value={user.email}
+                        onChange={handleChange}/>
                     </div>
                     <div>
                         <label>Password:</label>

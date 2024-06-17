@@ -10,7 +10,7 @@ import Footers from "../Footer/Footers";
 import "../Styles/Register.css"
 
 const Login = () => {
-    const [user, setUser] = useState({ username: '', password: '' });
+    const [user, setUser] = useState({ username: '', email: '',password: '' });
     const dispatch = useDispatch();
     const logging = useSelector((state) => state.logging);
     const error = useSelector((state) => state.error);
@@ -38,7 +38,8 @@ const Login = () => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 if (existUser>=0) {
-                    resolve(user);
+                    const indexUser = users[existUser];
+                    resolve(indexUser);
                 } else {
                     reject(new Error('Username sai or password sai'));
                 }

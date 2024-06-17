@@ -37,3 +37,9 @@ h2{
 .register-link{
     color: orangered;
 }
+.email{
+    margin-left: 52px;
+}
+input{
+    margin-left: 20px;
+}
