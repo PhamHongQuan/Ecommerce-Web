@@ -10,7 +10,7 @@ import {
 } from 'mdb-react-ui-kit';
 
 function ResetPasswordPage() {
-    const { username } = useParams(); // Lấy username từ URL
+    const { username } = useParams();
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState('');
@@ -20,18 +20,40 @@ function ResetPasswordPage() {
     useEffect(() => {
         const currentUserString = localStorage.getItem('currentUser');
         if (!currentUserString) {
-            // Xử lý khi không có currentUser trong localStorage
-            navigate('/not-found'); // Điều hướng đến trang 404
+            navigate('/not-found');
             return;
-        }
-        const currentUser = JSON.parse(currentUserString);
-
-        const user = currentUser.find(user => user.username === username);
-        if (!user) {
-            navigate('/not-found'); // Điều hướng đến trang 404 nếu không tìm thấy user
         }
 
     }, [username, navigate]);
+
+    const updatePassword = (newPassword) => {
+        const currentUserString = localStorage.getItem('currentUser');
+        let currentUser = JSON.parse(currentUserString);
+
+        const usersString = localStorage.getItem('users');
+        let users = JSON.parse(usersString);
+
+        if (typeof currentUser !== 'object' || Array.isArray(currentUser)) {
+            return false;
+        }
+        if (!Array.isArray(users)) {
+            return false;
+        }
+
+        currentUser.password = newPassword;
+
+        users = users.map(user => {
+            if (user.username === currentUser.username || user.email === currentUser.email) {
+                return { ...user, password: newPassword };
+            }
+            return user;
+        });
+
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        localStorage.setItem('users', JSON.stringify(users));
+
+        return true;
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -41,39 +63,14 @@ function ResetPasswordPage() {
             return;
         }
 
+        const updated = updatePassword(password);
 
-        const currentUserString = localStorage.getItem('currentUser');
-        const usersString = localStorage.getItem('users');
-        let currentUser = JSON.parse(currentUserString);
-        let users = JSON.parse(usersString);
-        let userExists = false;
-
-        currentUser = currentUser.map(user => {
-            if (user.username === username) {
-                userExists = true;
-                return { ...user, password };
-            }
-            return user;
-        });
-
-        users = users.map(user => {
-            if (user.username === username) {
-                userExists = true;
-                return { ...user, password };
-            }
-            return user;
-        });
-
-        if (!userExists) {
-            setErrorMessage('Tên đăng nhập không khớp.');
-            return;
+        if (updated) {
+            setMessage('Đặt lại mật khẩu thành công.');
+            setErrorMessage('');
+        } else {
+            setErrorMessage('Đặt lại mật khẩu thất bại. Vui lòng thử lại.');
         }
-
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        localStorage.setItem('users', JSON.stringify(users));
-        setMessage('Đặt lại mật khẩu thành công.');
-        setErrorMessage(''); // Xóa mọi thông báo lỗi trước đó
-
     };
 
     return (
