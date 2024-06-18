@@ -154,8 +154,8 @@ const Homes = () => {
                         </div>
                     </div>
                 </div>
-                <div className="buttons d-flex flex-wrap justify-content-center mb-5 h-50 col-12 col-md-6 mb-2">
-                    <button className="btn btn-outline-dark me-2 mb-2">All</button>
+                <div className="buttons d-flex flex-wrap justify-content-center mb-5 h-50 col-12 col-md-6 mb-2 fs-5 fw-bold">
+                    <button className="btn btn-dark fw-light me-2 mb-2">All</button>
                     <button className="btn btn-outline-dark me-2 mb-2">Bitis</button>
                     <button className="btn btn-outline-dark me-2 mb-2">Adidas</button>
                     <button className="btn btn-outline-dark me-2 mb-2">Puma</button>
@@ -308,7 +308,7 @@ const Homes = () => {
                         <p>Chúng tôi luôn đem đến khách hàng những thương hiệu hàng đầu thế
                             giới</p>
                     </div>
-                    <div className="multi-carousel-inner d-flex border  border-dark h-50">
+                    <div className="multi-carousel-inner d-flex border bg-white h-50">
                         <div
                             className="multi-carousel-item border-end border-2 w-50 d-flex justify-content-center align-items-center">
                             <img

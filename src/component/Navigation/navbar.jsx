@@ -1,4 +1,5 @@
-import React from "react";
+// import React from "react";
+import React, { useState } from 'react';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import * as mdb from 'mdb-ui-kit'; // lib
 import { Dropdown, Collapse, initMDB, Ripple } from "mdb-ui-kit";
@@ -8,6 +9,7 @@ import {AccountInfo} from "../account/AccountInfo";
 import "../Styles/Register.css";
 import {useDispatch, useSelector} from "react-redux";
 import {loginSuccess, logout} from "../../store/Action";
+import dark from "../Styles/dark.css"
 
 initMDB({ Dropdown, Ripple });
 initMDB({ Dropdown, Collapse });
@@ -24,6 +26,16 @@ const Navbar = () => {
         navigate('/');
         window.location.reload();
     }
+    // eslint-disable-next-line no-undef
+    const [isChecked, setIsChecked] = useState(false);
+
+    const handleToggle = () => {
+        setIsChecked(!isChecked);
+    };
+    document.body.className = isChecked ? 'dark-mode' : '';
+
+
+
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm">
@@ -67,7 +79,8 @@ const Navbar = () => {
 
                             <li className="nav-item">
                                 <div className="buttons">
-                                    <Link to="/cart"><i className="fa fa-cart-plus d-flex mt-2 fs-5"><CartInfo></CartInfo></i></Link>
+                                    <Link to="/cart"><i
+                                        className="fa fa-cart-plus d-flex mt-2 fs-5"><CartInfo></CartInfo></i></Link>
                                     {/*<a href="" className="nav-link bg-dark d-flex align-items-center">*/}
                                     {/*    <Link to="/cart"> <i className="fa fa-cart-plus"></i><CartInfo></CartInfo></Link></a>*/}
                                 </div>
@@ -106,10 +119,10 @@ const Navbar = () => {
                                     ) : (
                                         <>
                                             <a className="dropdown-item">
-                                            <Link to="/login">Đăng nhập </Link>
+                                                <Link to="/login">Đăng nhập </Link>
                                             </a>
                                             <a className="dropdown-item">
-                                                <Link to="/register">Đăng ký  </Link>
+                                                <Link to="/register">Đăng ký </Link>
                                             </a>
                                         </>
                                     )}
@@ -122,6 +135,15 @@ const Navbar = () => {
                                    aria-label="Search"/>
                             <button className="btn btn-outline-dark" type="submit">Search</button>
                         </form>
+
+                        <div className="wrapper">
+                            <div className="toggle">
+                                <input className="toggle-input" type="checkbox" checked={isChecked} onChange={handleToggle}/>
+                                <div className="toggle-bg"></div>
+                                <div className="toggle-switch"></div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </nav>
