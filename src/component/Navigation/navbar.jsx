@@ -1,4 +1,3 @@
-// import React from "react";
 import React, { useState } from 'react';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import * as mdb from 'mdb-ui-kit'; // lib
@@ -10,6 +9,8 @@ import "../Styles/Register.css";
 import {useDispatch, useSelector} from "react-redux";
 import {loginSuccess, logout} from "../../store/Action";
 import dark from "../Styles/dark.css"
+import Search from "../search/search";
+
 
 initMDB({ Dropdown, Ripple });
 initMDB({ Dropdown, Collapse });
@@ -33,6 +34,24 @@ const Navbar = () => {
         setIsChecked(!isChecked);
     };
     document.body.className = isChecked ? 'dark-mode' : '';
+
+
+    const [query, setQuery] = useState('');
+    // const [products, setProducts] = useState([]);
+    // const [loading, setLoading] = useState(false);
+    // const [error, setError] = useState(null);
+
+    // Xử lý khi thay đổi nội dung ô tìm kiếm
+    const handleInputChange = (e) => {
+        setQuery(e.target.value);
+    };
+
+    // Xử lý khi người dùng gửi biểu mẫu
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        navigate(`/search?query=${query}`);
+    };
 
 
 
@@ -86,6 +105,7 @@ const Navbar = () => {
                                 </div>
                             </li>
 
+
                             <li className="nav-item dropdown">
                                 {/*<Link to="/register"><i className="fa fa-cart-plus d-flex mt-2 fs-5"></i></Link>*/}
 
@@ -110,6 +130,9 @@ const Navbar = () => {
                                         <a className="dropdown-item" href="#">Tài khoản</a>
                                     </li>
                                     <li>
+                                        <a className="dropdown-item" href="#">Hướng dẫn</a>
+                                    </li>
+                                    <li>
                                         <a className="dropdown-item" href="#">Lịch sử đơn hàng</a>
                                     </li>
                                     {currentUser ? (
@@ -130,15 +153,20 @@ const Navbar = () => {
                                 </ul>
                             </li>
                         </ul>
-                        <form className="d-flex" role="search">
-                            <input className="form-control me-2" type="search" placeholder="Search"
-                                   aria-label="Search"/>
-                            <button className="btn btn-outline-dark" type="submit">Search</button>
+                        {/*<Search></Search>*/}
+                        <form className="d-flex position-relative" role="search" onSubmit={handleSubmit}>
+                            <input className="form-control" type="search" placeholder="Search"
+                                   aria-label="Search" value={query}
+                                   onChange={handleInputChange}/>
+                            <button className="" type="submit" style={{width: '30px'}}>
+                                <i className="fa fa-search fa-lg justify-content-center"></i>
+                            </button>
                         </form>
 
                         <div className="wrapper">
                             <div className="toggle">
-                                <input className="toggle-input" type="checkbox" checked={isChecked} onChange={handleToggle}/>
+                                <input className="toggle-input" type="checkbox" checked={isChecked}
+                                       onChange={handleToggle}/>
                                 <div className="toggle-bg"></div>
                                 <div className="toggle-switch"></div>
                             </div>

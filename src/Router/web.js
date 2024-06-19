@@ -13,6 +13,7 @@ import Cart from "../component/cart/Cart";
 import ProductDetails from "../component/ProductDetail/ProductDetails";
 import Register  from "../component/account/Register";
 import Login from "../component/account/Login";
+import Search from "../component/search/search";
 
 const Router = () => (
     <BrowserRouter>
@@ -31,6 +32,7 @@ const Router = () => (
             <Route index element={<ProductDetail />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="productdetails" element={<ProductDetails/>} />
+            <Route path="search" element={<Search/>}/>
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
             <Route index element={<Error />} />
