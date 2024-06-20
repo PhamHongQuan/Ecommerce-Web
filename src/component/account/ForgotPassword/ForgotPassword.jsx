@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import {
-    MDBContainer,
-    MDBCol,
-    MDBRow,
-    MDBBtn,
-    MDBInput,
-    MDBIcon
-} from 'mdb-react-ui-kit';
+import { MDBContainer, MDBCol, MDBRow, MDBBtn, MDBInput, MDBIcon } from 'mdb-react-ui-kit';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ForgotPassword() {
     const [email, setEmail] = useState('');
@@ -19,7 +14,7 @@ function ForgotPassword() {
         e.preventDefault();
 
         if (emailSent) {
-            alert('Email đã được gửi.');
+            toast.warning('Email đã được gửi.', { autoClose: 3000 });
             return;
         }
 
@@ -55,15 +50,15 @@ function ForgotPassword() {
             });
 
             if (response.ok) {
-                alert('Gửi mail thành công!');
+                toast.success('Gửi mail thành công!', { autoClose: 3000 });
                 setEmailSent(true);
                 setErrorMessage('');
             } else {
-                alert('Gửi mail thất bại. Vui lòng thử lại!');
+                toast.error('Gửi mail thất bại. Vui lòng thử lại!', { autoClose: 3000 });
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Gửi mail thất bại. Vui lòng thử lại!');
+            toast.error('Gửi mail thất bại. Vui lòng thử lại!', { autoClose: 3000 });
         }
     };
 
@@ -96,6 +91,7 @@ function ForgotPassword() {
                     </form>
                 </MDBCol>
             </MDBRow>
+            <ToastContainer />
         </MDBContainer>
     );
 }

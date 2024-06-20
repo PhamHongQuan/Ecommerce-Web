@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     MDBContainer,
@@ -8,23 +8,15 @@ import {
     MDBInput,
     MDBIcon
 } from 'mdb-react-ui-kit';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ResetPasswordPage() {
     const { username } = useParams();
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [message, setMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const currentUserString = localStorage.getItem('currentUser');
-        if (!currentUserString) {
-            navigate('/not-found');
-            return;
-        }
-
-    }, [username, navigate]);
 
     const updatePassword = (newPassword) => {
         const currentUserString = localStorage.getItem('currentUser');
@@ -66,9 +58,10 @@ function ResetPasswordPage() {
         const updated = updatePassword(password);
 
         if (updated) {
-            setMessage('Đặt lại mật khẩu thành công.');
+            toast.success('Đặt lại mật khẩu thành công.', { autoClose: 3000 });
             setErrorMessage('');
         } else {
+            toast.error('Đặt lại mật khẩu thất bại. Vui lòng thử lại.', { autoClose: 3000 });
             setErrorMessage('Đặt lại mật khẩu thất bại. Vui lòng thử lại.');
         }
     };
@@ -101,7 +94,6 @@ function ResetPasswordPage() {
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                         <div className="text-center">
-                            {message && <p className="text-success">{message}</p>}
                             {errorMessage && <p className="text-danger">{errorMessage}</p>}
                         </div>
 
@@ -111,6 +103,7 @@ function ResetPasswordPage() {
                     </form>
                 </MDBCol>
             </MDBRow>
+            <ToastContainer />
         </MDBContainer>
     );
 }

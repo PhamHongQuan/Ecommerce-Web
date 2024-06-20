@@ -37,7 +37,7 @@ export default function ProductList() {
 const Product = ({ id, name, img, des, price }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
     const handleAddToCart = () => {
         dispatch(addCart({ id, name, img, des, price }));
     };
@@ -55,7 +55,7 @@ const Product = ({ id, name, img, des, price }) => {
                     <MDBCardText className="truncate-description">{des}</MDBCardText>
                 </MDBCardBody>
                 <div className="card-footer">
-                    <span className="text-danger">{price}</span>
+                    <span className="text-danger">{formattedPrice}</span>
                     <button className="custom-button" onClick={(e) => { e.stopPropagation(); handleAddToCart(); }}>Thêm</button>
                 </div>
             </MDBCard>
