@@ -82,8 +82,8 @@ const Navbar = () => {
                             <li className="nav-item">
 
                                 <div className="buttons">
-                                    <Link to="/cart"><i
-                                        className="fa fa-cart-plus d-flex mt-2 fs-5"><CartInfo></CartInfo></i></Link>
+                                    {/*<Link to="/cart"><i*/}
+                                    {/*    className="fa fa-cart-plus d-flex mt-2 fs-5"><CartInfo></CartInfo></i></Link>*/}
                                     {/*<a href="" className="nav-link bg-dark d-flex align-items-center">*/}
                                     {/*    <Link to="/cart"> <i className="fa fa-cart-plus"></i><CartInfo></CartInfo></Link></a>*/}
                                 </div>

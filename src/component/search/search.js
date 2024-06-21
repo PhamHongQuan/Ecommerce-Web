@@ -23,13 +23,26 @@ const Search = () => {
         const fetchProducts = async () => {
             setLoading(true);
             setError(null);
+            // Kiểm tra query trước khi gửi request
+            if (!query || query.trim() === "") {
+                setProducts([]);
+                setLoading(false);
+                return;
+            }
+
             try {
                 const response = await fetch(`http://localhost:9000/products?search=${query}`);
                 if (!response.ok) {
+                    const errorText = await response.text();
                     throw new Error('Không thể tìm kiếm sản phẩm.');
                 }
                 const data = await response.json();
-                setProducts(data);
+
+                // Kiểm tra kết quả trả về từ API
+                const filteredData = data.filter(product =>
+                    product.name.toLowerCase().includes(query.toLowerCase())
+                );
+                setProducts(filteredData);
             } catch (error) {
                 setError(error.message);
             } finally {
