@@ -4,7 +4,7 @@ export const products= [
         "name": "GIÀY NIKE AIR WINFLO ",
         "img": "https://myshoes.vn/image/cache/catalog/2024/nike/nk3/giay-nike-air-winflo-11-nam-xam-01-800x800.jpg",
         "type": "Nike",
-        "price": 2890000
+        "price": 1990000
     },
     {
         "id": 2,
@@ -18,7 +18,7 @@ export const products= [
         "name": "GIÀY NIKE AIR ZOOM STRUCTURE 25",
         "img": "https://myshoes.vn/image/cache/catalog/2024/nike/nk2/giay-nike-air-zoom-structure-25-nam-trang-xanh-do-01-800x800.jpg",
         "type": "Nike",
-        "price": 3490000
+        "price": 1990000
     },
     {
         "id": 4,
@@ -39,7 +39,7 @@ export const products= [
         "name": "GIÀY NIKE RUN SWIFT 3 ",
         "img": "https://myshoes.vn/image/cache/catalog/2024/nike/nk2/giay-nike-run-swift-3-nam-trang-gold-01-800x800.jpg",
         "type": "Nike",
-        "price": 2090000
+        "price": 1990000
     },
     {
         "id": 7,
@@ -74,7 +74,7 @@ export const products= [
         "name": "GIÀY NIKE AIR MAX AP ",
         "img": "https://myshoes.vn/image/cache/catalog/2024/nike/nk01/giay-nike-air-max-ap-nu-trang-cam-01-800x800.jpg",
         "type": "Nike",
-        "price": 2490000
+        "price": 1990000
     },
     {
         "id": 12,
@@ -95,7 +95,7 @@ export const products= [
         "name": "GIÀY NIKE AIR WINFLO 10",
         "img": "https://myshoes.vn/image/cache/catalog/2023/nike/nk1/giay-nike-air-winflo-10-nu-trang-tim-01-800x800.jpg",
         "type": "Nike",
-        "price": 2390000
+        "price": 1990000
     },
     {
         "id": 15,

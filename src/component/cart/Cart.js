@@ -1,17 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
 
-import { useParams } from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from 'mdb-react-ui-kit';
 import { useSelector } from 'react-redux';
 import { delCart, decreasement,increaseCart} from "../../store/Action";
 import Navbar from '../Navigation/navbar';
 import Footers from "../Footer/Footers";
+const loadCart=()=>{
+    return JSON.parse(localStorage.getItem('cart'))??[];
+}
+const  loadCurrentUser=() => {
+    return JSON.parse(localStorage.getItem('currentUser'));
+}
 
 const Cart = () => {
-    const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
+    const cart = useSelector(state => state.cart);
+    const currentUser = useSelector(state => state.currentUser);
 
+    if(currentUser == null){
+        return (<MDBContainer className="my-5">
+            <Navbar></Navbar>
+            <p>Bạn phải   <Link to="/login">Đăng nhập </Link>
+            </p>
+            <Footers></Footers>
+        </MDBContainer>);
+    }
+    const userCart = cart.find(item => item.username === currentUser.username);
+    const productsOfCart = userCart.products;
     const handleRemoveFromCart = (productId) => {
         dispatch(delCart(productId));
     };
@@ -24,17 +41,18 @@ const Cart = () => {
     };
 
     return (
-
         <MDBContainer className="my-5">
             <Navbar></Navbar>
             <MDBRow>
-                {cart.length === 0 ? (
+                {productsOfCart.length === 0 ? (
                     <p>Giỏ hàng của bạn trống</p>
                 ) : (
-                    cart.map((product) => (
+                    productsOfCart.map(product => (
+
+
                         <MDBCol md="4" lg="3" key={product.id}>
                             <MDBCard className="product-card">
-                                <MDBCardImage src={product.img} alt={product.name} position="top" />
+                                <MDBCardImage src={product.img} alt={product.name} position="top"/>
                                 <MDBCardBody>
                                     <MDBCardTitle className="truncate-name">{product.name}</MDBCardTitle>
                                     <MDBCardText className="truncate-description">{product.des}</MDBCardText>

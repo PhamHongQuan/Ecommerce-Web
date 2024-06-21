@@ -1,0 +1,15 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    margin-bottom: 0;
+}
+
+.container {
+    padding-top: 0;
+}
+.nav-link.active {
+    color: #007bff !important;
+}

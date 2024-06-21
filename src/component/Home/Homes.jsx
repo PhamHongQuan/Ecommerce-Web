@@ -68,22 +68,22 @@ const Homes = () => {
 
 
 
-    useEffect(() => {
-        const getProduct = async () => {
-            setLoading(true);
-            const response = await fetch("https://fakestoreapi.com/products");
-            if (componentMounted) {
-                setData(await response.clone().json());
-                setFilter(await response.json());
-                setLoading(false);
-                console.log(filter)
-            }
-            return () => {
-                componentMounted = false;
-            }
-        }
-        getProduct();
-    }, []);
+    // useEffect(() => {
+    //     const getProduct = async () => {
+    //         setLoading(true);
+    //         const response = await fetch("https://fakestoreapi.com/products");
+    //         if (componentMounted) {
+    //             setData(await response.clone().json());
+    //             setFilter(await response.json());
+    //             setLoading(false);
+    //             console.log(filter)
+    //         }
+    //         return () => {
+    //             componentMounted = false;
+    //         }
+    //     }
+    //     getProduct();
+    // }, []);
 
     const Loading = () => {
         return (
@@ -168,11 +168,6 @@ const Homes = () => {
                     {products.map((product) => {
                         const formattedPrice = new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(product.price);
                         const buttonColor = buttonColors[product.id] || 'btn-danger'; // Lấy màu sắc từ state hoặc màu mặc định
-
-
-
-
-
                         return (
                             <div key={product.id} className="col-3 col-6 col-sm-6 col-lg-3 pb-lg-2 mb-3">
                                 <div className="card ms-3 h-100 border">

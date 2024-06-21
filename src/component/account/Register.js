@@ -10,7 +10,7 @@ import Footers from "../Footer/Footers";
 import "../Styles/Register.css"
 
 const Register = () => {
-    const [user, setUser] = useState({ username: '', password: '' });
+    const [user, setUser] = useState({ username: '', email: '',password: '' });
     const dispatch = useDispatch();
     const registering = useSelector((state) => state.registering);
     const error = useSelector((state) => state.error);
@@ -32,7 +32,6 @@ const Register = () => {
         }
     };
 
-    // Giả lập API
     const fakeApiRegister = (user) => {
         let users = JSON.parse(localStorage.getItem('users')) || [];
         const existUser = users.findIndex(item => item.username === user.username);
@@ -42,9 +41,9 @@ const Register = () => {
             setTimeout(() => {
                 if (existUser>=0) {
                     reject(new Error('Username đã tồn tại. Hãy đặt username khác'));
-                }else if(usernameString <5){
+                }else if(usernameString.length <5){
                     reject(new Error('Username phải lớn hơn 5 kí tu'));
-                }else if(passwordString <8){
+                }else if(passwordString.length <8){
                     reject(new Error('Password phải lớn hơn 8 kí tu'));
                 }
                 else {
@@ -70,6 +69,13 @@ const Register = () => {
                             onChange={handleChange}/>
                     </div>
                     <div>
+                        <label>Email:</label>
+                        <input className="email" type="email"
+                        name="email"
+                        value={user.email}
+                        onChange={handleChange}/>
+                    </div>
+                    <div>
                         <label>Password:</label>
                         <input
                             type="password"
@@ -77,10 +83,10 @@ const Register = () => {
                             value={user.password}
                             onChange={handleChange}/>
                     </div>
-                    <button type="submit" disabled={registering}>
+                    <button className="button-submit" type="submit" disabled={registering}>
                         {registering ? 'Registering...' : 'Register'}
                     </button>
-                    {error && <p>{error}</p>}
+                    {error && <p className="error-mess">{error}</p>}
                 </form>
             </div>
             <Footers></Footers>
