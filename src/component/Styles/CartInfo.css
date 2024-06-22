@@ -3,3 +3,41 @@
     font-family: 'Roboto', sans-serif;
     padding-top: 4px;
 }
+.custom-button-quantity{
+    background-color: white;
+    padding: 0px;
+    height: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid gray;
+}
+.custom-button-quantity:hover{
+    background-color: deepskyblue;
+    color: white;
+
+}
+.container-quantity{
+    display: flex;
+    top: 90%;
+    position: absolute;
+}
+.custom-button-remove{
+    margin-left: 150px;
+    height: 30px;
+    border: 0px solid gray;
+    background-color: white;
+}
+.custom-button-remove:hover{
+    color: red;
+}
+.container-quantity p{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.product-card{
+    height: 500px;
+}
+.text-danger{
+    position: absolute;
+    top: 80%;
+}
