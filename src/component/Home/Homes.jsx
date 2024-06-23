@@ -15,7 +15,8 @@ const Homes = () => {
     useEffect(() => {
         const getProduct = async () => {
             setLoading(true);
-            const response = await fetch("https://fakestoreapi.com/products");
+            // const response = await fetch("https://fakestoreapi.com/products");
+            const response = await fetch("http://localhost:9000/products");
             if (componentMounted) {
                 setData(await response.clone().json());
                 setFilter(await response.json());

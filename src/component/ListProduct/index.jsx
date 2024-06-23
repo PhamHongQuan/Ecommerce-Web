@@ -26,7 +26,7 @@ function ProductListDefaultPage() {
                         <Sidebar onFilterChange={handleFilterChange} />
                     </MDBCol>
                     <MDBCol md="9">
-                        <div className="content" style={{marginTop: '-100px'}}>
+                        <div className="content" style={{marginTop: '-50px'}}>
                             <Outlet context={[filterValues]}/>
                         </div>
                     </MDBCol>

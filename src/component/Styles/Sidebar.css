@@ -102,3 +102,13 @@
 .MDBRadio input[type="radio"] {
     margin-right: 5px;
 }
+
+.child-item {
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    max-height: 0;
+}
+
+.child-item.expand {
+    max-height: 1000px;
+}

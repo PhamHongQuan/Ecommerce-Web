@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import '../../Styles/PaginationInProduct.css';
-import {addCart} from "../../../store/Action";
+import { addCart } from "../../../store/Action";
 const ITEMS_PER_PAGE = 8;
 
 const Adidas = () => {
@@ -24,21 +24,15 @@ const Adidas = () => {
 
     const applyFilters = (products) => {
         return products.filter(product => {
-            // Kiểm tra giới tính
             if (filterValues.adidas.price === 'above' && product.price <= 2000000) return false;
             if (filterValues.adidas.price === 'below' && product.price > 2000000) return false;
 
-            // Lọc sản phẩm theo giới tính
             if (filterValues.adidas.gender && filterValues.adidas.gender !== 'all' && product.gender !== filterValues.adidas.gender) {
                 return false;
             }
-            // Lọc sản phẩm theo kích thước
             if (filterValues.adidas.size && filterValues.adidas.size !== 'all') {
                 const { size } = product;
-
-                // Kiểm tra nếu kích thước sản phẩm là một mảng
                 if (Array.isArray(size)) {
-                    // Xác định khoảng kích thước cần lọc
                     let sizeRange;
                     if (filterValues.adidas.size === 'small') {
                         sizeRange = [35, 37];
@@ -47,16 +41,11 @@ const Adidas = () => {
                     } else if (filterValues.adidas.size === 'large') {
                         sizeRange = [42, 45];
                     }
-
-                    // Kiểm tra nếu có ít nhất một kích thước nằm trong khoảng cần lọc
                     const sizeInRange = size.some(s => s >= sizeRange[0] && s <= sizeRange[1]);
-
-                    // Nếu không có kích thước nào phù hợp, trả về false
                     if (!sizeInRange) {
                         return false;
                     }
                 } else {
-                    // Nếu kích thước không phải là mảng, xử lý như bình thường
                     if (filterValues.adidas.size === 'small' && (size < 35 || size > 37)) {
                         return false;
                     }
@@ -71,7 +60,6 @@ const Adidas = () => {
             return true;
         });
     };
-
 
     const filteredProducts = applyFilters(products);
     const indexOfLastProduct = currentPage * ITEMS_PER_PAGE;
@@ -132,9 +120,9 @@ const Product = ({ id, name, img, des, price, size, gender, tint }) => {
             <MDBCard className="product-card" onClick={handleViewDetail} style={{ cursor: 'pointer' }}>
                 <MDBCardImage src={img} alt={name} position="top" />
                 <MDBCardBody>
-                    <MDBCardTitle className="truncate-name"><b>{name}</b></MDBCardTitle>
-                    <MDBCardTitle className="truncate-name"><b>Size:</b> {size.join(', ')}</MDBCardTitle>
-                    <MDBCardTitle className="truncate-name"><b>Màu sắc:</b>{tint.join(', ')}</MDBCardTitle>
+                    <MDBCardTitle className="truncate-name truncate-text"><b>{name}</b></MDBCardTitle>
+                    <MDBCardText className="truncate-size truncate-text"><b>Size:</b> {size.join(', ')}</MDBCardText>
+                    <MDBCardText className="truncate-tint truncate-text"><b>Màu sắc:</b>{tint.join(', ')}</MDBCardText>
                 </MDBCardBody>
                 <div className="card-footer">
                     <span className="text-danger">{formattedPrice}</span>
@@ -147,7 +135,6 @@ const Product = ({ id, name, img, des, price, size, gender, tint }) => {
         </MDBCol>
     );
 };
-
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     const pageNumbers = [];
