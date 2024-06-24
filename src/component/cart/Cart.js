@@ -5,8 +5,10 @@ import {Link, useParams} from 'react-router-dom';
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from 'mdb-react-ui-kit';
 import { useSelector } from 'react-redux';
 import { delCart, decreasement,increaseCart} from "../../store/Action";
-import Navbar from '../../component/Navigation/navbar';
+import Navbar from '../Navigation/navbar';
 import Footers from "../Footer/Footers";
+import "../Styles/CartInfo.css";
+
 const loadCart=()=>{
     return JSON.parse(localStorage.getItem('cart'))??[];
 }
@@ -40,6 +42,7 @@ const Cart = () => {
         dispatch(increaseCart(productId));
     };
 
+
     return (
         <MDBContainer className="my-5">
             <Navbar></Navbar>
@@ -47,40 +50,47 @@ const Cart = () => {
                 {productsOfCart.length === 0 ? (
                     <p>Giỏ hàng của bạn trống</p>
                 ) : (
-                    productsOfCart.map(product => (
+                    productsOfCart.map(product => {
+                        const totalPrice = product.price * product.quantity;
+                            return(<MDBCol md="4" lg="3" key={product.id}>
+                                <MDBCard className="product-card">
+                                    <MDBCardImage src={product.img} alt={product.name} position="top"/>
+                                    <MDBCardBody>
+                                        <MDBCardTitle className="truncate-name">{product.name}</MDBCardTitle>
+                                        <MDBCardText className="truncate-description">{product.des}</MDBCardText>
+
+                                        <span className="text-danger">{totalPrice}</span>
+                                        <div className="container-quantity">
+
+                                            <button
+                                                className="custom-button-quantity"
+                                                onClick={() => handleDecreasement(product.id)}>
+                                                -
+                                            </button>
+                                            <p>{product.quantity}</p>
+
+                                            <button
+                                                className="custom-button-quantity"
+                                                onClick={() => handleIncreasement(product.id)}
+                                            >
+                                                +
+                                            </button>
+
+                                            <button
+                                                className="custom-button-remove"
+                                                onClick={() => handleRemoveFromCart(product.id)}
+                                            >
+                                                Xóa
+                                            </button>
+                                        </div>
+
+                                    </MDBCardBody>
+                                </MDBCard>
+                            </MDBCol>);
+                    }
 
 
-                        <MDBCol md="4" lg="3" key={product.id}>
-                            <MDBCard className="product-card">
-                                <MDBCardImage src={product.img} alt={product.name} position="top"/>
-                                <MDBCardBody>
-                                    <MDBCardTitle className="truncate-name">{product.name}</MDBCardTitle>
-                                    <MDBCardText className="truncate-description">{product.des}</MDBCardText>
-                                    <span className="text-danger">{product.price}</span>
-                                    <p>Quantity: {product.quantity}</p>
-
-                                    <button
-                                        className="custom-button"
-                                        onClick={() => handleIncreasement(product.id)}
-                                    >
-                                        +
-                                    </button>
-                                    <button
-                                        className="custom-button"
-                                        onClick={() => handleDecreasement(product.id)}
-                                    >
-                                        -
-                                    </button>
-                                    <button
-                                        className="custom-button"
-                                        onClick={() => handleRemoveFromCart(product.id)}
-                                    >
-                                        Remove
-                                    </button>
-                                </MDBCardBody>
-                            </MDBCard>
-                        </MDBCol>
-                    ))
+                    )
                 )}
             </MDBRow>
             <Footers></Footers>

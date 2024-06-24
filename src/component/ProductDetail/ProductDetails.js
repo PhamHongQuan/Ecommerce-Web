@@ -4,9 +4,14 @@ import {products} from "../../data/ProductData";
 import Navbar from "../Navigation/navbar";
 import Footers from "../Footer/Footers";
 import { FaTimes } from 'react-icons/fa';
+import {useDispatch} from "react-redux";
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import { MDBPopover, MDBPopoverBody, MDBPopoverHeader, MDBBtn } from 'mdb-react-ui-kit';
 import {NavLink} from "react-router-dom";
+import {Carousel} from "react-bootstrap";
+import {addCart} from "../../store/Action";
+
+
 
 
 const ProductDetails = () => {
@@ -14,6 +19,31 @@ const ProductDetails = () => {
     const {id} = useParams();
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [buttonColors, setButtonColors] = useState({});
+    useEffect(() => {
+        // Lấy màu sắc từ localStorage khi component được render
+        const storedColors = JSON.parse(localStorage.getItem('buttonColors')) || {};
+        setButtonColors(storedColors);
+    }, []);
+
+
+
+
+
+    const changeButtonColor = (productId) => {
+        if (buttonColors[productId]) {
+            // Nếu nút đã được nhấn, hiển thị thông báo
+            alert('Sản phẩm này đã có trong giỏ hàng bạn có muốn thêm vào không!');
+        } else {
+            // Nếu nút chưa được nhấn, thay đổi màu sắc và lưu vào localStorage
+            const newColors = {
+                ...buttonColors,
+                [productId]: 'btn-primary' // Thay đổi màu sắc thành màu
+            };
+            setButtonColors(newColors);
+            localStorage.setItem('buttonColors', JSON.stringify(newColors));
+        }
+    };
 
 
     useEffect(() => {
@@ -53,34 +83,105 @@ const ProductDetails = () => {
         };
         const randomProducts = shuffleArray(products).slice(0, 8);
 
+        const [selectedImage, setSelectedImage] = useState(product.img);
+
+        const handleImageClick = (image) => {
+            setSelectedImage(image);
+        };
+        const [quantity, setQuantity] = useState(1);
+
+        const handleIncrement = () => {
+            setQuantity((prevQuantity) => Math.min(prevQuantity + 1, 9999));
+        };
+
+        const handleDecrement = () => {
+            setQuantity((prevQuantity) => Math.max(prevQuantity - 1, 1));
+        };
+
+        const handleChange = (event) => {
+            const value = Math.max(1, Math.min(parseInt(event.target.value, 10) || 1, 9999));
+            setQuantity(value);
+        };
+        const dispatch = useDispatch();
+        const handleAddToCart =({id, name, img, des,price}) =>{
+            dispatch(addCart({id, name, img, des, price}));
+        };
+        const [buttonColors, setButtonColors] = useState({});
+
+        const [selectedColor, setSelectedColor] = useState(
+            localStorage.getItem("selectedColor") || null
+        );
+        const [selectedSize, setSelectedSize] = useState(
+            localStorage.getItem("selectedSize") || null
+        );
+
+        useEffect(() => {
+            localStorage.setItem("selectedColor", selectedColor);
+        }, [selectedColor]);
+
+        useEffect(() => {
+            localStorage.setItem("selectedSize", selectedSize);
+        }, [selectedSize]);
+
+        const handleColorClick = (tint) => {
+            setSelectedColor(tint);
+        };
+        const handleColorClickSize = (size) => {
+            setSelectedSize(size);
+        };
+
+
+
+
         return(
           <><Navbar></Navbar><>
               <div className="col-md-4 mt-5">
-                  <img src={product.img} alt={product.name}
-                       height="400px" width="400px"
-                  className="border border-1 "/>
+                  <div className="d-flex justify-content-center">
+                      <img src={selectedImage} alt={product.name}
+                           height="400px" width="400px"
+                           className="border border-1"/>
+                  </div>
+
                   <div className="mt-2 d-flex justify-content-center">
                       {Array.isArray(product.additionalImages) && product.additionalImages.map((image, index) => (
-                          <img key={index} src={image} alt={`${product.name} ${index + 1}`} style={{ width: '100px', margin: '5px', border: '1px solid black'}} />
+                          <img key={index} src={image} alt={`${product.name} ${index + 1}`}
+                               style={{width: '100px', margin: '5px', border: '1px solid black'}}
+                               onClick={() => handleImageClick(image)}/>
                       ))}
                   </div>
+
               </div>
-              <div className="col-md-7 mt-5">
+              <div className="col-md-7 ms-5 mt-5">
                   <h1 className="fw-bold">{product.name}</h1>
-                  <p className="lead">
-                      Rating{product.rating && product.rating.rate}
-                      <i className="fa fa-star"></i>
-                  </p>
+                  {/*<p className="lead">*/}
+                  {/*    Rating{product.rating && product.rating.rate}*/}
+                  {/*    <i className="fa fa-star"></i>*/}
+                  {/*</p>*/}
+                  <div>
+                      <ul className="rating d-flex list-unstyled " data-mdb-rating-init>
+                          <li><i className="fa fa-star fa-sm text-warning me-2" title="Bad"></i></li>
+                          <li><i className="fa fa-star fa-sm text-warning me-2" title="Poor"></i></li>
+                          <li><i className="fa fa-star fa-sm text-warning me-2" title="OK"></i></li>
+                          <li><i className="fa fa-star fa-sm text-warning me-2" title="Good"></i></li>
+                          {/*<li><i className="fa fa-star fa-sm text-warning" title="Excellent"></i></li>*/}
+                      </ul>
+                  </div>
                   <h5 className="fw-bold my-4 text-danger">
-                     Giá bán: {formattedPrice}
+                      Giá bán: {formattedPrice}
                   </h5>
                   <div className="">
                       <div className="d-flex">
                           <p className="fw-bold mt-2">Màu Sắc</p>
                           <div className="ms-4" role="group" aria-label="">
                               {Array.isArray(product.tint) && product.tint.map((tint, index) => (
-                                  <button key={index} type="button"
-                                          className="btn btn-outline-black me-2">{tint}</button>
+                                  <button
+                                      key={index}
+                                      type="button"
+                                      className={`btn ${selectedColor === tint ? "btn-primary" : "btn-outline-black"} me-2`}
+                                      onClick={() => handleColorClick(tint)}
+                                  >
+                                      {tint}
+                                  </button>
                               ))}
                           </div>
                       </div>
@@ -89,21 +190,34 @@ const ProductDetails = () => {
                           <p className="fw-bold mt-2">Chọn Size</p>
                           <div className="ms-3" role="group" aria-label="First group">
                               {Array.isArray(product.size) && product.size.map((size, index) => (
-                                  <button key={index} type="button"
-                                          className="btn btn-outline-black me-2">{size}</button>
+                                  <button
+                                      key={index}
+                                      type="button"
+                                      className={`btn ${selectedSize === size ? "btn-primary" : "btn-outline-black"} me-2`}
+                                      onClick={() => handleColorClickSize(size)}
+                                  >
+                                      {size}
+                                  </button>
                               ))}
                           </div>
                       </div>
                       <div className="d-flex">
                           <div className="quantity buttons_added">
-                              <input type="button" value="-" className="minus button is-form"/>
+                              <input type="button" value="-" className="minus button is-form" onClick={handleDecrement}/>
                               <input type="number" id="quantity" className="input-text qty text" step="1"
-                                     min="1" max="9999" name="quantity" value="1" title="SL" size="4"
-                                     inputMode="numeric"/>
-                              <input type="button" value="+" className="plus button is-form"/></div>
-                          <button type="submit" className="ms-4 border bg-danger rounded-2"><i
-                              className="fa fa-cart-plus me-2"></i>Thêm vào giỏ hàng
-                          </button>
+                                     min="1" max="9999" name="quantity"  value={quantity}  title="SL" size="4"
+                                     inputMode="numeric"  onChange={handleChange} />
+                              <input type="button" value="+" className="plus button is-form"  onClick={handleIncrement} />
+                          </div>
+                          <NavLink to="">
+                              <button type="button" className="btn btn-danger d-flex align-items-center ms-2 mb-2 mb-md-0"
+                                      data-mdb-color="dark" data-mdb-ripple-init="" onClick={(e) => {
+                                  e.stopPropagation();handleAddToCart(product); changeButtonColor(product.id)}} >
+                                  <i className="fa fa-cart-plus me-2" aria-hidden="true"></i> Thêm vào giỏ hàng
+                              </button>
+                          </NavLink>
+
+
                       </div>
                       <div style={{marginTop:"20px", position: 'relative', display: 'inline-block'}}>
                           <MDBPopoverBody
@@ -177,30 +291,35 @@ const ProductDetails = () => {
                   <div className="container">
                       <div className="row">
                           {randomProducts.map((product) => (
-                              <div className="col-12 col-sm-6 col-lg-3 pb-lg-2" key={product.id}>
+                              <div className="col-3 col-6 col-sm-6 col-lg-3 pb-lg-2 mb-3" key={product.id}>
                                   <div className="card ms-3 h-100 border">
-                                      <div className="bg-image hover-overlay" data-mdb-ripple-init=""
-                                           data-mdb-ripple-color="light">
-                                          <NavLink to={`/product/${product.id}`}>
-                                              <img src={product.img} alt={product.title} className="img-fluid w-100"/>
+                                      <div className="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                          <NavLink to={`/product/${product.id}`}
+                                                   style={{display: 'block', overflow: 'hidden'}}>
+                                              <img
+                                                  src={product.img}
+                                                  alt={product.title}
+                                                  className="img-fluid w-100"
+                                                  style={{transition: 'transform 0.3s ease'}}
+                                                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.15)'}
+                                                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                                              />
                                           </NavLink>
                                       </div>
                                       <div className="card-body text-center">
-                                          <h5 className="fs-6 h-50">{product.name}</h5>
+                                          <h5 className=" fs-6 h-50">{product.name}</h5>
                                           <div className="d-flex justify-content-center">
-                                              <div className="btn-group shadow-0 mt-3" role="group"
+                                              <div className="btn-group shadow-0 mt-3 flex-column flex-md-row"
+                                                   role="group"
                                                    aria-label="Basic example">
-                                                  <p className="btn btn-outline-black me-1" data-mdb-color="dark"
-                                                     data-mdb-ripple-init="">
-                                                      {product.price.toLocaleString('vi-VN', {
-                                                          style: 'currency',
-                                                          currency: 'VND'
-                                                      })}
+                                                  <p className="btn btn-outline-black  me-md-1 mb-2 mb-md-0"
+                                                     data-mdb-color="dark" data-mdb-ripple-init="">{formattedPrice}
                                                   </p>
-                                                  <NavLink to="">
-                                                      <button type="button" className="btn btn-danger d-flex"
-                                                              data-mdb-color="dark" data-mdb-ripple-init="">
-                                                          <i className="fa fa-cart-plus me-2" aria-hidden="true"></i>Thêm
+                                                  <NavLink to="cart">
+                                                      <button type="button"
+                                                              className="btn btn-danger d-flex align-items-center mb-2 mb-md-0"
+                                                              data-mdb-color="dark" data-mdb-ripple-init=""><i
+                                                          className="fa fa-cart-plus me-2" aria-hidden="true"></i>Thêm
                                                       </button>
                                                   </NavLink>
                                               </div>

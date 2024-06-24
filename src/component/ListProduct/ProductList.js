@@ -48,7 +48,7 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
     };
 
     return (
-        <MDBCol md="4" lg="3">
+        <MDBCol md="6" lg="3">
             <motion.div
                 initial={{ x: "100%", opacity: 0, scale: 0.7 }}
                 animate={{ x: 0, opacity: 1, scale: 1 }}
@@ -62,7 +62,7 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
                         <MDBCardText className="truncate-tint truncate-text"><b>Màu sắc:</b> {tint.join(', ')}</MDBCardText>
                     </MDBCardBody>
                     <div className="card-footer">
-                        <span className="text-danger">{formattedPrice}</span>
+                        <span className="text-price">{formattedPrice}</span>
                         <button className="custom-button-pl" onClick={(e) => {
                             e.stopPropagation();
                             handleAddToCart();
@@ -73,4 +73,6 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
             </motion.div>
         </MDBCol>
     );
+
+
 };
