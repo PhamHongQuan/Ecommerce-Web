@@ -4,6 +4,7 @@ import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import Sidebar from './Sidebar/Sidebar';
 import Navbar from '../../component/Navigation/navbar';
 import Footers from "../Footer/Footers";
+import "../Styles/ProductListDefaultPage.css"
 
 function ProductListDefaultPage() {
     const [filterValues, setFilterValues] = useState({
@@ -18,21 +19,21 @@ function ProductListDefaultPage() {
     };
 
     return (
-        <div>
-            <Navbar />
+        <div className="page-wrapper">
+            <Navbar/>
             <MDBContainer className="my-5">
                 <MDBRow>
                     <MDBCol md="3">
-                        <Sidebar onFilterChange={handleFilterChange} />
+                        <Sidebar onFilterChange={handleFilterChange}/>
                     </MDBCol>
                     <MDBCol md="9">
-                        <div className="content" style={{marginTop: '-50px'}}>
+                        <div className="content">
                             <Outlet context={[filterValues]}/>
                         </div>
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
-            <Footers />
+            <Footers/>
         </div>
     );
 }

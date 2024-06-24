@@ -1,9 +1,11 @@
 import { useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBBtn } from "mdb-react-ui-kit";
+import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from "mdb-react-ui-kit";
 import { Link, useNavigate, useOutletContext } from 'react-router-dom';
+import { motion } from "framer-motion";
 import { Button } from "react-bootstrap";
 import "../../Styles/PaginationInProduct.css";
+import '../../Styles/ProductListStyles.css'
 import { addCart } from "../../../store/Action";
 
 const ITEMS_PER_PAGE = 8;
@@ -12,6 +14,10 @@ export default function Puma() {
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [filterValues] = useOutletContext();
+    const [sizeFilterChanged, setSizeFilterChanged] = useState(false);
+    const [priceFilterChanged, setPriceFilterChanged] = useState(false);
+    const [genderFilterChanged, setGenderFilterChanged] = useState(false);
+    const [initialLoad, setInitialLoad] = useState(true);
 
     useEffect(() => {
         fetch("http://localhost:9000/products")
@@ -19,8 +25,27 @@ export default function Puma() {
             .then((data) => {
                 const pumaProducts = data.filter(product => product.type === "Puma");
                 setProducts(pumaProducts);
+                setInitialLoad(false);
             });
     }, []);
+
+    useEffect(() => {
+        if (!initialLoad) {
+            setSizeFilterChanged(true);
+        }
+    }, [filterValues.puma.size]);
+
+    useEffect(() => {
+        if (!initialLoad) {
+            setPriceFilterChanged(true);
+        }
+    }, [filterValues.puma.price]);
+
+    useEffect(() => {
+        if (!initialLoad) {
+            setGenderFilterChanged(true);
+        }
+    }, [filterValues.puma.gender]);
 
     const applyFilters = (products) => {
         return products.filter(product => {
@@ -58,6 +83,7 @@ export default function Puma() {
                     }
                 }
             }
+
             return true;
         });
     };
@@ -70,13 +96,16 @@ export default function Puma() {
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
+        setSizeFilterChanged(false);
+        setPriceFilterChanged(false);
+        setGenderFilterChanged(false);
     };
 
     return (
         <MDBContainer className="my-5">
             <MDBRow>
                 <MDBRow className="gy-4">
-                    {currentProducts.map((product) => (
+                    {currentProducts.map((product, index) => (
                         <Product
                             key={product.id}
                             id={product.id}
@@ -86,6 +115,11 @@ export default function Puma() {
                             gender={product.gender}
                             size={product.size}
                             tint={product.tint}
+                            index={index}
+                            sizeFilterChanged={sizeFilterChanged}
+                            priceFilterChanged={priceFilterChanged}
+                            genderFilterChanged={genderFilterChanged}
+                            initialLoad={initialLoad}
                         />
                     ))}
                 </MDBRow>
@@ -100,9 +134,9 @@ export default function Puma() {
             </MDBRow>
         </MDBContainer>
     );
-};
+}
 
-const Product = ({ id, name, img, des, price, size, gender, tint }) => {
+const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFilterChanged, priceFilterChanged, genderFilterChanged, initialLoad }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -116,23 +150,31 @@ const Product = ({ id, name, img, des, price, size, gender, tint }) => {
         navigate(`/product/${id}`);
     };
 
+    const shouldAnimate = !sizeFilterChanged && !priceFilterChanged && !genderFilterChanged && !initialLoad;
+
     return (
         <MDBCol md="4" lg="3">
-            <MDBCard className="product-card" onClick={handleViewDetail} style={{ cursor: 'pointer' }}>
-                <MDBCardImage src={img} alt={name} position="top" />
-                <MDBCardBody>
-                    <MDBCardTitle className="truncate-name truncate-text"><b>{name}</b></MDBCardTitle>
-                    <MDBCardText className="truncate-size truncate-text"><b>Size:</b> {size.join(', ')}</MDBCardText>
-                    <MDBCardText className="truncate-tint truncate-text"><b>Màu sắc:</b> {tint.join(', ')}</MDBCardText>
-                </MDBCardBody>
-                <div className="card-footer">
-                    <span className="text-danger">{formattedPrice}</span>
-                    <button className="custom-button" onClick={(e) => {
-                        e.stopPropagation();
-                        handleAddToCart();
-                    }}>Thêm</button>
-                </div>
-            </MDBCard>
+            <motion.div
+                initial={shouldAnimate ? { x: "100%", opacity: 0, scale: 0.7 } : false}
+                animate={{ x: 0, opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: index * 0.2, ease: "easeIn" }}
+            >
+                <MDBCard className="product-card-pl" onClick={handleViewDetail} style={{ cursor: 'pointer' }}>
+                    <MDBCardImage src={img} alt={name} position="top" />
+                    <MDBCardBody>
+                        <MDBCardTitle className="truncate-name truncate-text"><b>{name}</b></MDBCardTitle>
+                        <MDBCardText className="truncate-size truncate-text"><b>Size:</b> {size.join(', ')}</MDBCardText>
+                        <MDBCardText className="truncate-tint truncate-text"><b>Màu sắc:</b> {tint.join(', ')}</MDBCardText>
+                    </MDBCardBody>
+                    <div className="card-footer">
+                        <span className="text-danger">{formattedPrice}</span>
+                        <button className="custom-button-pl" onClick={(e) => {
+                            e.stopPropagation();
+                            handleAddToCart();
+                        }}>Thêm</button>
+                    </div>
+                </MDBCard>
+            </motion.div>
         </MDBCol>
     );
 };

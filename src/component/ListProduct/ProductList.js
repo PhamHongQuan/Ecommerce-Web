@@ -50,11 +50,11 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
     return (
         <MDBCol md="4" lg="3">
             <motion.div
-                initial={{ x: "100%", opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
+                initial={{ x: "100%", opacity: 0, scale: 0.7 }}
+                animate={{ x: 0, opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: index * 0.2, ease: "easeIn" }}
             >
-                <MDBCard className="product-card" onClick={handleViewDetail} style={{ cursor: 'pointer' }}>
+                <MDBCard className="product-card-pl" onClick={handleViewDetail} style={{ cursor: 'pointer' }}>
                     <MDBCardImage src={img} alt={name} position="top" />
                     <MDBCardBody>
                         <MDBCardTitle className="truncate-name truncate-text">{name}</MDBCardTitle>
@@ -63,7 +63,11 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
                     </MDBCardBody>
                     <div className="card-footer">
                         <span className="text-danger">{formattedPrice}</span>
-                        <button className="custom-button" onClick={(e) => { e.stopPropagation(); handleAddToCart(); }}>Thêm</button>
+                        <button className="custom-button-pl" onClick={(e) => {
+                            e.stopPropagation();
+                            handleAddToCart();
+                        }}>Thêm
+                        </button>
                     </div>
                 </MDBCard>
             </motion.div>
