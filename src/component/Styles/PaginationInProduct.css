@@ -7,3 +7,42 @@
 .pagination button {
     margin: 0 5px;
 }
+
+.truncate-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.truncate-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 8px;
+}
+
+.truncate-size, .truncate-tint {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 8px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text-danger {
+    flex: 1;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.row {
+    padding: 0;
+    margin: 0;
+}

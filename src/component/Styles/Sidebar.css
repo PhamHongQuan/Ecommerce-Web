@@ -1,45 +1,78 @@
-.list-group-item:hover{
-    background-color: #f0f0f0;
+.list-group-item {
+    background: linear-gradient(to bottom right, rgba(135, 255, 212, 0.8), rgba(76, 184, 196));
+    font-family: 'Montserrat', Tahoma, sans-serif;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    margin: 5px 0;
+    font-weight: bold;
+    padding: 10px 15px;
     cursor: pointer;
 }
+
+.list-group-item:hover {
+    background: linear-gradient(to bottom right, rgba(76, 184, 196),  rgba(135, 255, 212, 0.8));
+    transform: scale(1.05);
+}
+
 .list-group-item.active {
-    background-color: #f0f0f0;
-    color: #000;
+    background-color: #007bff;
+    color: #0056b3 !important;
     border-left: 4px solid #007bff;
 }
+
 .parent-item {
+    font-family: 'Montserrat', Tahoma, sans-serif;
     font-size: 1.25rem;
-    font-weight: bold;
     padding: 10px;
     border-bottom: 1px solid #ccc;
-    cursor: pointer;
+    color: #f8f9fa !important;
+    border-radius: 8px !important;
 }
 
 .child-item {
-    font-size: 1rem;
-    margin-left: 10px;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    max-height: 1000px;
+    margin-left: 60px;
+    max-width: 200px;
+    padding: 10px 10px 0 10px;
+}
+
+.child-item.expand {
+    max-height: 1000px;
+    padding: 10px;
+    margin-left: 60px;
+    max-width: 200px;
 }
 
 .sub-item-box {
-    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border: 1px solid #2fc1d3;
     padding: 10px;
-    margin: 5px 0 5px 20px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+    border-radius: 8px;
+    background: linear-gradient(to left, rgba(109, 207, 186, 0.51), rgba(154, 96, 223, 0.44), rgba(77, 172, 207, 0.8));
+    transition: transform 0.3s ease;
 }
 
 .sub-item-box:hover {
-    background-color: #e0e0e0;
-    border-color: #b3b3b3;
+    border-color: #08c3ed;
+    transform: scale(1.05);
+}
+
+.form-check-label {
+    font-family: 'Montserrat', Tahoma, sans-serif;
+    color: rgb(223, 231, 234);
 }
 
 .sub-item-heading {
+    font-family: 'Montserrat', Tahoma, sans-serif;
     cursor: pointer;
     font-weight: bold;
     margin-bottom: 5px;
     font-size: 1.1rem;
+    color: #ebf1f3;
+    text-decoration: none;
 }
-
 
 .MDBContainer {
     padding: 20px;
@@ -54,45 +87,6 @@
     list-style-type: none;
 }
 
-.parent-item {
-    background-color: #ffffff;
-    color: #333;
-    padding: 10px 15px;
-    margin-bottom: 5px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-}
-
-.parent-item:hover {
-    background-color: #e9ecef;
-}
-
-.parent-item.active {
-    background-color: #007bff;
-    color: #ffffff;
-}
-
-.child-item {
-    padding-left: 20px;
-    margin-top: 10px;
-}
-
-.sub-item-box {
-    margin-bottom: 10px;
-}
-
-.sub-item-heading {
-    font-weight: bold;
-    margin-bottom: 5px;
-    cursor: pointer;
-    color: #007bff;
-}
-
-.sub-item-heading:hover {
-    text-decoration: underline;
-}
-
 .MDBRadio {
     display: block;
     margin-bottom: 5px;
@@ -100,4 +94,5 @@
 
 .MDBRadio input[type="radio"] {
     margin-right: 5px;
+    accent-color: #4facfe;
 }

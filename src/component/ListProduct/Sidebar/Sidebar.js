@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MDBContainer, MDBListGroup, MDBListGroupItem, MDBRadio } from 'mdb-react-ui-kit';
 import '../../Styles/Sidebar.css';
@@ -9,6 +9,17 @@ const SidebarItem = ({ label, itemKey, selectedItem, expandedItem, onItemClick, 
         size: false,
         gender: false
     });
+
+    const childRef = useRef(null);
+
+    useEffect(() => {
+        const childElement = childRef.current;
+        if (expandedItem === itemKey) {
+            childElement.style.maxHeight = `${childElement.scrollHeight}px`;
+        } else {
+            childElement.style.maxHeight = '0';
+        }
+    }, [expandedItem, itemKey, expandedSubItems]);
 
     const handleSubItemClick = (subItem) => {
         setExpandedSubItems(prevState => ({
@@ -27,87 +38,85 @@ const SidebarItem = ({ label, itemKey, selectedItem, expandedItem, onItemClick, 
                     {label}
                 </MDBListGroupItem>
             </Link>
-            {expandedItem === itemKey && (
-                <div className="child-item">
-                    <div className="sub-item-box">
-                        <div className="sub-item-heading" onClick={() => handleSubItemClick('price')}>Giá tiền</div>
-                        {expandedSubItems.price && (
-                            <>
-                                <MDBRadio
-                                    name={`${itemKey}-price`}
-                                    id={`${itemKey}-price-above-2m`}
-                                    label="Giá trên 2 triệu"
-                                    value="above"
-                                    checked={radioValues[itemKey].price === 'above'}
-                                    onChange={() => onRadioChange(itemKey, 'price', 'above')}
-                                />
-                                <MDBRadio
-                                    name={`${itemKey}-price`}
-                                    id={`${itemKey}-price-below-2m`}
-                                    label="Giá dưới 2 triệu"
-                                    value="below"
-                                    checked={radioValues[itemKey].price === 'below'}
-                                    onChange={() => onRadioChange(itemKey, 'price', 'below')}
-                                />
-                            </>
-                        )}
-                    </div>
-                    <div className="sub-item-box">
-                        <div className="sub-item-heading" onClick={() => handleSubItemClick('size')}>Kích thước</div>
-                        {expandedSubItems.size && (
-                            <>
-                                <MDBRadio
-                                    name={`${itemKey}-size`}
-                                    id={`${itemKey}-size-small`}
-                                    label="35 - 37"
-                                    value="small"
-                                    checked={radioValues[itemKey].size === 'small'}
-                                    onChange={() => onRadioChange(itemKey, 'size', 'small')}
-                                />
-                                <MDBRadio
-                                    name={`${itemKey}-size`}
-                                    id={`${itemKey}-size-medium`}
-                                    label="38 - 41"
-                                    value="medium"
-                                    checked={radioValues[itemKey].size === 'medium'}
-                                    onChange={() => onRadioChange(itemKey, 'size', 'medium')}
-                                />
-                                <MDBRadio
-                                    name={`${itemKey}-size`}
-                                    id={`${itemKey}-size-large`}
-                                    label="42 - 45"
-                                    value="large"
-                                    checked={radioValues[itemKey].size === 'large'}
-                                    onChange={() => onRadioChange(itemKey, 'size', 'large')}
-                                />
-                            </>
-                        )}
-                    </div>
-                    <div className="sub-item-box">
-                        <div className="sub-item-heading" onClick={() => handleSubItemClick('gender')}>Giới tính</div>
-                        {expandedSubItems.gender && (
-                            <>
-                                <MDBRadio
-                                    name={`${itemKey}-gender`}
-                                    id={`${itemKey}-gender-male`}
-                                    label="Nam"
-                                    value="Nam"
-                                    checked={radioValues[itemKey].gender === 'Nam'}
-                                    onChange={() => onRadioChange(itemKey, 'gender', 'Nam')}
-                                />
-                                <MDBRadio
-                                    name={`${itemKey}-gender`}
-                                    id={`${itemKey}-gender-female`}
-                                    label="Nữ"
-                                    value="Nữ"
-                                    checked={radioValues[itemKey].gender === 'Nữ'}
-                                    onChange={() => onRadioChange(itemKey, 'gender', 'Nữ')}
-                                />
-                            </>
-                        )}
-                    </div>
+            <div ref={childRef} className={`child-item ${expandedItem === itemKey ? 'expand' : ''}`}>
+                <div className="sub-item-box">
+                    <div className="sub-item-heading" onClick={() => handleSubItemClick('price')}>Giá tiền</div>
+                    {expandedSubItems.price && (
+                        <>
+                            <MDBRadio
+                                name={`${itemKey}-price`}
+                                id={`${itemKey}-price-above-2m`}
+                                label="Giá trên 2 triệu"
+                                value="above"
+                                checked={radioValues[itemKey].price === 'above'}
+                                onChange={() => onRadioChange(itemKey, 'price', 'above')}
+                            />
+                            <MDBRadio
+                                name={`${itemKey}-price`}
+                                id={`${itemKey}-price-below-2m`}
+                                label="Giá dưới 2 triệu"
+                                value="below"
+                                checked={radioValues[itemKey].price === 'below'}
+                                onChange={() => onRadioChange(itemKey, 'price', 'below')}
+                            />
+                        </>
+                    )}
                 </div>
-            )}
+                <div className="sub-item-box">
+                    <div className="sub-item-heading" onClick={() => handleSubItemClick('size')}>Kích thước</div>
+                    {expandedSubItems.size && (
+                        <>
+                            <MDBRadio
+                                name={`${itemKey}-size`}
+                                id={`${itemKey}-size-small`}
+                                label="35 - 37"
+                                value="small"
+                                checked={radioValues[itemKey].size === 'small'}
+                                onChange={() => onRadioChange(itemKey, 'size', 'small')}
+                            />
+                            <MDBRadio
+                                name={`${itemKey}-size`}
+                                id={`${itemKey}-size-medium`}
+                                label="38 - 41"
+                                value="medium"
+                                checked={radioValues[itemKey].size === 'medium'}
+                                onChange={() => onRadioChange(itemKey, 'size', 'medium')}
+                            />
+                            <MDBRadio
+                                name={`${itemKey}-size`}
+                                id={`${itemKey}-size-large`}
+                                label="42 - 45"
+                                value="large"
+                                checked={radioValues[itemKey].size === 'large'}
+                                onChange={() => onRadioChange(itemKey, 'size', 'large')}
+                            />
+                        </>
+                    )}
+                </div>
+                <div className="sub-item-box">
+                    <div className="sub-item-heading" onClick={() => handleSubItemClick('gender')}>Giới tính</div>
+                    {expandedSubItems.gender && (
+                        <>
+                            <MDBRadio
+                                name={`${itemKey}-gender`}
+                                id={`${itemKey}-gender-male`}
+                                label="Nam"
+                                value="Nam"
+                                checked={radioValues[itemKey].gender === 'Nam'}
+                                onChange={() => onRadioChange(itemKey, 'gender', 'Nam')}
+                            />
+                            <MDBRadio
+                                name={`${itemKey}-gender`}
+                                id={`${itemKey}-gender-female`}
+                                label="Nữ"
+                                value="Nữ"
+                                checked={radioValues[itemKey].gender === 'Nữ'}
+                                onChange={() => onRadioChange(itemKey, 'gender', 'Nữ')}
+                            />
+                        </>
+                    )}
+                </div>
+            </div>
         </>
     );
 };
