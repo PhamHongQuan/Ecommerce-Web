@@ -170,7 +170,7 @@ const Homes = () => {
                         const buttonColor = buttonColors[product.id] || 'btn-danger'; // Lấy màu sắc từ state hoặc màu mặc định
                         return (
                             <div key={product.id} className="col-3 col-6 col-sm-6 col-lg-3 pb-lg-2 mb-3">
-                                <div className="card ms-3 h-100 border">
+                                <div className="card ms-3 h-100 border" >
                                     <div className="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                                         <NavLink to={`/product/${product.id}`}
                                                  style={{display: 'block', overflow: 'hidden'}}>
