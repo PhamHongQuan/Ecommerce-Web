@@ -27,7 +27,7 @@ const Security = () => {
                             <p><i className="fa fa-phone me-3" aria-hidden="true"></i>Số điện thoại: 0982.997.698</p>
                             <p><i className="fa fa-envelope me-3"></i>Email: shopShoes@gmail.com</p>
                         </div>
-                        
+
                     </p>
                 </div>
 
