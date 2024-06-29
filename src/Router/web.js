@@ -16,6 +16,8 @@ import Login from "../component/account/Login";
 import Search from "../component/search/search";
 import ForgotPassword from "../component/account/ForgotPassword/ForgotPassword";
 import ResetPasswordPage from "../component/account/ForgotPassword/ResetPassword";
+import Warranty from "../component/ Policy/Warranty";
+import Security from "../component/ Policy/Security";
 
 
 const Router = () => (
@@ -38,6 +40,8 @@ const Router = () => (
             <Route path="search" element={<Search/>}/>
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
+            <Route path="warranty" element={<Warranty />} />
+            <Route path="security" element={<Security/>} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password/:username" element={<ResetPasswordPage />} />
             <Route index element={<Error />} />

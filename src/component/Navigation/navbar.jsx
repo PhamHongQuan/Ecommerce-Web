@@ -155,8 +155,8 @@ const Navbar = () => {
                             <div className="toggle">
                                 <input className="toggle-input" type="checkbox" checked={isChecked}
                                        onChange={handleToggle}/>
-                                <div className="toggle-bg"></div>
-                                <div className="toggle-switch"></div>
+                                <div className="toggle-bg" title="dark mode"></div>
+                                <div className="toggle-switch" title="dark mode"></div>
                             </div>
                         </div>
 
