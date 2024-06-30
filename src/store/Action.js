@@ -11,23 +11,23 @@ export const addCart=(product)=>{
     }
 }
 
-export const delCart=(productid)=>{
+export const delCart=(product)=>{
     return {
         type:'cart/del',
-        payload:productid
+        payload:product
     }
 }
-export const increaseCart=(productid)=>{
+export const increaseCart=(product)=>{
     return {
         type:'cart/increasement',
-        payload:productid
+        payload:product
     }
 }
-export const decreasement = (productid) =>{
+export const decreasement = (product) =>{
     return{
 
         type:'cart/decreasement',
-        payload: productid
+        payload: product
     }
 }
 export const register = (user) => {

@@ -38,6 +38,13 @@
     height: 500px;
 }
 .text-danger{
+
+}
+.detail-product{
     position: absolute;
-    top: 80%;
+    top: 70%;
+}
+.detail-product *{
+    margin-bottom: 0px;
+    margin-top: 0px;
 }
