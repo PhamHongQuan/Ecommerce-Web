@@ -20,15 +20,12 @@ const ProductDetails = () => {
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(false);
     const [buttonColors, setButtonColors] = useState({});
+
     useEffect(() => {
         // Lấy màu sắc từ localStorage khi component được render
         const storedColors = JSON.parse(localStorage.getItem('buttonColors')) || {};
         setButtonColors(storedColors);
     }, []);
-
-
-
-
 
     const changeButtonColor = (productId) => {
         if (buttonColors[productId]) {
@@ -88,7 +85,14 @@ const ProductDetails = () => {
         const handleImageClick = (image) => {
             setSelectedImage(image);
         };
-        const [quantity, setQuantity] = useState(1);
+        const [selectedQuantity, setQuantity] = useState(() => {
+            // Lấy giá trị ban đầu từ localStorage, nếu không có thì mặc định là 1
+            const savedQuantity = localStorage.getItem('selectedQuantity');
+            return savedQuantity ? parseInt(savedQuantity, 10) : 1;
+        });
+        useEffect(() => {
+            localStorage.setItem('selectedQuantity', selectedQuantity);
+        }, [selectedQuantity]);
 
         const handleIncrement = () => {
             setQuantity((prevQuantity) => Math.min(prevQuantity + 1, 9999));
@@ -103,9 +107,7 @@ const ProductDetails = () => {
             setQuantity(value);
         };
         const dispatch = useDispatch();
-        const handleAddToCart =({id, name, img, des,price}) =>{
-            dispatch(addCart({id, name, img, des, price}));
-        };
+
         const [buttonColors, setButtonColors] = useState({});
 
         const [selectedColor, setSelectedColor] = useState(
@@ -129,7 +131,19 @@ const ProductDetails = () => {
         const handleColorClickSize = (size) => {
             setSelectedSize(size);
         };
+        const handleAddToCart =({id, name, img, des,price}) =>{
+            setSelectedSize(null);
+            setSelectedColor(null);
+            setQuantity(1);
 
+            if (selectedSize!=null && selectedColor!=null) {
+                dispatch(addCart({id, name, img, des, price,size:selectedSize,color:selectedColor,quantity:selectedQuantity}));
+
+                alert("Đã thêm sản phẩm vào giỏ hàng");
+            } else {
+                alert("Vui lòng chọn đầy đủ kích thước, màu sắc và số lượng trước khi thêm vào giỏ hàng");
+            }
+        };
 
 
 
@@ -205,15 +219,16 @@ const ProductDetails = () => {
                           <div className="quantity buttons_added">
                               <input type="button" value="-" className="minus button is-form" onClick={handleDecrement}/>
                               <input type="number" id="quantity" className="input-text qty text" step="1"
-                                     min="1" max="9999" name="quantity"  value={quantity}  title="SL" size="4"
+                                     min="1" max="9999" name="quantity"  value={selectedQuantity}  title="SL" size="4"
                                      inputMode="numeric"  onChange={handleChange} />
                               <input type="button" value="+" className="plus button is-form"  onClick={handleIncrement} />
                           </div>
                           <NavLink to="">
                               <button type="button" className="btn btn-danger d-flex align-items-center ms-2 mb-2 mb-md-0"
                                       data-mdb-color="dark" data-mdb-ripple-init="" onClick={(e) => {
-                                  e.stopPropagation();handleAddToCart(product); changeButtonColor(product.id)}} >
+                                  e.stopPropagation(); handleAddToCart(product); changeButtonColor(product.id)}} >
                                   <i className="fa fa-cart-plus me-2" aria-hidden="true"></i> Thêm vào giỏ hàng
+
                               </button>
                           </NavLink>
 
