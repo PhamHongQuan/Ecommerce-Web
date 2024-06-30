@@ -142,17 +142,78 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
 
     const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
 
-    const handleAddToCart = () => {
-        dispatch(addCart({ id, name, img, des, price }));
-    };
+
 
     const handleViewDetail = () => {
         navigate(`/product/${id}`);
     };
 
     const shouldAnimate = !sizeFilterChanged && !priceFilterChanged && !genderFilterChanged && !initialLoad;
+    useEffect(() => {
+        setSelectedSize(null);
+        setSelectedColor(null);
+        setQuantity(1);
+    }, [id]);
+    const [showPopup, setShowPopup] = useState(false);
+    const handleClosePopup = () => {
+        setShowPopup(false);
+        setSelectedSize(null);
+        setSelectedColor(null);
+        setQuantity(1);
+    };
+    const handlePopUp = () =>{
+        setShowPopup(true);
 
+    }
+    const [selectedColor, setSelectedColor] = useState(
+        localStorage.getItem("selectedColor") || null
+    );
+    useEffect(() => {
+        localStorage.setItem("selectedColor", selectedColor);
+    }, [selectedColor]);
+
+    const [selectedSize, setSelectedSize] = useState(
+        localStorage.getItem("selectedSize") || null
+    );
+    useEffect(() => {
+        localStorage.setItem("selectedSize", selectedSize);
+    }, [selectedSize]);
+    const handleColorClick = (tint) => {
+        setSelectedColor(tint);
+    };
+    const handleColorClickSize = (size) => {
+        setSelectedSize(size);
+    };
+
+    useEffect(() => {
+        localStorage.setItem("selectedSize", selectedSize);
+    }, [selectedSize]);
+    const [selectedQuantity, setQuantity] = useState(() => {
+        const savedQuantity = localStorage.getItem('selectedQuantity');
+        return savedQuantity ? parseInt(savedQuantity, 10) : 1;
+    });
+    useEffect(() => {
+        localStorage.setItem('selectedQuantity', selectedQuantity);
+    }, [selectedQuantity]);
+
+    const handleIncrement = () => {
+        setQuantity((prevQuantity) => Math.min(prevQuantity + 1, 9999));
+    };
+
+    const handleDecrement = () => {
+        setQuantity((prevQuantity) => Math.max(prevQuantity - 1, 1));
+    };
+
+    const handleChange = (event) => {
+        const value = Math.max(1, Math.min(parseInt(event.target.value, 10) || 1, 9999));
+        setQuantity(value);
+    };
+    const handleAddToCart = () => {
+        dispatch(addCart({id, name, img, des, price,size:selectedSize,color:selectedColor,quantity:selectedQuantity}));
+    };
     return (
+        <>
+
         <MDBCol md="4" lg="3">
             <motion.div
                 initial={shouldAnimate ? { x: "100%", opacity: 0, scale: 0.7 } : false}
@@ -176,6 +237,76 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
                 </MDBCard>
             </motion.div>
         </MDBCol>
+            {showPopup && (
+                <div id="popup">
+                    <div className="popup-content">
+                        <div className="d-flex">
+                            <p className="fw-bold mt-2">Chọn Size</p>
+                            <div className="ms-3" role="group" aria-label="First group">
+                                {Array.isArray(size) && size.map((size, index) => (
+                                    <button
+                                        key={index}
+                                        type="button"
+                                        className={`btn ${selectedSize === size ? "btn-primary" : "btn-outline-black"} me-2`}
+                                        onClick={() => handleColorClickSize(size)}
+                                    >
+                                        {size}
+                                    </button>
+
+                                ))}
+
+                            </div>
+                        </div>
+                        <div className="d-flex">
+                            <p className="fw-bold mt-2">Màu Sắc</p>
+                            <div className="ms-4" role="group" aria-label="">
+                                {Array.isArray(tint) && tint.map((tint, index) => (
+                                    <button
+                                        key={index}
+                                        type="button"
+                                        className={`btn ${selectedColor === tint ? "btn-primary" : "btn-outline-black"} me-2`}
+                                        onClick={() => handleColorClick(tint)}
+                                    >
+                                        {tint}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="d-flex">
+                            <div className="quantity buttons_added">
+                                <input type="button" value="-" className="minus button is-form"
+                                       onClick={handleDecrement}/>
+                                <input type="number" id="quantity" className="input-text qty text" step="1"
+                                       min="1" max="9999" name="quantity" value={selectedQuantity} title="SL" size="4"
+                                       inputMode="numeric" onChange={handleChange}  style={{ textAlign: 'center' }}/>
+                                <input type="button" value="+" className="plus button is-form"
+                                       onClick={handleIncrement}/>
+                            </div>
+
+                        </div>
+                        <div className="card-footer">
+                            <button className="custom-button-pl" onClick={(e) => {
+                                e.stopPropagation();
+                                if(selectedSize != null && selectedColor != null){
+                                    handleAddToCart();
+                                    alert("Đã thêm sản phẩm vào giỏ haàng");
+                                }else {
+                                    alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
+                                }
+                            }}>Thêm
+                            </button>
+                            <button className="custom-button-pl" onClick={(e) => {
+                                e.stopPropagation();
+                                handleClosePopup();
+                            }}>Đóng
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
+
     );
 };
 

@@ -149,3 +149,29 @@
 body {
     background: linear-gradient(to right, rgba(91, 221, 195, 0.5), rgba(82, 75, 213, 0.6));
 }
+#popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 1000;
+    width: 30%;
+    max-width: 40%;
+
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.popup-content button {
+    margin-top: 10px;
+}
+#quantity{
+    width: 50px;
+}
