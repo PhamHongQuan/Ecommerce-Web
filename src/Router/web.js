@@ -16,6 +16,7 @@ import Login from "../component/account/Login";
 import Search from "../component/search/search";
 import ForgotPassword from "../component/account/ForgotPassword/ForgotPassword";
 import ResetPasswordPage from "../component/account/ForgotPassword/ResetPassword";
+import Usage from "../component/Usage/Usage";
 
 
 const Router = () => (
@@ -40,6 +41,7 @@ const Router = () => (
             <Route path="login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password/:username" element={<ResetPasswordPage />} />
+            <Route path="/usage" element={<Usage />} />
             <Route index element={<Error />} />
         </Routes>
     </BrowserRouter>
