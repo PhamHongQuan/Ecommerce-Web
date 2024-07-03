@@ -47,12 +47,13 @@ export const root=(state= initState,action)=>{
 
 
             const productsUser = cart[userCartIndex].products;
-            const existProductIndex = productsUser.findIndex(item => item.id === product.id);
+            const existProductIndex = productsUser.findIndex(
+                item => item.id === product.id && item.size === product.size && item.color === product.color);
 
             if (existProductIndex >= 0) {
-                cart[userCartIndex].products[existProductIndex].quantity += 1;
+                cart[userCartIndex].products[existProductIndex].quantity += product.quantity ;
             } else {
-                cart[userCartIndex].products.push({ ...product, quantity: 1 });
+                cart[userCartIndex].products.push({ ...product, quantity: product.quantity });
             }
 
             localStorage.setItem('cart', JSON.stringify(cart));
@@ -65,14 +66,14 @@ export const root=(state= initState,action)=>{
             };
         }
         case 'cart/increasement':{
-            const productId = action.payload;
+            const product = action.payload;
             const cart = loadCart();
             const currentUser = loadCurrentUser();
             const userCartIndex = cart.findIndex(item=>item.username===currentUser.username);
-
-
             const productsUser = cart[userCartIndex].products;
-            const existProductIndex = productsUser.findIndex(item => item.id === productId);
+
+            const existProductIndex = productsUser.findIndex(
+                item => item.id === product.id && item.size === product.size && item.color === product.color);
 
 
             if (existProductIndex >= 0) {
@@ -86,14 +87,14 @@ export const root=(state= initState,action)=>{
             };
         }
         case 'cart/decreasement':{
-            const productId = action.payload;
+            const product = action.payload;
             const cart = loadCart();
             const currentUser = loadCurrentUser();
             const userCartIndex = cart.findIndex(item=>item.username===currentUser.username);
-
-
             const productsUser = cart[userCartIndex].products;
-            const existProductIndex = productsUser.findIndex(item => item.id === productId);
+
+            const existProductIndex = productsUser.findIndex(
+                item => item.id === product.id && item.size === product.size && item.color === product.color);
             if (existProductIndex >= 0 &&  cart[userCartIndex].products[existProductIndex].quantity>= 1) {
                 cart[userCartIndex].products[existProductIndex].quantity -= 1;
 
@@ -106,14 +107,13 @@ export const root=(state= initState,action)=>{
             };
         }
         case "cart/del":{
-            const productId = action.payload;
+            const product = action.payload;
             const cart = loadCart();
             const currentUser = loadCurrentUser();
             const userCartIndex = cart.findIndex(item=>item.username===currentUser.username);
 
-
             const productsUser = cart[userCartIndex].products;
-            const updatedProducts = productsUser.filter(item => item.id !== productId);
+            const updatedProducts = productsUser.filter(item => !(item.id === product.id && item.color === product.color && item.size === product.size));
             cart[userCartIndex].products = updatedProducts;
             localStorage.setItem('cart', JSON.stringify(cart));
             return {

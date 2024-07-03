@@ -31,15 +31,15 @@ const Cart = () => {
     }
     const userCart = cart.find(item => item.username === currentUser.username);
     const productsOfCart = userCart.products;
-    const handleRemoveFromCart = (productId) => {
-        dispatch(delCart(productId));
+    const handleRemoveFromCart = (product) => {
+        dispatch(delCart(product));
     };
 
-    const handleDecreasement = (productId) => {
-        dispatch(decreasement(productId));
+    const handleDecreasement = (product) => {
+        dispatch(decreasement(product));
     };
-    const handleIncreasement = (productId) => {
-        dispatch(increaseCart(productId));
+    const handleIncreasement = (product) => {
+        dispatch(increaseCart(product));
     };
 
 
@@ -52,33 +52,41 @@ const Cart = () => {
                 ) : (
                     productsOfCart.map(product => {
                         const totalPrice = product.price * product.quantity;
-                            return(<MDBCol md="4" lg="3" key={product.id}>
+                        const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice);
+
+                        return(<MDBCol md="4" lg="3" key={product.id}>
                                 <MDBCard className="product-card">
                                     <MDBCardImage src={product.img} alt={product.name} position="top"/>
                                     <MDBCardBody>
                                         <MDBCardTitle className="truncate-name">{product.name}</MDBCardTitle>
                                         <MDBCardText className="truncate-description">{product.des}</MDBCardText>
 
-                                        <span className="text-danger">{totalPrice}</span>
+
+                                        <div className="detail-product">
+                                            <p>Màu sắc: {product.color}</p>
+                                            <p>{formattedPrice}</p>
+                                            <p>Kích thước: {product.size}</p>
+
+                                        </div>
                                         <div className="container-quantity">
 
                                             <button
                                                 className="custom-button-quantity"
-                                                onClick={() => handleDecreasement(product.id)}>
+                                                onClick={() => handleDecreasement(product)}>
                                                 -
                                             </button>
                                             <p>{product.quantity}</p>
 
                                             <button
                                                 className="custom-button-quantity"
-                                                onClick={() => handleIncreasement(product.id)}
+                                                onClick={() => handleIncreasement(product)}
                                             >
                                                 +
                                             </button>
 
                                             <button
                                                 className="custom-button-remove"
-                                                onClick={() => handleRemoveFromCart(product.id)}
+                                                onClick={() => handleRemoveFromCart(product)}
                                             >
                                                 Xóa
                                             </button>
@@ -87,9 +95,7 @@ const Cart = () => {
                                     </MDBCardBody>
                                 </MDBCard>
                             </MDBCol>);
-                    }
-
-
+                        }
                     )
                 )}
             </MDBRow>
