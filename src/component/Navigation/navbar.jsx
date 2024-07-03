@@ -114,31 +114,39 @@ const Navbar = () => {
                                     />
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <li>
-                                        <a className="dropdown-item" href="#">Tài khoản</a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Hướng dẫn</a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Lịch sử đơn hàng</a>
-                                    </li>
                                     {currentUser ? (
-                                        <a className="dropdown-item" onClick={logoutFunction}>
-                                            Đăng xuất
-                                        </a>
+                                        <>
+                                            <li>
+                                                <a className="dropdown-item" href="#">Tài khoản</a>
+                                            </li>
+                                            <li>
+                                                <a className="dropdown-item" href="#">Hướng dẫn</a>
+                                            </li>
+                                            <li>
+                                                <a className="dropdown-item" href="#">Lịch sử đơn hàng</a>
+                                            </li>
+                                            <li>
+                                                <a className="dropdown-item" onClick={logoutFunction}>
+                                                    Đăng xuất
+                                                </a>
+                                            </li>
+                                        </>
                                     ) : (
                                         <>
-                                            <a className="dropdown-item">
-                                                <Link to="/login">Đăng nhập </Link>
-                                            </a>
-                                            <a className="dropdown-item">
-                                                <Link to="/register">Đăng ký </Link>
-                                            </a>
+                                            <li>
+                                                <a className="dropdown-item">
+                                                    <Link to="/login">Đăng nhập</Link>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a className="dropdown-item">
+                                                    <Link to="/register">Đăng ký</Link>
+                                                </a>
+                                            </li>
                                         </>
                                     )}
-
                                 </ul>
+
                             </li>
                         </ul>
                         {/*<Search></Search>*/}
