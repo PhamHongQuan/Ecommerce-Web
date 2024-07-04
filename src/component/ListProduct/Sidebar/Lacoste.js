@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from "mdb-react-ui-kit";
-import { Link, useNavigate, useOutletContext } from 'react-router-dom';
+import {Link, NavLink, useNavigate, useOutletContext} from 'react-router-dom';
 import { motion } from "framer-motion";
 import { Button } from "react-bootstrap";
 import "../../Styles/PaginationInProduct.css";
@@ -219,7 +219,16 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
                 transition={{ duration: 0.5, delay: index * 0.2, ease: "easeIn" }}
             >
                 <MDBCard className="product-card-pl" onClick={handleViewDetail} style={{ cursor: 'pointer' }}>
-                    <MDBCardImage src={img} alt={name} position="top" />
+                    <NavLink to={`/product/${id}`} title={`URL: http://localhost:9000/products/${id}`} style={{ display: 'block', overflow: 'hidden' }}>
+                        <MDBCardImage
+                            src={img}
+                            alt={name}
+                            className="img-fluid w-100"
+                            style={{ transition: 'transform 0.3s ease' }}
+                            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.15)'}
+                            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)' }
+                        />
+                    </NavLink>
                     <MDBCardBody>
                         <MDBCardTitle className="truncate-name truncate-text"><b>{name}</b></MDBCardTitle>
                         <MDBCardText className="truncate-size truncate-text"><b>Size:</b> {size.join(', ')}</MDBCardText>
@@ -229,7 +238,7 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
                         <span className="text-price">{formattedPrice}</span>
                         <button className="custom-button-pl" onClick={(e) => {
                             e.stopPropagation();
-                            handleAddToCart();
+                            handlePopUp();
                         }}>Thêm</button>
                     </div>
                 </MDBCard>

@@ -4,6 +4,7 @@ import "../Styles/Usage.css"
 import UsageStartWeb from "./UsageStartWeb";
 import UsageResetPassword from "./UsageResetPassword";
 import Navbar from "../Navigation/navbar";
+import Footers from "../Footer/Footers";
 
 function Usage() {
     const [activeTab, setActiveTab] = useState('tab1');
@@ -97,6 +98,7 @@ function Usage() {
                     </MDBTabsPane>
                 </MDBTabsContent>
             </div>
+            <Footers/>
         </div>
     );
 }
