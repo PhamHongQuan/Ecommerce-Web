@@ -22,7 +22,7 @@ const Cart = () => {
     const currentUser = useSelector(state => state.currentUser);
 
     if(currentUser == null){
-        return (<MDBContainer className="my-5">
+        return (<MDBContainer className="">
             <Navbar></Navbar>
             <p>Bạn phải   <Link to="/login">Đăng nhập </Link>
             </p>
@@ -44,17 +44,20 @@ const Cart = () => {
 
 
     return (
-        <MDBContainer className="my-5">
+        <MDBContainer className="">
             <Navbar></Navbar>
-            <MDBRow>
+            <MDBRow className="mt-5">
                 {productsOfCart.length === 0 ? (
                     <p>Giỏ hàng của bạn trống</p>
                 ) : (
                     productsOfCart.map(product => {
-                        const totalPrice = product.price * product.quantity;
-                        const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice);
+                            const totalPrice = product.price * product.quantity;
+                            const formattedPrice = new Intl.NumberFormat('vi-VN', {
+                                style: 'currency',
+                                currency: 'VND'
+                            }).format(totalPrice);
 
-                        return(<MDBCol md="4" lg="3" key={product.id}>
+                            return (<MDBCol md="4" lg="3" key={product.id}>
                                 <MDBCard className="product-card">
                                     <MDBCardImage src={product.img} alt={product.name} position="top"/>
                                     <MDBCardBody>
@@ -99,9 +102,12 @@ const Cart = () => {
                     )
                 )}
             </MDBRow>
+            <hr/>
             <Footers></Footers>
         </MDBContainer>
+
     );
+
 };
 
 export default Cart;

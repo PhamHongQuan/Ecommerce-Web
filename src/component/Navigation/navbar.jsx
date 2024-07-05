@@ -80,16 +80,11 @@ const Navbar = () => {
                             </li>
 
                             <li className="nav-item">
-
-                                <div className="buttons">
-                                    {/*<Link to="/cart"><i*/}
-                                    {/*    className="fa fa-cart-plus d-flex mt-2 fs-5"><CartInfo></CartInfo></i></Link>*/}
-                                    {/*<a href="" className="nav-link bg-dark d-flex align-items-center">*/}
-                                    {/*    <Link to="/cart"> <i className="fa fa-cart-plus"></i><CartInfo></CartInfo></Link></a>*/}
-                                </div>
                                 <Link className={`nav-link ${location.pathname === '/cart' ? 'active' : ''}`}
                                       to="/cart">
-                                    <i className="fa fa-cart-plus  fs-5 d-inline-flex"><CartInfo/></i>
+                                    <div className="d-flex">
+                                        <i className="fa fa-cart-plus d-inline-flex"></i><CartInfo></CartInfo>
+                                    </div>
                                 </Link>
                             </li>
 
@@ -114,31 +109,39 @@ const Navbar = () => {
                                     />
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <li>
-                                        <a className="dropdown-item" href="#">Tài khoản</a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Hướng dẫn</a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Lịch sử đơn hàng</a>
-                                    </li>
                                     {currentUser ? (
-                                        <a className="dropdown-item" onClick={logoutFunction}>
-                                            Đăng xuất
-                                        </a>
+                                        <>
+                                            <li>
+                                                <a className="dropdown-item" href="#">Tài khoản</a>
+                                            </li>
+                                            <li>
+                                                <a className="dropdown-item" href="#">Hướng dẫn</a>
+                                            </li>
+                                            <li>
+                                                <a className="dropdown-item" href="#">Lịch sử đơn hàng</a>
+                                            </li>
+                                            <li>
+                                                <a className="dropdown-item" onClick={logoutFunction}>
+                                                    Đăng xuất
+                                                </a>
+                                            </li>
+                                        </>
                                     ) : (
                                         <>
-                                            <a className="dropdown-item">
-                                                <Link to="/login">Đăng nhập </Link>
-                                            </a>
-                                            <a className="dropdown-item">
-                                                <Link to="/register">Đăng ký </Link>
-                                            </a>
+                                            <li>
+                                                <a className="dropdown-item">
+                                                    <Link to="/login">Đăng nhập</Link>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a className="dropdown-item">
+                                                    <Link to="/register">Đăng ký</Link>
+                                                </a>
+                                            </li>
                                         </>
                                     )}
-
                                 </ul>
+
                             </li>
                         </ul>
                         {/*<Search></Search>*/}
@@ -155,8 +158,8 @@ const Navbar = () => {
                             <div className="toggle">
                                 <input className="toggle-input" type="checkbox" checked={isChecked}
                                        onChange={handleToggle}/>
-                                <div className="toggle-bg"></div>
-                                <div className="toggle-switch"></div>
+                                <div className="toggle-bg" title="dark mode"></div>
+                                <div className="toggle-switch" title="dark mode"></div>
                             </div>
                         </div>
 

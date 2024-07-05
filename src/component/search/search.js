@@ -120,6 +120,7 @@ const Search = () => {
                     })}
                 </div>
             </ul>
+            <hr/>
             <Footers />
         </div>
     );
