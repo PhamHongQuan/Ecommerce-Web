@@ -227,10 +227,10 @@ const ProductDetails = () => {
                               {/*       inputMode="numeric" onChange={handleChange}/>*/}
                               {/*<input style={{marginLeft:'0px'}} type="button" value="+" className="plus button is-form" onClick={handleIncrement}/>*/}
                               <input type="button" value="-" className="minus button is-form" onClick={handleDecrement}/>
-                              <input type="number" id="quantity" className="input-text qty text" step="1"
+                              <input style={{marginLeft:'-1px', width:'50px', textAlign:'center'}} type="number" id="quantity" className="input-text qty text" step="1"
                                      min="1" max="9999" name="quantity"  value={selectedQuantity}  title="SL" size="4"
                                      inputMode="numeric"  onChange={handleChange} />
-                              <input type="button" value="+" className="plus button is-form"  onClick={handleIncrement} />
+                              <input style={{marginLeft:'0px'}} type="button" value="+" className="plus button is-form"  onClick={handleIncrement} />
                           </div>
                           <NavLink to="">
                               <button type="button"
@@ -238,7 +238,7 @@ const ProductDetails = () => {
                                       data-mdb-color="dark" data-mdb-ripple-init="" onClick={(e) => {
                                   e.stopPropagation();
                                   handleAddToCart(product);
-                                  changeButtonColor(product.id)
+                                  // changeButtonColor(product.id)
                               }}>
                                   <i className="fa fa-cart-plus me-2" aria-hidden="true"></i> Thêm vào giỏ hàng
 

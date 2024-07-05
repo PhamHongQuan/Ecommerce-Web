@@ -218,8 +218,8 @@ const Homes = () => {
                 {/*            </div>*/}
                 {/*        );*/}
                 {/*    })}*/}
-                <div className="">
-                    {/*<div className="col-3">*/}
+                <div className="d-flex">
+                    {/*<div className="col-12 col-md-6 col-lg-4 mb-3">*/}
                     {/*    <Sidebar/>*/}
                     {/*</div>*/}
                     <Pagination></Pagination>

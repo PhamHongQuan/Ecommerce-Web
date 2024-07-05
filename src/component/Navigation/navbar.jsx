@@ -80,16 +80,11 @@ const Navbar = () => {
                             </li>
 
                             <li className="nav-item">
-
-                                <div className="buttons">
-                                    {/*<Link to="/cart"><i*/}
-                                    {/*    className="fa fa-cart-plus d-flex mt-2 fs-5"><CartInfo></CartInfo></i></Link>*/}
-                                    {/*<a href="" className="nav-link bg-dark d-flex align-items-center">*/}
-                                    {/*    <Link to="/cart"> <i className="fa fa-cart-plus"></i><CartInfo></CartInfo></Link></a>*/}
-                                </div>
                                 <Link className={`nav-link ${location.pathname === '/cart' ? 'active' : ''}`}
                                       to="/cart">
-                                    <i className="fa fa-cart-plus  fs-5 d-inline-flex"><CartInfo/></i>
+                                    <div className="d-flex">
+                                        <i className="fa fa-cart-plus d-inline-flex"></i><CartInfo></CartInfo>
+                                    </div>
                                 </Link>
                             </li>
 

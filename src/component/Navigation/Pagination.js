@@ -5,7 +5,7 @@ import {useDispatch} from "react-redux";
 import {useSelector } from 'react-redux';
 import {addCart} from "../../store/Action"; // Đường dẫn đến tệp ProductData
 
-const Products = () => {
+const Products = ({product}) => {
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [productsPerPage] = useState(20); // Số sản phẩm mỗi trang
@@ -39,6 +39,19 @@ const Products = () => {
     const handleAddToCart =({id, name, img, des,price}) =>{
         dispatch(addCart({id, name, img, des, price}));
     };
+    const handleRemoveFromCart = (productId) => {
+        // Logic để xóa sản phẩm khỏi giỏ hàng
+        console.log('Xóa sản phẩm khỏi giỏ hàng', productId);
+        alert('Xóa sản phẩm khỏi giỏ hàng');
+
+        // Cập nhật lại trạng thái và localStorage khi sản phẩm bị xóa
+        const newColors = { ...buttonColors };
+        delete newColors[productId];
+        setButtonColors(newColors);
+        localStorage.setItem('buttonColors', JSON.stringify(newColors));
+    };
+
+
 
     const changeButtonColor = (productId) => {
         if (buttonColors[productId]) {
@@ -48,11 +61,16 @@ const Products = () => {
             // Nếu nút chưa được nhấn, thay đổi màu sắc và lưu vào localStorage
             const newColors = {
                 ...buttonColors,
-                [productId]: 'btn-primary' // Thay đổi màu sắc thành màu
+                [productId]: 'btn-danger' // Thay đổi màu sắc thành màu
             };
             setButtonColors(newColors);
             localStorage.setItem('buttonColors', JSON.stringify(newColors));
         }
+    };
+    const [inCart, setInCart] = useState(false); // State để theo dõi sản phẩm có trong giỏ hàng hay không
+
+    const handleToggleCart = () => {
+        setInCart(!inCart); // Đảo ngược trạng thái giỏ hàng khi nhấn vào button
     };
 
     return (
@@ -64,7 +82,8 @@ const Products = () => {
                         style: 'currency',
                         currency: 'VND'
                     }).format(product.price);
-                    const buttonColor = buttonColors[product.id] || 'btn-danger'; // Lấy màu sắc từ state hoặc màu mặc định
+                    const buttonColor = buttonColors[product.id] || 'btn-primary'; // Lấy màu sắc từ state hoặc màu mặc định
+                    const buttonColor1 = buttonColors[product.id] || 'btn-primary'; // Lấy màu sắc từ state hoặc màu mặc định
                     return (
                         <div key={product.id} className="col-3 col-6 col-sm-6 col-lg-3 pb-lg-2 mb-3">
                             <div className="card ms-3 h-100 border">
@@ -94,14 +113,15 @@ const Products = () => {
                                             <button
                                                 type="button"
                                                 className={`btn ${buttonColor} d-flex align-items-center mb-2 mb-md-0`}
-                                                data-mdb-color="dark" data-mdb-ripple-init=""
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     handleAddToCart(product);
                                                     changeButtonColor(product.id); // Đổi màu khi nhấp chuột
+                                                    // handleToggleCart(product.id);
                                                     // handleRemoveFromCart(product.id);
                                                 }}>
-                                                <i className="fa fa-cart-plus me-2" aria-hidden="true"></i> Thêm
+                                                <i className="fa fa-cart-plus me-2" aria-hidden="true"></i>
+                                                {inCart ? 'Xóa' : 'Thêm'}
                                             </button>
 
 
@@ -113,6 +133,8 @@ const Products = () => {
                     );
                 })}
             </div>
+
+
 
             <nav aria-label="Page navigation example">
                 <ul className="pagination">
@@ -136,3 +158,27 @@ const Products = () => {
 };
 
 export default Products;
+const Product1 = ({ product }) => {
+    const [inCart, setInCart] = useState(false); // State để theo dõi sản phẩm có trong giỏ hàng hay không
+
+    const handleToggleCart = () => {
+        setInCart(!inCart); // Đảo ngược trạng thái giỏ hàng khi nhấn vào button
+    };
+
+    return (
+        <div className="card">
+            <div className="card-body">
+                <h5 className="card-title">{product.name}</h5>
+                {/* Sử dụng biểu thức ba ngôi để thay đổi nội dung của button */}
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleToggleCart}
+                >
+                    <i className="fa fa-cart-plus me-2" aria-hidden="true"></i>
+                    {inCart ? 'Xóa khỏi giỏ hàng' : 'Thêm vào giỏ hàng'}
+                </button>
+            </div>
+        </div>
+    );
+};
