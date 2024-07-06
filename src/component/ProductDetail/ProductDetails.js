@@ -4,7 +4,7 @@ import {products} from "../../data/ProductData";
 import Navbar from "../Navigation/navbar";
 import Footers from "../Footer/Footers";
 import { FaTimes } from 'react-icons/fa';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import { MDBPopover, MDBPopoverBody, MDBPopoverHeader, MDBBtn } from 'mdb-react-ui-kit';
 import {NavLink} from "react-router-dom";
@@ -23,6 +23,13 @@ const ProductDetails = () => {
     const [loading, setLoading] = useState(false);
     const [buttonColors, setButtonColors] = useState({});
 
+    const cart = useSelector(state => state.cart);
+    const currentUser = useSelector(state => state.currentUser);
+
+    if(currentUser != null){
+        const userCart = cart.find(item => item.username === currentUser.username);
+        const productsOfCart = userCart.products;
+    }
     useEffect(() => {
         // Lấy màu sắc từ localStorage khi component được render
         const storedColors = JSON.parse(localStorage.getItem('buttonColors')) || {};
@@ -112,19 +119,15 @@ const ProductDetails = () => {
 
         const [buttonColors, setButtonColors] = useState({});
 
-        const [selectedColor, setSelectedColor] = useState(
-            localStorage.getItem("selectedColor") || null
-        );
-        const [selectedSize, setSelectedSize] = useState(
-            localStorage.getItem("selectedSize") || null
-        );
+        const [selectedColor, setSelectedColor] = useState(null);
 
+        const [selectedSize, setSelectedSize] = useState(null);
         useEffect(() => {
             localStorage.setItem("selectedColor", selectedColor);
         }, [selectedColor]);
 
         useEffect(() => {
-            localStorage.setItem("selectedSize", selectedSize);
+             localStorage.setItem("selectedSize", selectedSize);
         }, [selectedSize]);
 
         const handleColorClick = (tint) => {
@@ -133,20 +136,29 @@ const ProductDetails = () => {
         const handleColorClickSize = (size) => {
             setSelectedSize(size);
         };
-        const handleAddToCart =({id, name, img, des,price}) =>{
-            setSelectedSize(null);
-            setSelectedColor(null);
-            setQuantity(1);
+        const handleAddToCart =({id, name, img, des,price},selectedSize,selectedColor,selectedQuantity) =>{
 
-            if (selectedSize!=null && selectedColor!=null) {
-                dispatch(addCart({id, name, img, des, price,size:selectedSize,color:selectedColor,quantity:selectedQuantity}));
-
+            if (selectedColor !== null && selectedSize !== null) {
+                dispatch(addCart({ id,name, img,des, price,size: selectedSize,color: selectedColor,quantity: selectedQuantity }));
                 alert("Đã thêm sản phẩm vào giỏ hàng");
+
+
             } else {
                 alert("Vui lòng chọn đầy đủ kích thước, màu sắc và số lượng trước khi thêm vào giỏ hàng");
             }
-        };
 
+        };
+        const [showPopup, setShowPopup] = useState(false);
+        const handleClosePopup = () => {
+            setShowPopup(false);
+            setSelectedSize(null);
+            setSelectedColor(null);
+            setQuantity(1);
+        };
+        const handlePopUp = () =>{
+            setShowPopup(true);
+
+        }
 
 
         return(
@@ -237,7 +249,16 @@ const ProductDetails = () => {
                                       className="btn btn-danger d-flex align-items-center ms-2 mb-2 mb-md-0"
                                       data-mdb-color="dark" data-mdb-ripple-init="" onClick={(e) => {
                                   e.stopPropagation();
-                                  handleAddToCart(product);
+                                  if(currentUser != null) {
+                                      if(selectedSize != null && selectedColor != null){
+                                          handleAddToCart(product,selectedSize,selectedColor,selectedQuantity);
+                                      }else {
+                                          alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
+                                      }
+                                  }else{
+                                      alert("Bạn cần đăng nhập")
+                                  }
+
                                   // changeButtonColor(product.id)
                               }}>
                                   <i className="fa fa-cart-plus me-2" aria-hidden="true"></i> Thêm vào giỏ hàng
@@ -352,7 +373,7 @@ const ProductDetails = () => {
                                                   <p className="btn btn-outline-black  me-md-1 mb-2 mb-md-0"
                                                      data-mdb-color="dark" data-mdb-ripple-init="">{formattedPrice}
                                                   </p>
-                                                  <NavLink to="cart">
+                                                  <NavLink to={`/product/${product.id}`}>
                                                       <button type="button"
                                                               className="btn btn-danger d-flex align-items-center mb-2 mb-md-0"
                                                               data-mdb-color="dark" data-mdb-ripple-init=""><i

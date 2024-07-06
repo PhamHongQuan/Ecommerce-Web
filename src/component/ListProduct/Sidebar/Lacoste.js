@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import React, { useEffect, useState } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from "mdb-react-ui-kit";
 import { Link, useNavigate, useOutletContext } from 'react-router-dom';
@@ -141,7 +141,14 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
     const navigate = useNavigate();
 
 
+    const cart = useSelector(state => state.cart);
+    const currentUser = useSelector(state => state.currentUser);
 
+
+    if(currentUser != null){
+        const userCart = cart.find(item => item.username === currentUser.username);
+        const productsOfCart = userCart.products;
+    }
     const handleViewDetail = () => {
         navigate(`/product/${id}`);
     };
@@ -229,7 +236,7 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
                         <span className="text-price">{formattedPrice}</span>
                         <button className="custom-button-pl" onClick={(e) => {
                             e.stopPropagation();
-                            handleAddToCart();
+                            handlePopUp();
                         }}>Thêm</button>
                     </div>
                 </MDBCard>
@@ -286,11 +293,15 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
                         <div className="card-footer">
                             <button className="custom-button-pl" onClick={(e) => {
                                 e.stopPropagation();
-                                if(selectedSize != null && selectedColor != null){
-                                    handleAddToCart();
-                                    alert("Đã thêm sản phẩm vào giỏ haàng");
-                                }else {
-                                    alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
+                                if(currentUser != null) {
+                                    if(selectedSize != null && selectedColor != null){
+                                        handleAddToCart();
+                                    }else {
+                                        alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
+                                    }
+                                }else{
+                                    alert("Bạn cần đăng nhập");
+
                                 }
                             }}>Thêm
                             </button>

@@ -48,9 +48,10 @@ const Login = () => {
     };
 
     return (
+        <div className="page-wrapper">
+            <Navbar/>
         <MDBContainer className="my-5">
 
-            <Navbar></Navbar>
             <div className="container-register">
                 <h2>Login</h2>
                 <form onSubmit={handleSubmit}>
@@ -84,6 +85,7 @@ const Login = () => {
             <Footers></Footers>
 
         </MDBContainer>
+        </div>
 
     );
 };
