@@ -159,7 +159,7 @@ const Products = ({product}) => {
                         style: 'currency',
                         currency: 'VND'
                     }).format(product.price);
-                    const buttonColor = buttonColors[product.id] || 'btn-primary'; // Lấy màu sắc từ state hoặc màu mặc định
+                    const buttonColor = buttonColors[product.id] || 'btn-success'; // Lấy màu sắc từ state hoặc màu mặc định
                     const buttonColor1 = buttonColors[product.id] || 'btn-primary'; // Lấy màu sắc từ state hoặc màu mặc định
                     return (
                         <div key={product.id} className="col-3 col-6 col-sm-6 col-lg-3 pb-lg-2 mb-3">
@@ -179,29 +179,32 @@ const Products = ({product}) => {
                                 </div>
                                 <div className="card-body text-center">
                                     <h5 className="fs-6 h-50">{product.name}</h5>
-                                    <div className="d-flex justify-content-center">
-                                        <div className="btn-group shadow-0 mt-3 flex-column flex-md-row"
-                                             role="group" aria-label="Basic example">
-                                            <p className="btn btn-outline-black me-md-1 mb-2 mb-md-0"
-                                               data-mdb-color="dark" data-mdb-ripple-init="">
-                                                {formattedPrice}
-                                            </p>
+                                    <div className="d-flex justify-content-center flex-column flex-md-row mt-3">
+                                        <p className="fs-5 me-md-1 mb-2 mb-md-0 "
+                                           data-mdb-color="dark" data-mdb-ripple-init="">
+                                            {formattedPrice}
+                                        </p>
+                                        <div className="btn-group shadow-0  flex-column flex-md-row">
+                                            {/*<p className="btn bg-primary btn-outline fs-5 me-md-1 mb-2 mb-md-0"*/}
+                                            {/*   data-mdb-color="dark" data-mdb-ripple-init="">*/}
+                                            {/*    {formattedPrice}*/}
+                                            {/*</p>*/}
 
                                             <button
                                                 type="button"
-                                                className={`btn ${buttonColor} d-flex align-items-center mb-2 mb-md-0`}
+                                                className={`btn ${buttonColor} d-flex align-items-center justify-content-center text-center mb-2 mb-md-0 rounded-5 w-100 w-md-auto`}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     handlePopUp(product);
-                                                  //  changeButtonColor(product.id); // Đổi màu khi nhấp chuột
+                                                    //  changeButtonColor(product.id); // Đổi màu khi nhấp chuột
                                                     // handleToggleCart(product.id);
                                                     // handleRemoveFromCart(product.id);
                                                 }}>
                                                 <i className="fa fa-cart-plus me-2" aria-hidden="true"></i>
                                                 {inCart ? 'Xóa' : 'Thêm'}
                                             </button>
-                                            {showPopup && selectedProduct &&(
-                                                <div id="popup">
+                                            {showPopup && selectedProduct && (
+                                                <div id="popup" className="" style={{boxShadow: 'none'}}>
                                                     <div className="popup-content">
                                                         <div className="d-flex">
                                                             <p className="fw-bold mt-2">Chọn Size</p>
@@ -217,7 +220,6 @@ const Products = ({product}) => {
                                                                     </button>
 
                                                                 ))}
-
                                                             </div>
                                                         </div>
                                                         <div className="d-flex">
@@ -235,14 +237,23 @@ const Products = ({product}) => {
                                                                 ))}
                                                             </div>
                                                         </div>
-                                                        <div className="d-flex">
+                                                        <div className="d-flex mt-lg-2">
+                                                            <p className="fw-bold">Số Lượng</p>
                                                             <div className="quantity buttons_added">
-                                                                <input type="button" value="-" className="minus button is-form"
+                                                                <input type="button" value="-"
+                                                                       className="minus button is-form"
                                                                        onClick={handleDecrement}/>
-                                                                <input type="number" id="quantity" className="input-text qty text" step="1"
-                                                                       min="1" max="9999" name="quantity" value={selectedQuantity} title="SL" size="4"
-                                                                       inputMode="numeric" onChange={handleChange}  style={{ textAlign: 'center' }}/>
-                                                                <input type="button" value="+" className="plus button is-form"
+                                                                <input type="number" id="quantity"
+                                                                       className="input-text qty text" step="1"
+                                                                       min="1" max="9999" name="quantity"
+                                                                       value={selectedQuantity} title="SL" size="4"
+                                                                       inputMode="numeric" onChange={handleChange}
+                                                                       style={{
+                                                                           textAlign: 'center',
+                                                                           marginLeft: '0px'
+                                                                       }}/>
+                                                                <input style={{marginLeft: '0px'}} type="button"
+                                                                       value="+" className="plus button is-form"
                                                                        onClick={handleIncrement}/>
                                                             </div>
 
@@ -250,14 +261,14 @@ const Products = ({product}) => {
                                                         <div className="card-footer">
                                                             <button className="custom-button-pl" onClick={(e) => {
                                                                 e.stopPropagation();
-                                                                if(currentUser != null){
-                                                                    if(selectedSize != null && selectedColor != null  ){
-                                                                        handleAddToCart(selectedProduct,selectedSize,selectedColor,selectedQuantity);
-                                                                    }else {
+                                                                if (currentUser != null) {
+                                                                    if (selectedSize != null && selectedColor != null) {
+                                                                        handleAddToCart(selectedProduct, selectedSize, selectedColor, selectedQuantity);
+                                                                    } else {
                                                                         alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
                                                                     }
-                                                                }else {
-                                                                    alert("Bạn phải đăng nhạp");
+                                                                } else {
+                                                                    alert("Bạn phải đăng nhập");
 
                                                                 }
 
@@ -283,10 +294,9 @@ const Products = ({product}) => {
             </div>
 
 
-
             <nav aria-label="Page navigation example">
                 <ul className="pagination">
-                    <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
                         <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>Previous
                         </button>
                     </li>
@@ -306,27 +316,4 @@ const Products = ({product}) => {
 };
 
 export default Products;
-const Product1 = ({ product }) => {
-    const [inCart, setInCart] = useState(false); // State để theo dõi sản phẩm có trong giỏ hàng hay không
 
-    const handleToggleCart = () => {
-        setInCart(!inCart); // Đảo ngược trạng thái giỏ hàng khi nhấn vào button
-    };
-
-    return (
-        <div className="card">
-            <div className="card-body">
-                <h5 className="card-title">{product.name}</h5>
-                {/* Sử dụng biểu thức ba ngôi để thay đổi nội dung của button */}
-                <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={handleToggleCart}
-                >
-                    <i className="fa fa-cart-plus me-2" aria-hidden="true"></i>
-                    {inCart ? 'Xóa khỏi giỏ hàng' : 'Thêm vào giỏ hàng'}
-                </button>
-            </div>
-        </div>
-    );
-};

@@ -154,74 +154,12 @@ const Homes = () => {
                         </div>
                     </div>
                 </div>
-                {/*<div className="buttons d-flex flex-wrap justify-content-center mb-5 h-50 col-12 col-md-6 mb-2 fs-5 fw-bold">*/}
-                {/*    <button className="btn btn-dark fw-light me-2 mb-2">All</button>*/}
-                {/*    <button className="btn btn-outline-dark me-2 mb-2">Bitis</button>*/}
-                {/*    <button className="btn btn-outline-dark me-2 mb-2">Adidas</button>*/}
-                {/*    <button className="btn btn-outline-dark me-2 mb-2">Puma</button>*/}
-                {/*    <button className="btn btn-outline-dark me-2 mb-2">Nike</button>*/}
-                {/*</div>*/}
-
                 {/*san pham*/}
                 <div className="d-flex justify-content-center fw-bold fs-5"><p>SẢN PHẨM MỚI</p></div>
-                {/*<div className="row">*/}
-                {/*    {products.map((product) => {*/}
-                {/*        const formattedPrice = new Intl.NumberFormat('vi-VN', {*/}
-                {/*            style: 'currency',*/}
-                {/*            currency: 'VND'*/}
-                {/*        }).format(product.price);*/}
-                {/*        const buttonColor = buttonColors[product.id] || 'btn-danger'; // Lấy màu sắc từ state hoặc màu mặc định*/}
-                {/*        return (*/}
-                {/*            <div key={product.id} className="col-3 col-6 col-sm-6 col-lg-3 pb-lg-2 mb-3">*/}
-                {/*                <div className="card ms-3 h-100 border">*/}
-                {/*                    <div className="bg-image hover-overlay ripple" data-mdb-ripple-color="light">*/}
-                {/*                        <NavLink to={`/product/${product.id}`}*/}
-                {/*                                 style={{display: 'block', overflow: 'hidden'}}>*/}
-                {/*                            <img*/}
-                {/*                                src={product.img}*/}
-                {/*                                alt={product.title}*/}
-                {/*                                className="img-fluid w-100"*/}
-                {/*                                style={{transition: 'transform 0.3s ease'}}*/}
-                {/*                                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.15)'}*/}
-                {/*                                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}*/}
-                {/*                            />*/}
-                {/*                        </NavLink>*/}
-                {/*                    </div>*/}
-                {/*                    <div className="card-body text-center">*/}
-                {/*                        <h5 className="fs-6 h-50">{product.name}</h5>*/}
-                {/*                        <div className="d-flex justify-content-center">*/}
-                {/*                            <div className="btn-group shadow-0 mt-3 flex-column flex-md-row"*/}
-                {/*                                 role="group" aria-label="Basic example">*/}
-                {/*                                <p className="btn btn-outline-black me-md-1 mb-2 mb-md-0"*/}
-                {/*                                   data-mdb-color="dark" data-mdb-ripple-init="">*/}
-                {/*                                    {formattedPrice}*/}
-                {/*                                </p>*/}
-
-                {/*                                <button*/}
-                {/*                                    type="button"*/}
-                {/*                                    className={`btn ${buttonColor} d-flex align-items-center mb-2 mb-md-0`}*/}
-                {/*                                    data-mdb-color="dark" data-mdb-ripple-init=""*/}
-                {/*                                    onClick={(e) => {*/}
-                {/*                                        e.stopPropagation();*/}
-                {/*                                        handleAddToCart(product);*/}
-                {/*                                        changeButtonColor(product.id); // Đổi màu khi nhấp chuột*/}
-                {/*                                        // handleRemoveFromCart(product.id);*/}
-                {/*                                    }}>*/}
-                {/*                                    <i className="fa fa-cart-plus me-2" aria-hidden="true"></i> Thêm*/}
-                {/*                                </button>*/}
-
-
-                {/*                            </div>*/}
-                {/*                        </div>*/}
-                {/*                    </div>*/}
-                {/*                </div>*/}
-                {/*            </div>*/}
-                {/*        );*/}
-                {/*    })}*/}
                 <div className="d-flex">
-                    {/*<div className="col-12 col-md-6 col-lg-4 mb-3">*/}
-                    {/*    <Sidebar/>*/}
-                    {/*</div>*/}
+                    <div className="d-none d-md-block">
+                        <Sidebar/>
+                    </div>
                     <Pagination></Pagination>
                 </div>
 
