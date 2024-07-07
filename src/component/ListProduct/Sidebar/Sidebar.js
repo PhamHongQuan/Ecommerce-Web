@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { MDBContainer, MDBListGroup, MDBListGroupItem, MDBRadio } from 'mdb-react-ui-kit';
 import '../../Styles/Sidebar.css';
 
@@ -33,7 +33,7 @@ const SidebarItem = ({ label, itemKey, selectedItem, expandedItem, onItemClick, 
             <div className="">
                 <Link to={`/list-product/${itemKey}`} className="text-decoration-none">
                     <MDBListGroupItem
-                        className={`list-group-item parent-item ${selectedItem === itemKey ? 'active' : ''}`}
+                        className={`list-group-item parent-item ${selectedItem === itemKey && expandedItem ? 'active' : ''}`}
                         onClick={() => onItemClick(itemKey)}
                     >
                         {label}
@@ -123,7 +123,7 @@ const SidebarItem = ({ label, itemKey, selectedItem, expandedItem, onItemClick, 
     );
 };
 
-export default function Sidebar({ onFilterChange }) {
+const Sidebar = ({ onFilterChange }) => {
     const [selectedItem, setSelectedItem] = useState(null);
     const [expandedItem, setExpandedItem] = useState(null);
     const [radioValues, setRadioValues] = useState({
@@ -132,6 +132,21 @@ export default function Sidebar({ onFilterChange }) {
         lacoste: { price: '', size: '', gender: '' },
         puma: { price: '', size: '', gender: '' }
     });
+
+    const location = useLocation();
+
+    useEffect(() => {
+        // Close all sub-items when path is "/list-product"
+        if (location.pathname === "/list-product") {
+            setExpandedItem(null);
+            setRadioValues({
+                nike: { price: '', size: '', gender: '' },
+                adidas: { price: '', size: '', gender: '' },
+                lacoste: { price: '', size: '', gender: '' },
+                puma: { price: '', size: '', gender: '' }
+            });
+        }
+    }, [location.pathname]);
 
     const handleItemClick = (item) => {
         setSelectedItem(item);
@@ -175,4 +190,6 @@ export default function Sidebar({ onFilterChange }) {
             </MDBListGroup>
         </MDBContainer>
     );
-}
+};
+
+export default Sidebar;

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import '../Styles/ProductListStyles.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { addCart } from "../../store/Action";
+import ReactTooltip from 'react-tooltip';
 
 export default function ProductList() {
     const [products, setProducts] = useState([]);
@@ -71,19 +72,6 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
         navigate(`/product/${id}`);
     };
 
-    // useEffect(() => {
-    //     setSelectedSize(null);
-    //     setSelectedColor(null);
-    //     setQuantity(1);
-    // }, [id]);
-
-    // const [selectedColor, setSelectedColor] = useState(localStorage.getItem("selectedColor") || null);
-    //     setSelectedSize(null);
-    //     setSelectedColor(null);
-    //     setQuantity(1);
-    //     navigate(`/product/${id}`);
-    // };
-
     const [selectedColor, setSelectedColor] = useState(
         localStorage.getItem("selectedColor") || null
     );
@@ -133,10 +121,10 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
                 <motion.div
                     initial={{ x: "100%", opacity: 0, scale: 0.7 }}
                     animate={{ x: 0, opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.2, ease: "easeIn" }}
+                    // transition={{ duration: 0.5, delay: index * 0.2, ease: "easeIn" }}
                 >
                     <MDBCard className="product-card-pl" style={{ cursor: 'pointer' }}>
-                        <NavLink to={`/product/${id}`} title={`URL: http://localhost:9000/products/${id}`} style={{ display: 'block', overflow: 'hidden' }}>
+                        <NavLink to={`/product/${id}`} style={{ display: 'block', overflow: 'hidden' }}>
                             <MDBCardImage
                                 src={img}
                                 alt={name}

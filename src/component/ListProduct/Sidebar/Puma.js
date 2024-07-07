@@ -228,7 +228,7 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
                 transition={{ duration: 0.5, delay: index * 0.2, ease: "easeIn" }}
             >
                 <MDBCard className="product-card-pl" onClick={handleViewDetail} style={{ cursor: 'pointer' }}>
-                    <NavLink to={`/product/${id}`} title={`URL: http://localhost:9000/products/${id}`} style={{ display: 'block', overflow: 'hidden' }}>
+                    <NavLink to={`/product/${id}`} style={{ display: 'block', overflow: 'hidden' }}>
                         <MDBCardImage
                             src={img}
                             alt={name}
