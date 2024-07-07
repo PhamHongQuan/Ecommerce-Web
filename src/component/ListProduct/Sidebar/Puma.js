@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import React, { useEffect, useState } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from "mdb-react-ui-kit";
 import {Link, NavLink, useNavigate, useOutletContext} from 'react-router-dom';
@@ -18,6 +18,7 @@ export default function Puma() {
     const [priceFilterChanged, setPriceFilterChanged] = useState(false);
     const [genderFilterChanged, setGenderFilterChanged] = useState(false);
     const [initialLoad, setInitialLoad] = useState(true);
+
 
     useEffect(() => {
         fetch("http://localhost:9000/products")
@@ -143,7 +144,13 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
     const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
 
 
+    const cart = useSelector(state => state.cart);
+    const currentUser = useSelector(state => state.currentUser);
 
+    if(currentUser != null){
+        const userCart = cart.find(item => item.username === currentUser.username);
+        const productsOfCart = userCart.products;
+    }
     const handleViewDetail = () => {
         navigate(`/product/${id}`);
     };
@@ -296,11 +303,15 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
                         <div className="card-footer">
                             <button className="custom-button-pl" onClick={(e) => {
                                 e.stopPropagation();
-                                if(selectedSize != null && selectedColor != null){
-                                    handleAddToCart();
-                                    alert("Đã thêm sản phẩm vào giỏ haàng");
-                                }else {
-                                    alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
+                                if(currentUser != null) {
+                                    if(selectedSize != null && selectedColor != null){
+                                        handleAddToCart();
+                                    }else {
+                                        alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
+                                    }
+                                }else{
+                                    alert("Bạn cần đăng nhập");
+
                                 }
                             }}>Thêm
                             </button>

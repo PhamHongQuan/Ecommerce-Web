@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from "mdb-react-ui-kit";
 import { motion } from "framer-motion";
 import '../Styles/ProductListStyles.css';
@@ -41,34 +41,52 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
     const navigate = useNavigate();
     const [showPopup, setShowPopup] = useState(false);
     const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+    const cart = useSelector(state => state.cart);
+    const currentUser = useSelector(state => state.currentUser);
+    const [buttonColors, setButtonColors] = useState({});
 
+    if(currentUser != null){
+        const userCart = cart.find(item => item.username === currentUser.username);
+        const productsOfCart = userCart.products;
+    }
     const handleClosePopup = () => {
         setShowPopup(false);
-        setSelectedSize(null);
-        setSelectedColor(null);
-        setQuantity(1);
     };
 
     const handlePopUp = () => {
         setShowPopup(true);
-    };
+        setSelectedSize(null);
+        setSelectedColor(null);
+        setQuantity(1);
+    }
 
     const handleAddToCart = () => {
         dispatch(addCart({ id, name, img, des, price, size: selectedSize, color: selectedColor, quantity: selectedQuantity }));
     };
 
     const handleViewDetail = () => {
-        navigate(`/product/${id}`);
-    };
-
-    useEffect(() => {
         setSelectedSize(null);
         setSelectedColor(null);
         setQuantity(1);
-    }, [id]);
+        navigate(`/product/${id}`);
+    };
 
-    const [selectedColor, setSelectedColor] = useState(localStorage.getItem("selectedColor") || null);
+    // useEffect(() => {
+    //     setSelectedSize(null);
+    //     setSelectedColor(null);
+    //     setQuantity(1);
+    // }, [id]);
 
+    // const [selectedColor, setSelectedColor] = useState(localStorage.getItem("selectedColor") || null);
+    //     setSelectedSize(null);
+    //     setSelectedColor(null);
+    //     setQuantity(1);
+    //     navigate(`/product/${id}`);
+    // };
+
+    const [selectedColor, setSelectedColor] = useState(
+        localStorage.getItem("selectedColor") || null
+    );
     useEffect(() => {
         localStorage.setItem("selectedColor", selectedColor);
     }, [selectedColor]);
@@ -192,6 +210,16 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
                                     alert("Đã thêm sản phẩm vào giỏ hàng");
                                 } else {
                                     alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
+                                    if (currentUser != null) {
+                                        if (selectedSize != null && selectedColor != null) {
+                                            handleAddToCart();
+                                            alert("Đã thêm sản phẩm vào giỏ haàng");
+                                        } else {
+                                            alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
+                                        }
+                                    } else {
+                                        alert("Bạn cần đăng nhập");
+                                    }
                                 }
                             }}>Thêm
                             </button>
@@ -206,4 +234,4 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
             )}
         </>
     );
-};
+}

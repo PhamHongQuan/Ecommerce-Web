@@ -22,12 +22,17 @@ const Cart = () => {
     const currentUser = useSelector(state => state.currentUser);
 
     if(currentUser == null){
-        return (<MDBContainer className="my-5">
-            <Navbar></Navbar>
+        return (
+
+            <div className="page-wrapper">
+                <Navbar/>
+                <MDBContainer className="my-5">
             <p>Bạn phải   <Link to="/login">Đăng nhập </Link>
             </p>
             <Footers></Footers>
-        </MDBContainer>);
+        </MDBContainer>
+            </div>
+                );
     }
     const userCart = cart.find(item => item.username === currentUser.username);
     const productsOfCart = userCart.products;
@@ -44,64 +49,73 @@ const Cart = () => {
 
 
     return (
-        <MDBContainer className="my-5">
-            <Navbar></Navbar>
-            <MDBRow>
-                {productsOfCart.length === 0 ? (
-                    <p>Giỏ hàng của bạn trống</p>
-                ) : (
-                    productsOfCart.map(product => {
-                        const totalPrice = product.price * product.quantity;
-                        const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice);
+        <div className="page-wrapper">
+            <Navbar/>
+            <MDBContainer className="my-5">
+                <MDBRow className="mt-5">
+                    {productsOfCart.length === 0 ? (
+                        <p>Giỏ hàng của bạn trống</p>
+                    ) : (
+                        productsOfCart.map(product => {
+                                const totalPrice = product.price * product.quantity;
+                                const formattedPrice = new Intl.NumberFormat('vi-VN', {
+                                    style: 'currency',
+                                    currency: 'VND'
+                                }).format(totalPrice);
 
-                        return(<MDBCol md="4" lg="3" key={product.id}>
-                                <MDBCard className="product-card">
-                                    <MDBCardImage src={product.img} alt={product.name} position="top"/>
-                                    <MDBCardBody>
-                                        <MDBCardTitle className="truncate-name">{product.name}</MDBCardTitle>
-                                        <MDBCardText className="truncate-description">{product.des}</MDBCardText>
+                                return (<MDBCol md="4" lg="3" key={product.id}>
+                                    <MDBCard className="product-card">
+                                        <MDBCardImage src={product.img} alt={product.name} position="top"/>
+                                        <MDBCardBody>
+                                            <MDBCardTitle className="truncate-name">{product.name}</MDBCardTitle>
+                                            <MDBCardText className="truncate-description">{product.des}</MDBCardText>
 
 
-                                        <div className="detail-product">
-                                            <p>Màu sắc: {product.color}</p>
-                                            <p>{formattedPrice}</p>
-                                            <p>Kích thước: {product.size}</p>
+                                            <div className="detail-product">
+                                                <p>Màu sắc: {product.color}</p>
+                                                <p>{formattedPrice}</p>
+                                                <p>Kích thước: {product.size}</p>
 
-                                        </div>
-                                        <div className="container-quantity">
+                                            </div>
+                                            <div className="container-quantity">
 
-                                            <button
-                                                className="custom-button-quantity"
-                                                onClick={() => handleDecreasement(product)}>
-                                                -
-                                            </button>
-                                            <p>{product.quantity}</p>
+                                                <button
+                                                    className="custom-button-quantity"
+                                                    onClick={() => handleDecreasement(product)}>
+                                                    -
+                                                </button>
+                                                <p>{product.quantity}</p>
 
-                                            <button
-                                                className="custom-button-quantity"
-                                                onClick={() => handleIncreasement(product)}
-                                            >
-                                                +
-                                            </button>
+                                                <button
+                                                    className="custom-button-quantity"
+                                                    onClick={() => handleIncreasement(product)}
+                                                >
+                                                    +
+                                                </button>
 
-                                            <button
-                                                className="custom-button-remove"
-                                                onClick={() => handleRemoveFromCart(product)}
-                                            >
-                                                Xóa
-                                            </button>
-                                        </div>
+                                                <button
+                                                    className="custom-button-remove"
+                                                    onClick={() => handleRemoveFromCart(product)}
+                                                >
+                                                    Xóa
+                                                </button>
+                                            </div>
 
-                                    </MDBCardBody>
-                                </MDBCard>
-                            </MDBCol>);
-                        }
-                    )
-                )}
-            </MDBRow>
-            <Footers></Footers>
-        </MDBContainer>
+                                        </MDBCardBody>
+                                    </MDBCard>
+                                </MDBCol>);
+                            }
+                        )
+                    )}
+                </MDBRow>
+                <hr/>
+                <Footers></Footers>
+            </MDBContainer>
+        </div>
+
+
     );
+
 };
 
 export default Cart;

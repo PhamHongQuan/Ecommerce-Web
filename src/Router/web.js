@@ -17,6 +17,10 @@ import Search from "../component/search/search";
 import ForgotPassword from "../component/account/ForgotPassword/ForgotPassword";
 import ResetPasswordPage from "../component/account/ForgotPassword/ResetPassword";
 import Usage from "../component/Usage/Usage";
+import Warranty from "../component/ Policy/Warranty";
+import Security from "../component/ Policy/Security";
+import Rules from "../component/ Policy/Rules";
+import Introduce from "../component/ Policy/Introduce";
 
 
 const Router = () => (
@@ -39,6 +43,10 @@ const Router = () => (
             <Route path="search" element={<Search/>}/>
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
+            <Route path="warranty" element={<Warranty />} />
+            <Route path="security" element={<Security/>} />
+            <Route path="rules" element={<Rules/>} />
+            <Route path="introduce" element={<Introduce/>} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password/:username" element={<ResetPasswordPage />} />
             <Route path="/usage" element={<Usage />} />

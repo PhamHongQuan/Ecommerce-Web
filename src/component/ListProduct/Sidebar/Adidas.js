@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from 'mdb-react-ui-kit';
 import {NavLink, useOutletContext} from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { motion } from "framer-motion";
 import { Button } from 'react-bootstrap';
@@ -139,6 +139,14 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
     const navigate = useNavigate();
 
     const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+    const cart = useSelector(state => state.cart);
+    const currentUser = useSelector(state => state.currentUser);
+    const [buttonColors, setButtonColors] = useState({});
+
+    if(currentUser != null){
+        const userCart = cart.find(item => item.username === currentUser.username);
+        const productsOfCart = userCart.products;
+    }
 
 
     const handleViewDetail = () => {
@@ -296,12 +304,17 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
                         <div className="card-footer">
                             <button className="custom-button-pl" onClick={(e) => {
                                 e.stopPropagation();
-                                if(selectedSize != null && selectedColor != null){
-                                    handleAddToCart();
-                                    alert("Đã thêm sản phẩm vào giỏ haàng");
-                                }else {
-                                    alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
+                                if(currentUser != null) {
+                                    if(selectedSize != null && selectedColor != null){
+                                        handleAddToCart();
+                                    }else {
+                                        alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
+                                    }
+                                }else{
+                                    alert("Bạn cần đăng nhập");
+
                                 }
+
                             }}>Thêm
                             </button>
                             <button className="custom-button-pl" onClick={(e) => {
