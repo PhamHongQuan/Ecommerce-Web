@@ -143,6 +143,11 @@ const Navbar = () => {
                                 </ul>
 
                             </li>
+                            <li className="nav-item dropdown">
+                                <Link
+                                    className={`nav-link ${location.pathname.includes("usage") ? 'active' : ''}`}
+                                    to="/usage">Hướng dẫn</Link>
+                            </li>
                         </ul>
                         {/*<Search></Search>*/}
                         <form className="d-flex position-relative" role="search" onSubmit={handleSubmit}>

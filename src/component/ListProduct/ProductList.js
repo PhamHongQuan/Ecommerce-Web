@@ -3,8 +3,9 @@ import {useDispatch, useSelector} from "react-redux";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from "mdb-react-ui-kit";
 import { motion } from "framer-motion";
 import '../Styles/ProductListStyles.css';
-import {NavLink, useNavigate} from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { addCart } from "../../store/Action";
+import ReactTooltip from 'react-tooltip';
 
 export default function ProductList() {
     const [products, setProducts] = useState([]);
@@ -51,25 +52,24 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
     }
     const handleClosePopup = () => {
         setShowPopup(false);
-
     };
 
-    const handlePopUp = () =>{
+    const handlePopUp = () => {
         setShowPopup(true);
         setSelectedSize(null);
         setSelectedColor(null);
         setQuantity(1);
-
     }
+
     const handleAddToCart = () => {
-        dispatch(addCart({id, name, img, des, price,size:selectedSize,color:selectedColor,quantity:selectedQuantity}));
+        dispatch(addCart({ id, name, img, des, price, size: selectedSize, color: selectedColor, quantity: selectedQuantity }));
     };
+
     const handleViewDetail = () => {
         setSelectedSize(null);
         setSelectedColor(null);
         setQuantity(1);
         navigate(`/product/${id}`);
-
     };
 
     const [selectedColor, setSelectedColor] = useState(
@@ -79,23 +79,25 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
         localStorage.setItem("selectedColor", selectedColor);
     }, [selectedColor]);
 
-    const [selectedSize, setSelectedSize] = useState(
-        localStorage.getItem("selectedSize") || null
-    );
+    const [selectedSize, setSelectedSize] = useState(localStorage.getItem("selectedSize") || null);
 
     useEffect(() => {
         localStorage.setItem("selectedSize", selectedSize);
     }, [selectedSize]);
+
     const handleColorClick = (tint) => {
         setSelectedColor(tint);
     };
+
     const handleColorClickSize = (size) => {
         setSelectedSize(size);
     };
+
     const [selectedQuantity, setQuantity] = useState(() => {
         const savedQuantity = localStorage.getItem('selectedQuantity');
         return savedQuantity ? parseInt(savedQuantity, 10) : 1;
     });
+
     useEffect(() => {
         localStorage.setItem('selectedQuantity', selectedQuantity);
     }, [selectedQuantity]);
@@ -115,32 +117,39 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
 
     return (
         <>
-        <MDBCol md="6" lg="3">
-            <motion.div
-                initial={{ x: "100%", opacity: 0, scale: 0.7 }}
-                animate={{ x: 0, opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.2, ease: "easeIn" }}
-            >
-                <MDBCard className="product-card-pl" onClick={handleViewDetail} style={{ cursor: 'pointer' }}>
-                    <MDBCardImage src={img} alt={name} position="top" />
-                    <MDBCardBody>
-                        <MDBCardTitle className="truncate-name truncate-text">{name}</MDBCardTitle>
-                        <MDBCardText className="truncate-size truncate-text"><b>Size:</b> {size.join(', ')}</MDBCardText>
-                        <MDBCardText className="truncate-tint truncate-text"><b>Màu sắc:</b> {tint.join(', ')}</MDBCardText>
-                    </MDBCardBody>
-                    <div className="card-footer">
-                        <span className="text-price">{formattedPrice}</span>
-                        <button className="custom-button-pl" onClick={(e) => {
-                            e.stopPropagation();
-                            handlePopUp();
-                        }}>Thêm
-                        </button>
-
-                    </div>
-
-                </MDBCard>
-            </motion.div>
-        </MDBCol>
+            <MDBCol md="6" lg="3">
+                <motion.div
+                    initial={{ x: "100%", opacity: 0, scale: 0.7 }}
+                    animate={{ x: 0, opacity: 1, scale: 1 }}
+                    // transition={{ duration: 0.5, delay: index * 0.2, ease: "easeIn" }}
+                >
+                    <MDBCard className="product-card-pl" style={{ cursor: 'pointer' }}>
+                        <NavLink to={`/product/${id}`} style={{ display: 'block', overflow: 'hidden' }}>
+                            <MDBCardImage
+                                src={img}
+                                alt={name}
+                                className="img-fluid w-100"
+                                style={{ transition: 'transform 0.3s ease' }}
+                                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.15)'}
+                                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)' }
+                            />
+                        </NavLink>
+                        <MDBCardBody>
+                            <MDBCardTitle className="truncate-name truncate-text">{name}</MDBCardTitle>
+                            <MDBCardText className="truncate-size truncate-text"><b>Size:</b> {size.join(', ')}</MDBCardText>
+                            <MDBCardText className="truncate-tint truncate-text"><b>Màu sắc:</b> {tint.join(', ')}</MDBCardText>
+                        </MDBCardBody>
+                        <div className="card-footer">
+                            <span className="text-price">{formattedPrice}</span>
+                            <button className="custom-button-pl" onClick={(e) => {
+                                e.stopPropagation();
+                                handlePopUp();
+                            }}>Thêm
+                            </button>
+                        </div>
+                    </MDBCard>
+                </motion.div>
+            </MDBCol>
             {showPopup && (
                 <div id="popup">
                     <div className="popup-content">
@@ -156,9 +165,7 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
                                     >
                                         {size}
                                     </button>
-
                                 ))}
-
                             </div>
                         </div>
                         <div className="d-flex">
@@ -178,30 +185,30 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
                         </div>
                         <div className="d-flex">
                             <div className="quantity buttons_added">
-                                <input type="button" value="-" className="minus button is-form"
-                                       onClick={handleDecrement}/>
-                                <input type="number" id="quantity" className="input-text qty text" step="1"
-                                       min="1" max="9999" name="quantity" value={selectedQuantity} title="SL" size="4"
-                                       inputMode="numeric" onChange={handleChange}  style={{ textAlign: 'center' }}/>
-                                <input type="button" value="+" className="plus button is-form"
-                                       onClick={handleIncrement}/>
+                                <input type="button" value="-" className="minus button is-form" onClick={handleDecrement} />
+                                <input type="number" id="quantity" className="input-text qty text" step="1" min="1" max="9999" name="quantity" value={selectedQuantity} title="SL" size="4" inputMode="numeric" onChange={handleChange} style={{ textAlign: 'center' }} />
+                                <input type="button" value="+" className="plus button is-form" onClick={handleIncrement} />
                             </div>
-
                         </div>
                         <div className="card-footer">
                             <button className="custom-button-pl" onClick={(e) => {
                                 e.stopPropagation();
-                                if(currentUser != null) {
-                                    if(selectedSize != null && selectedColor != null){
-                                        handleAddToCart();
-                                        alert("Đã thêm sản phẩm vào giỏ haàng");
-                                    }else {
-                                        alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
+                                if (selectedSize != null && selectedColor != null) {
+                                    handleAddToCart();
+                                    alert("Đã thêm sản phẩm vào giỏ hàng");
+                                } else {
+                                    alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
+                                    if (currentUser != null) {
+                                        if (selectedSize != null && selectedColor != null) {
+                                            handleAddToCart();
+                                            alert("Đã thêm sản phẩm vào giỏ haàng");
+                                        } else {
+                                            alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
+                                        }
+                                    } else {
+                                        alert("Bạn cần đăng nhập");
                                     }
-                                }else {
-                                    alert("Bạn cần đăng nhập");
                                 }
-
                             }}>Thêm
                             </button>
                             <button className="custom-button-pl" onClick={(e) => {
@@ -209,13 +216,10 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
                                 handleClosePopup();
                             }}>Đóng
                             </button>
-
                         </div>
                     </div>
                 </div>
             )}
         </>
     );
-
-
-};
+}
