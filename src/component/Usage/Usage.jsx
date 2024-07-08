@@ -98,6 +98,7 @@ function Usage() {
                     </MDBTabsPane>
                 </MDBTabsContent>
             </div>
+            <hr/>
             <Footers/>
         </div>
     );

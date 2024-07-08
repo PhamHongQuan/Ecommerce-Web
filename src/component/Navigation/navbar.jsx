@@ -122,6 +122,21 @@ const Navbar = () => {
                                 </Link>
                             </li>
 
+                            {/*<li className="nav-item">*/}
+                            {/*    <Link className={`nav-link ${location.pathname === '/cart' ? 'active' : ''}`}*/}
+                            {/*          to="/cart">*/}
+                            {/*        <div className="d-flex">*/}
+                            {/*            <i className="fa fa-cart-plus d-inline-flex"></i><CartInfo></CartInfo>*/}
+                            {/*        </div>*/}
+                            {/*    </Link>*/}
+                            {/*</li>*/}
+
+                            <li className="nav-item dropdown">
+                                <Link
+                                    className={`nav-link ${location.pathname.includes("usage") ? 'active' : ''}`}
+                                    to="/usage">Hướng dẫn</Link>
+                            </li>
+
 
                             <li className="nav-item dropdown">
                                 {/*<Link to="/register"><i className="fa fa-cart-plus d-flex mt-2 fs-5"></i></Link>*/}
@@ -149,11 +164,14 @@ const Navbar = () => {
                                             <li>
                                                 <a className="dropdown-item" href="#">Tài khoản</a>
                                             </li>
-                                            <li>
-                                                <a className="dropdown-item" href="#">Hướng dẫn</a>
+                                            <li className="dropdown-item">
+                                                <Link
+                                                    className={`nav-link ${location.pathname.includes("usage") ? 'active' : ''}`}
+                                                    style={{marginLeft: '-5px'}} to="/usage">Hướng dẫn</Link>
                                             </li>
-                                            <li>
-                                                <a className="dropdown-item" href="#">Lịch sử đơn hàng</a>
+                                            <li className="dropdown-item">
+                                                <Link to="/reset-password/:username" className="text-reset"> Đổi mật
+                                                    khẩu </Link>
                                             </li>
                                             <li>
                                                 <a className="dropdown-item" onClick={logoutFunction}>
@@ -165,12 +183,12 @@ const Navbar = () => {
                                         <>
                                             <li>
                                                 <a className="dropdown-item">
-                                                    <Link to="/login">Đăng nhập</Link>
+                                                    <Link to="/login" className="text-reset fs-6">Đăng nhập</Link>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a className="dropdown-item">
-                                                    <Link to="/register">Đăng ký</Link>
+                                                    <Link to="/register" className="text-reset fs-6">Đăng ký</Link>
                                                 </a>
                                             </li>
                                         </>
@@ -178,11 +196,7 @@ const Navbar = () => {
                                 </ul>
 
                             </li>
-                            <li className="nav-item dropdown">
-                                <Link
-                                    className={`nav-link ${location.pathname.includes("usage") ? 'active' : ''}`}
-                                    to="/usage">Hướng dẫn</Link>
-                            </li>
+
                         </ul>
                     </div>
                 </div>

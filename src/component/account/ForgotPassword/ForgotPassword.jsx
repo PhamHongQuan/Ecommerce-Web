@@ -5,6 +5,7 @@ import { MDBContainer, MDBCol, MDBRow, MDBBtn, MDBInput, MDBIcon } from 'mdb-rea
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 function ForgotPassword() {
     const [email, setEmail] = useState('');
     const [emailSent, setEmailSent] = useState(false);
@@ -63,6 +64,7 @@ function ForgotPassword() {
     };
 
     return (
+
         <MDBContainer>
             <MDBRow className="justify-content-center">
                 <MDBCol md="6">

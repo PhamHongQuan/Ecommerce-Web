@@ -42,9 +42,9 @@ const Register = () => {
                 if (existUser>=0) {
                     reject(new Error('Username đã tồn tại. Hãy đặt username khác'));
                 }else if(usernameString.length <5){
-                    reject(new Error('Username phải lớn hơn 5 kí tu'));
+                    reject(new Error('Username phải lớn hơn 5 kí tự'));
                 }else if(passwordString.length <8){
-                    reject(new Error('Password phải lớn hơn 8 kí tu'));
+                    reject(new Error('Password phải lớn hơn 8 kí tự'));
                 }
                 else {
                     resolve(user);
@@ -57,42 +57,45 @@ const Register = () => {
         <div className="page-wrapper">
             <Navbar/>
         <MDBContainer className="my-5">
-
             <div className="container-register">
-                <h2>Register</h2>
-                <form onSubmit={handleSubmit}>
-                    <div >
-                        <label>Username:</label>
-                        <input
-                            type="text"
-                            name="username"
-                            value={user.username}
-                            onChange={handleChange}/>
-                    </div>
-                    <div>
-                        <label>Email:</label>
-                        <input className="email" type="email"
-                        name="email"
-                        value={user.email}
-                        onChange={handleChange}/>
-                    </div>
-                    <div>
-                        <label>Password:</label>
-                        <input
-                            type="password"
-                            name="password"
-                            value={user.password}
-                            onChange={handleChange}/>
-                    </div>
-                    <button className="button-submit" type="submit" disabled={registering}>
-                        {registering ? 'Registering...' : 'Register'}
-                    </button>
-                    {error && <p className="error-mess">{error}</p>}
-                </form>
-            </div>
-            <Footers></Footers>
+                <h2 className="text-center">Register</h2>
+                <div className="ms-5 me-5">
+                    <form onSubmit={handleSubmit}>
+                        <div>
+                            <label>Username:</label>
+                            <input minLength={5}
+                                type="text"
+                                name="username"
+                                value={user.username}
+                                onChange={handleChange}/>
+                        </div>
+                        <div>
+                            <label>Email:</label>
+                            <input className="email" type="email"
+                                   name="email"
+                                   value={user.email}
+                                   onChange={handleChange}/>
+                        </div>
+                        <div>
+                            <label>Password:</label>
+                            <input className="ms-1"
+                                   minLength={8}
+                                type="password"
+                                name="password"
+                                value={user.password}
+                                onChange={handleChange}/>
+                        </div>
+                        <button className="button-submit mb-3" type="submit" disabled={registering}>
+                            {registering ? 'Registering...' : 'Register'}
+                        </button>
+                        {error && <p className="error-mess">{error}</p>}
+                    </form>
+                </div>
 
+            </div>
         </MDBContainer>
+            <hr/>
+            <Footers></Footers>
         </div>
     );
 };

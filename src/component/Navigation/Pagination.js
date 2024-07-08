@@ -3,7 +3,7 @@ import { products } from '../../data/ProductData';
 import {Link, NavLink} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {useSelector } from 'react-redux';
-import {addCart} from "../../store/Action";
+import {addCart, delCart} from "../../store/Action";
 import {MDBContainer} from "mdb-react-ui-kit";
 import Navbar from "./navbar";
 import Footers from "../Footer/Footers"; // Đường dẫn đến tệp ProductData
@@ -40,6 +40,7 @@ const Products = ({product}) => {
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     //thay doi mau btn
@@ -71,6 +72,12 @@ const Products = ({product}) => {
         setButtonColors(newColors);
         localStorage.setItem('buttonColors', JSON.stringify(newColors));
     };
+    // const [color, setColor] = useState('btn-success');
+    // const handleRemoveFromCart = (product) => {
+    //     dispatch(delCart(product));
+    //     setColor('btn-primary');
+    //
+    // };
 
 
 
@@ -177,8 +184,8 @@ const Products = ({product}) => {
                                         />
                                     </NavLink>
                                 </div>
-                                <div className="card-body text-center">
-                                    <h5 className="fs-6 h-50">{product.name}</h5>
+                                <div className="text-center">
+                                    <h5 className="fs-6 h-50 w-100 mt-lg-1">{product.name}</h5>
                                     <div className="d-flex justify-content-center flex-column flex-md-row mt-3">
                                         <p className="fs-5 me-md-1 mb-2 mb-md-0 "
                                            data-mdb-color="dark" data-mdb-ripple-init="">
@@ -191,7 +198,7 @@ const Products = ({product}) => {
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     handlePopUp(product);
-                                                    //  changeButtonColor(product.id); // Đổi màu khi nhấp chuột
+                                                     changeButtonColor(product.id); // Đổi màu khi nhấp chuột
                                                     // handleToggleCart(product.id);
                                                     // handleRemoveFromCart(product.id);
                                                 }}>
@@ -266,7 +273,6 @@ const Products = ({product}) => {
                                                                     alert("Bạn phải đăng nhập");
 
                                                                 }
-
                                                             }}>Thêm
                                                             </button>
                                                             <button className="custom-button-pl" onClick={(e) => {
@@ -292,8 +298,7 @@ const Products = ({product}) => {
             <nav aria-label="Page navigation example">
                 <ul className="pagination">
                 <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                        <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>Previous
-                        </button>
+                        <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>Previous</button>
                     </li>
                     {Array.from({length: totalPages}, (_, index) => (
                         <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>

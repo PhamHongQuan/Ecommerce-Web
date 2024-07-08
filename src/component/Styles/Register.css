@@ -1,7 +1,14 @@
 .container-register {
-    margin-left: 500px;
-    margin-top: 100px;
+    /*margin-left: 500px;*/
+    /*margin-top: 100px;*/
     margin-bottom: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+    height: auto;
+    border: solid 1px black;
+    box-shadow: 5px 10px 8px;
+    /*background-color: white;*/
 }
 .container-register * {
 
@@ -14,11 +21,12 @@
 a {
     color: black;
 }
-h2{
-    margin-left: 100px;
-}
+/*h2{*/
+/*    margin-left: 100px;*/
+/*}*/
 .button-submit{
     margin-top: 30px;
+    text-align: center;
     margin-left: 100px;
     background-color: white;
     border:2px lightblue solid;
@@ -38,8 +46,8 @@ h2{
     color: orangered;
 }
 .email{
-    margin-left: 52px;
+    margin-left: 34px;
 }
 input{
-    margin-left: 20px;
+    margin-left: 21px;
 }
