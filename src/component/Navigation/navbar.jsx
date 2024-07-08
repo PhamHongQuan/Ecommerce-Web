@@ -178,6 +178,11 @@ const Navbar = () => {
                                 </ul>
 
                             </li>
+                            <li className="nav-item dropdown">
+                                <Link
+                                    className={`nav-link ${location.pathname.includes("usage") ? 'active' : ''}`}
+                                    to="/usage">Hướng dẫn</Link>
+                            </li>
                         </ul>
                     </div>
                 </div>

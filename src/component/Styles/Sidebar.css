@@ -44,6 +44,13 @@
     margin-left: 60px;
     max-width: 200px;
 }
+.sub-item-box-u {
+    margin-bottom: 10px;
+    border: 1px solid #2fc1d3;
+    padding: 10px;
+    border-radius: 8px;
+    background: linear-gradient(to left, rgb(55, 147, 128), rgba(154, 96, 223, 0.44), rgba(77, 172, 207, 0.8));
+}
 
 .sub-item-box {
     margin-bottom: 10px;
