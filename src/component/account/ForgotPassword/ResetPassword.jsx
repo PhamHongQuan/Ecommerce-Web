@@ -68,7 +68,7 @@ function ResetPasswordPage() {
 
     return (
         <MDBContainer>
-            <MDBRow className="justify-content-center">
+            <MDBRow className="justify-content-center mt-lg-5">
                 <MDBCol md="6">
                     <form onSubmit={handleSubmit}>
                         <p className="h4 text-center mb-4 title">

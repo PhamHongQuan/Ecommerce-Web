@@ -9,6 +9,9 @@ import "../Styles/Register.css";
 import "../Styles/Navbar.css";
 import {useDispatch, useSelector} from "react-redux";
 import {loginSuccess, logout} from "../../store/Action";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'mdb-ui-kit/css/mdb.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import dark from "../Styles/dark.css"
 import Search from "../search/search";
 
@@ -57,18 +60,49 @@ const Navbar = () => {
 
 
     return (
-        <div>
-            <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm">
+        <div className="">
+            {/*<nav className="navbar navbar-expand-md navbar-expand-lg navbar-light bg-white py-3 shadow-sm">*/}
+            <nav className="navbar navbar-expand-md navbar-expand-lg py-3 shadow-sm">
                 <div className="container ">
                     <a className="navbar-brand fw-bold fs-4" href="#">Shop Shoes</a>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
+                    <div>
+                        <button className="navbar-toggler bg-primary" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <i className="navbar-toggler-icon"></i>
+                        </button>
+
+                    </div>
+
+
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        {/*<Search></Search>*/}
+                        <div className="d-flex flex-column order-1 order-md-2 mt-2 mt-md-0">
+                            <div className="d-flex w-100">
+                                <form className="d-flex mb-2 mb-md-0 position-relative w-100" role="search"
+                                      onSubmit={handleSubmit}>
+                                    <input className="form-control" type="search" placeholder="Search"
+                                           aria-label="Search"
+                                           value={query} onChange={handleInputChange}/>
+                                    <button className="btn btn-primary" type="submit" style={{width: '40px'}}>
+                                        <i className="fa fa-search fa-lg justify-content-center"></i>
+                                    </button>
+                                </form>
+
+                                <div className="wrapper">
+                                    <div className="toggle">
+                                        <input className="toggle-input" type="checkbox" checked={isChecked}
+                                               onChange={handleToggle}/>
+                                        <div className="toggle-bg" title="dark mode"></div>
+                                        <div className="toggle-switch" title="dark mode"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
+                            <li className="nav-item ">
                                 <Link className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
                                       aria-current="page" to="/">Trang chủ</Link>
                             </li>
@@ -88,12 +122,27 @@ const Navbar = () => {
                                 </Link>
                             </li>
 
+                            {/*<li className="nav-item">*/}
+                            {/*    <Link className={`nav-link ${location.pathname === '/cart' ? 'active' : ''}`}*/}
+                            {/*          to="/cart">*/}
+                            {/*        <div className="d-flex">*/}
+                            {/*            <i className="fa fa-cart-plus d-inline-flex"></i><CartInfo></CartInfo>*/}
+                            {/*        </div>*/}
+                            {/*    </Link>*/}
+                            {/*</li>*/}
+
+                            <li className="nav-item dropdown">
+                                <Link
+                                    className={`nav-link ${location.pathname.includes("usage") ? 'active' : ''}`}
+                                    to="/usage">Hướng dẫn</Link>
+                            </li>
+
 
                             <li className="nav-item dropdown">
                                 {/*<Link to="/register"><i className="fa fa-cart-plus d-flex mt-2 fs-5"></i></Link>*/}
 
                                 <a
-                                    data-mdb-dropdown-init
+                                    data-mdb-dropdown-init=""
                                     className="nav-link dropdown-toggle d-flex align-items-center"
                                     href="#"
                                     id="navbarDropdownMenuLink"
@@ -102,11 +151,12 @@ const Navbar = () => {
                                 >
                                     <img
                                         src="https://cdn-icons-png.freepik.com/256/1144/1144760.png?ga=GA1.1.2079026882.1697034920&semt=ais_hybrid"
-                                        className="rounded-circle"
+                                        className="rounded-circle d-none d-md-block"
                                         height="22"
                                         alt="Portrait of a Woman"
                                         loading="lazy"
                                     />
+                                    <span className="d-block d-md-none">Tài khoản</span>
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     {currentUser ? (
@@ -114,11 +164,14 @@ const Navbar = () => {
                                             <li>
                                                 <a className="dropdown-item" href="#">Tài khoản</a>
                                             </li>
-                                            <li>
-                                                <a className="dropdown-item" href="#">Hướng dẫn</a>
+                                            <li className="dropdown-item">
+                                                <Link
+                                                    className={`nav-link ${location.pathname.includes("usage") ? 'active' : ''}`}
+                                                    style={{marginLeft: '-5px'}} to="/usage">Hướng dẫn</Link>
                                             </li>
-                                            <li>
-                                                <a className="dropdown-item" href="#">Lịch sử đơn hàng</a>
+                                            <li className="dropdown-item">
+                                                <Link to="/reset-password/:username" className="text-reset"> Đổi mật
+                                                    khẩu </Link>
                                             </li>
                                             <li>
                                                 <a className="dropdown-item" onClick={logoutFunction}>
@@ -130,12 +183,12 @@ const Navbar = () => {
                                         <>
                                             <li>
                                                 <a className="dropdown-item">
-                                                    <Link to="/login">Đăng nhập</Link>
+                                                    <Link to="/login" className="text-reset fs-6">Đăng nhập</Link>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a className="dropdown-item">
-                                                    <Link to="/register">Đăng ký</Link>
+                                                    <Link to="/register" className="text-reset fs-6">Đăng ký</Link>
                                                 </a>
                                             </li>
                                         </>
@@ -143,31 +196,8 @@ const Navbar = () => {
                                 </ul>
 
                             </li>
-                            <li className="nav-item dropdown">
-                                <Link
-                                    className={`nav-link ${location.pathname.includes("usage") ? 'active' : ''}`}
-                                    to="/usage">Hướng dẫn</Link>
-                            </li>
+
                         </ul>
-                        {/*<Search></Search>*/}
-                        <form className="d-flex position-relative" role="search" onSubmit={handleSubmit}>
-                            <input className="form-control" type="search" placeholder="Search"
-                                   aria-label="Search" value={query}
-                                   onChange={handleInputChange}/>
-                            <button className="" type="submit" style={{width: '30px'}}>
-                                <i className="fa fa-search fa-lg justify-content-center"></i>
-                            </button>
-                        </form>
-
-                        <div className="wrapper">
-                            <div className="toggle">
-                                <input className="toggle-input" type="checkbox" checked={isChecked}
-                                       onChange={handleToggle}/>
-                                <div className="toggle-bg" title="dark mode"></div>
-                                <div className="toggle-switch" title="dark mode"></div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </nav>

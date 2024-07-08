@@ -160,6 +160,8 @@ const ProductDetails = () => {
 
         }
 
+        
+
 
         return(
           <><Navbar></Navbar><>
@@ -206,7 +208,7 @@ const ProductDetails = () => {
                                   <button
                                       key={index}
                                       type="button"
-                                      className={`btn ${selectedColor === tint ? "btn-primary" : "btn-outline-black"} me-2`}
+                                      className={`btn ${selectedColor === tint ? "btn-primary" : "btn-outline-secondary text-warning"} me-2`}
                                       onClick={() => handleColorClick(tint)}
                                   >
                                       {tint}
@@ -222,7 +224,7 @@ const ProductDetails = () => {
                                   <button
                                       key={index}
                                       type="button"
-                                      className={`btn ${selectedSize === size ? "btn-primary" : "btn-outline-black"} me-2`}
+                                      className={`btn ${selectedSize === size ?  "btn-primary" : "btn-outline-secondary text-warning"} me-2`}
                                       onClick={() => handleColorClickSize(size)}
                                   >
                                       {size}
@@ -232,12 +234,6 @@ const ProductDetails = () => {
                       </div>
                       <div className="d-flex" style={{marginLeft:'-16px'}}>
                           <div className="quantity buttons_added">
-                              {/*<input type="button" value="-" className="minus button is-form"*/}
-                              {/*       onClick={handleDecrement}/>*/}
-                              {/*<input style={{marginLeft:'-1px', width:'50px', textAlign:'center'}} type="number" id="quantity" className="input-text qty text" step="1"*/}
-                              {/*       min="1" max="9999" name="quantity" value={quantity} title="SL" size="4"*/}
-                              {/*       inputMode="numeric" onChange={handleChange}/>*/}
-                              {/*<input style={{marginLeft:'0px'}} type="button" value="+" className="plus button is-form" onClick={handleIncrement}/>*/}
                               <input type="button" value="-" className="minus button is-form" onClick={handleDecrement}/>
                               <input style={{marginLeft:'-1px', width:'50px', textAlign:'center'}} type="number" id="quantity" className="input-text qty text" step="1"
                                      min="1" max="9999" name="quantity"  value={selectedQuantity}  title="SL" size="4"
@@ -286,7 +282,7 @@ const ProductDetails = () => {
                                               onClick={() => setShowPopover(false)}
                                           />
                                           <img className="img-fluid"
-                                               src="https://cdn.giayhongthanh.com.vn/public/uploads/site/10179/wordpress/2022/05/7a8baa45f531356f6c20-787x400.jpg"
+                                               src="https://duvis.vn/wp-content/uploads/xem-ki-huong-dan-ve-size-giay-312358.jpeg"
                                                alt=""
                                           />
                                       </MDBPopoverBody>
@@ -345,7 +341,7 @@ const ProductDetails = () => {
               </div>
               <hr/>
               <div className="ms-5 mb-5">
-                  <p className="fw-bold fs-5">Sản phẩm tương tự</p>
+                  <p className="fw-bold fs-5">Sản phẩm khác</p>
                   <div className="container">
                       <div className="row">
                           {randomProducts.map((product) => (
@@ -367,17 +363,17 @@ const ProductDetails = () => {
                                       <div className="card-body text-center">
                                           <h5 className=" fs-6 h-50">{product.name}</h5>
                                           <div className="d-flex justify-content-center">
-                                              <div className="btn-group shadow-0 mt-3 flex-column flex-md-row"
+                                              <div className="btn-group shadow-0 mt-3 flex-column"
                                                    role="group"
                                                    aria-label="Basic example">
-                                                  <p className="btn btn-outline-black  me-md-1 mb-2 mb-md-0"
+                                                  <p className="btn btn-outline fs-5 me-md-1 mb-2 mb-md-0"
                                                      data-mdb-color="dark" data-mdb-ripple-init="">{formattedPrice}
                                                   </p>
-                                                  <NavLink to={`/product/${product.id}`}>
+                                                  <NavLink to={`/product/${product.id}`} className="w-100 text-center">
                                                       <button type="button"
-                                                              className="btn btn-danger d-flex align-items-center mb-2 mb-md-0"
-                                                              data-mdb-color="dark" data-mdb-ripple-init=""><i
-                                                          className="fa fa-cart-plus me-2" aria-hidden="true"></i>Thêm
+                                                              className="btn btn-danger d-flex align-items-center justify-content-center ms-2 mb-2 mb-md-0"
+                                                              data-mdb-color="dark" data-mdb-ripple-init="">Xem chi tiết
+                                                          {/*<i className="fa fa-cart-plus me-2" aria-hidden="true"></i>*/}
                                                       </button>
                                                   </NavLink>
                                               </div>

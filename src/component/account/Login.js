@@ -50,41 +50,45 @@ const Login = () => {
     return (
         <div className="page-wrapper">
             <Navbar/>
-        <MDBContainer className="my-5">
-
+        <MDBContainer className="my-5 text-center align-items-center ">
             <div className="container-register">
-                <h2>Login</h2>
+                <h2 className="text-center">Login</h2>
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label>Username:</label>
-                        <input
+                        <label>Username</label>
+                        <input className="ms-1"
+                            minLength={5}
                             type="text"
                             name="username"
                             value={user.username}
                             onChange={handleChange}/>
                     </div>
                     <div>
-                        <label>Password:</label>
+                        <label>Password</label>
                         <input
+                            className="ms-1"
+                            minLength={8}
                             type="password"
                             name="password"
                             value={user.password}
                             onChange={handleChange}/>
                     </div>
-                    <button className="button-submit" type="submit" disabled={logging}>
+                    <button className="button-submit" style={{marginLeft:'-10px'}} type="submit" disabled={logging}>
                         {logging ? 'Logging...' : 'Login'}
                     </button>
                     {error && <p className="error-mess">{error}</p>}
                     <br/>
                     <p>
+                        <Link to="/forgot-password" className="register-link">Quên mật khẩu</Link>
+                    </p>
+                    <p>
                         Bạn mới biết đến Shop Shoes ? <Link to="/register" className="register-link">Đăng ký </Link>
-
                     </p>
                 </form>
             </div>
-            <Footers></Footers>
-
         </MDBContainer>
+            <hr/>
+            <Footers></Footers>
         </div>
 
     );

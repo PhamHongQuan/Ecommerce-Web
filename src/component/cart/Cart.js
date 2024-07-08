@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
-
 import {Link, useParams} from 'react-router-dom';
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from 'mdb-react-ui-kit';
 import { useSelector } from 'react-redux';
@@ -23,16 +22,19 @@ const Cart = () => {
 
     if(currentUser == null){
         return (
-
-            <div className="page-wrapper">
-                <Navbar/>
-                <MDBContainer className="my-5">
-            <p>Bạn phải   <Link to="/login">Đăng nhập </Link>
-            </p>
+        <div className="page-wrapper">
+            <Navbar/>
+            <MDBContainer className="" style={{marginBottom: '78px'}} >
+                <MDBRow className="mt-5">
+                    <p>Bạn phải <Link to="/login">Đăng nhập </Link></p>
+                </MDBRow>
+            </MDBContainer>
+            <hr/>
             <Footers></Footers>
-        </MDBContainer>
-            </div>
-                );
+        </div>
+
+
+        );
     }
     const userCart = cart.find(item => item.username === currentUser.username);
     const productsOfCart = userCart.products;
@@ -41,7 +43,10 @@ const Cart = () => {
     };
 
     const handleDecreasement = (product) => {
-        dispatch(decreasement(product));
+        if (product.quantity > 1) {
+            dispatch(decreasement(product));
+        }
+        
     };
     const handleIncreasement = (product) => {
         dispatch(increaseCart(product));
@@ -67,17 +72,16 @@ const Cart = () => {
                                     <MDBCard className="product-card">
                                         <MDBCardImage src={product.img} alt={product.name} position="top"/>
                                         <MDBCardBody>
-                                            <MDBCardTitle className="truncate-name">{product.name}</MDBCardTitle>
-                                            <MDBCardText className="truncate-description">{product.des}</MDBCardText>
-
-
+                                            {/*<MDBCardTitle className="truncate-name">{product.name}</MDBCardTitle>*/}
+                                            <MDBCardTitle className="fs-6 fw-bold pe-2">{product.name}</MDBCardTitle>
+                                            {/*<MDBCardText className="truncate-description">{product.des}</MDBCardText>*/}
                                             <div className="detail-product">
                                                 <p>Màu sắc: {product.color}</p>
-                                                <p>{formattedPrice}</p>
+                                                <p>Giá: {formattedPrice}</p>
                                                 <p>Kích thước: {product.size}</p>
 
                                             </div>
-                                            <div className="container-quantity">
+                                            <div className="container-quantity mt-lg-1">
 
                                                 <button
                                                     className="custom-button-quantity"
@@ -108,9 +112,9 @@ const Cart = () => {
                         )
                     )}
                 </MDBRow>
-                <hr/>
-                <Footers></Footers>
             </MDBContainer>
+            <hr/>
+            <Footers></Footers>
         </div>
 
 
