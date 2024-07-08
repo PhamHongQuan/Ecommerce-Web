@@ -136,7 +136,6 @@ const Sidebar = ({ onFilterChange }) => {
     const location = useLocation();
 
     useEffect(() => {
-        // Close all sub-items when path is "/list-product"
         if (location.pathname === "/list-product") {
             setExpandedItem(null);
             setRadioValues({
