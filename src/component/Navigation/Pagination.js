@@ -153,7 +153,7 @@ const Products = ({product}) => {
 
     return (
         <div>
-            <div className="row">
+            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3">
                 {productList.map((product) => {
                     const formattedPrice = new Intl.NumberFormat('vi-VN', {
                         style: 'currency',
@@ -163,7 +163,7 @@ const Products = ({product}) => {
                     const buttonColor1 = buttonColors[product.id] || 'btn-primary'; // Lấy màu sắc từ state hoặc màu mặc định
                     return (
                         <div key={product.id} className="col-3 col-6 col-sm-6 col-lg-3 pb-lg-2 mb-3">
-                            <div className="card ms-3 h-100 border">
+                            <div className="card ms-3 h-100 border col pb-lg-2 mb-3">
                                 <div className="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                                     <NavLink to={`/product/${product.id}`}
                                              style={{display: 'block', overflow: 'hidden'}}>
@@ -185,11 +185,6 @@ const Products = ({product}) => {
                                             {formattedPrice}
                                         </p>
                                         <div className="btn-group shadow-0  flex-column flex-md-row">
-                                            {/*<p className="btn bg-primary btn-outline fs-5 me-md-1 mb-2 mb-md-0"*/}
-                                            {/*   data-mdb-color="dark" data-mdb-ripple-init="">*/}
-                                            {/*    {formattedPrice}*/}
-                                            {/*</p>*/}
-
                                             <button
                                                 type="button"
                                                 className={`btn ${buttonColor} d-flex align-items-center justify-content-center text-center mb-2 mb-md-0 rounded-5 w-100 w-md-auto`}
@@ -204,11 +199,11 @@ const Products = ({product}) => {
                                                 {inCart ? 'Xóa' : 'Thêm'}
                                             </button>
                                             {showPopup && selectedProduct && (
-                                                <div id="popup" className="" style={{boxShadow: 'none'}}>
+                                                <div id="popup" className="text-center w-100" style={{boxShadow: 'none', maxWidth: '450px', height: 'auto'}}>
                                                     <div className="popup-content">
-                                                        <div className="d-flex">
-                                                            <p className="fw-bold mt-2">Chọn Size</p>
-                                                            <div className="ms-3" role="group" aria-label="First group">
+                                                        <div className="d-flex flex-column flex-lg-row align-items-center">
+                                                            <p className="fw-bold mt-2 mt-lg-0">Chọn Size</p>
+                                                            <div className="ms-0 ms-lg-3 mb-3 mb-lg-0" role="group" aria-label="First group">
                                                                 {Array.isArray(selectedProduct.size) && selectedProduct.size.map((size, index) => (
                                                                     <button
                                                                         key={index}
@@ -222,9 +217,9 @@ const Products = ({product}) => {
                                                                 ))}
                                                             </div>
                                                         </div>
-                                                        <div className="d-flex">
-                                                            <p className="fw-bold mt-2">Màu Sắc</p>
-                                                            <div className="ms-4" role="group" aria-label="">
+                                                        <div className="d-flex flex-column flex-lg-row align-items-center">
+                                                            <p className="fw-bold mt-2 mb-lg-0">Màu Sắc</p>
+                                                            <div className="ms-0 ms-lg-4 mb-3 mb-lg-0" role="group" aria-label="">
                                                                 {Array.isArray(selectedProduct.tint) && selectedProduct.tint.map((tint, index) => (
                                                                     <button
                                                                         key={index}
@@ -237,9 +232,9 @@ const Products = ({product}) => {
                                                                 ))}
                                                             </div>
                                                         </div>
-                                                        <div className="d-flex mt-lg-2">
-                                                            <p className="fw-bold">Số Lượng</p>
-                                                            <div className="quantity buttons_added">
+                                                        <div className="d-flex flex-column flex-lg-row align-items-center mt-lg-2">
+                                                            <p className="fw-bold mb-lg-0">Số Lượng</p>
+                                                            <div className="quantity buttons_added ms-3">
                                                                 <input type="button" value="-"
                                                                        className="minus button is-form"
                                                                        onClick={handleDecrement}/>

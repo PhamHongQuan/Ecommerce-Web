@@ -18,7 +18,7 @@
 .container-quantity{
     display: flex;
     top: 90%;
-    position: absolute;
+    /*position: absolute;*/
 }
 .custom-button-remove{
     margin-left: 150px;
@@ -35,13 +35,13 @@
     margin-right: 10px;
 }
 .product-card{
-    height: 500px;
+    height: auto;
 }
 .text-danger{
 
 }
 .detail-product{
-    position: absolute;
+    /*position: absolute;*/
     top: 70%;
 }
 .detail-product *{

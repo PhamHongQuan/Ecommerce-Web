@@ -208,7 +208,7 @@ const ProductDetails = () => {
                                   <button
                                       key={index}
                                       type="button"
-                                      className={`btn ${selectedColor === tint ? "btn-primary" : "btn-outline-black"} me-2`}
+                                      className={`btn ${selectedColor === tint ? "btn-primary" : "btn-outline-secondary text-warning"} me-2`}
                                       onClick={() => handleColorClick(tint)}
                                   >
                                       {tint}
@@ -224,7 +224,7 @@ const ProductDetails = () => {
                                   <button
                                       key={index}
                                       type="button"
-                                      className={`btn ${selectedSize === size ? "btn-primary" : "btn-outline-black"} me-2`}
+                                      className={`btn ${selectedSize === size ?  "btn-primary" : "btn-outline-secondary text-warning"} me-2`}
                                       onClick={() => handleColorClickSize(size)}
                                   >
                                       {size}

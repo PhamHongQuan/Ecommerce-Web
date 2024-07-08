@@ -108,9 +108,9 @@ const Cart = () => {
                         )
                     )}
                 </MDBRow>
-                <hr/>
-                <Footers></Footers>
             </MDBContainer>
+            <hr/>
+            <Footers></Footers>
         </div>
 
 
