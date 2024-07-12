@@ -3,9 +3,8 @@ import {useDispatch, useSelector} from "react-redux";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from "mdb-react-ui-kit";
 import { motion } from "framer-motion";
 import '../Styles/ProductListStyles.css';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { addCart } from "../../store/Action";
-import ReactTooltip from 'react-tooltip';
 
 export default function ProductList() {
     const [products, setProducts] = useState([]);
@@ -117,37 +116,38 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
 
     return (
         <>
-            <MDBCol md="6" lg="3">
+            <MDBCol md="6" lg="3" xl="3" className="product-column">
                 <motion.div
                     initial={{ x: "100%", opacity: 0, scale: 0.7 }}
                     animate={{ x: 0, opacity: 1, scale: 1 }}
-                    // transition={{ duration: 0.5, delay: index * 0.2, ease: "easeIn" }}
+                    transition={{ duration: 0.3, delay: index * 0.2, linear: "linear" }}
                 >
-                    <MDBCard className="product-card-pl" style={{ cursor: 'pointer' }}>
-                        <NavLink to={`/product/${id}`} style={{ display: 'block', overflow: 'hidden' }}>
-                            <MDBCardImage
-                                src={img}
-                                alt={name}
-                                className="img-fluid w-100"
-                                style={{ transition: 'transform 0.3s ease' }}
-                                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.15)'}
-                                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)' }
-                            />
-                        </NavLink>
-                        <MDBCardBody>
-                            <MDBCardTitle className="truncate-name truncate-text">{name}</MDBCardTitle>
-                            <MDBCardText className="truncate-size truncate-text"><b>Size:</b> {size.join(', ')}</MDBCardText>
-                            <MDBCardText className="truncate-tint truncate-text"><b>Màu sắc:</b> {tint.join(', ')}</MDBCardText>
-                        </MDBCardBody>
-                        <div className="card-footer">
-                            <span className="text-price">{formattedPrice}</span>
-                            <button className="custom-button-pl" onClick={(e) => {
-                                e.stopPropagation();
-                                handlePopUp();
-                            }}>Thêm
-                            </button>
-                        </div>
-                    </MDBCard>
+                    <Link to={`/product/${id}`} style={{ display: 'block', overflow: 'hidden' }}>
+                        <MDBCard className="product-card-pl" style={{ cursor: 'pointer' }}>
+                                <MDBCardImage
+                                    src={img}
+                                    alt={name}
+                                    className="img-fluid w-100"
+                                    style={{ transition: 'transform 0.3s ease' }}
+                                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.15)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)' }
+                                />
+
+                            <MDBCardBody>
+                                <MDBCardTitle className="truncate-name truncate-text">{name}</MDBCardTitle>
+                                <MDBCardText className="truncate-size truncate-text"><b>Size:</b> {size.join(', ')}</MDBCardText>
+                                <MDBCardText className="truncate-tint truncate-text"><b>Màu sắc:</b> {tint.join(', ')}</MDBCardText>
+                            </MDBCardBody>
+                            <div className="card-footer">
+                                <span className="text-price">{formattedPrice}</span>
+                                <button className="custom-button-pl" onClick={(e) => {
+                                    e.stopPropagation();
+                                    handlePopUp();
+                                }}>Thêm
+                                </button>
+                            </div>
+                        </MDBCard>
+                    </Link>
                 </motion.div>
             </MDBCol>
             {showPopup && (
@@ -201,7 +201,7 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
                                     if (currentUser != null) {
                                         if (selectedSize != null && selectedColor != null) {
                                             handleAddToCart();
-                                            alert("Đã thêm sản phẩm vào giỏ haàng");
+                                            alert("Đã thêm sản phẩm vào giỏ hàng");
                                         } else {
                                             alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
                                         }

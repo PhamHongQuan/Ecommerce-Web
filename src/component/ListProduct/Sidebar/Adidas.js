@@ -218,39 +218,40 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
     };
     return (
         <>
-        <MDBCol md="4" lg="3">
-            <motion.div
-                initial={shouldAnimate ? { x: "100%", opacity: 0, scale: 0.7 } : false}
-                animate={{ x: 0, opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.2, ease: "easeIn" }}
-            >
-                <MDBCard className="product-card-pl" onClick={handleViewDetail} style={{ cursor: 'pointer' }}>
-                    <NavLink to={`/product/${id}`} style={{ display: 'block', overflow: 'hidden' }}>
-                        <MDBCardImage
-                            src={img}
-                            alt={name}
-                            className="img-fluid w-100"
-                            style={{ transition: 'transform 0.3s ease' }}
-                            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.15)'}
-                            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)' }
-                        />
-                    </NavLink>
-                    <MDBCardBody>
-                        <MDBCardTitle className="truncate-name truncate-text"><b>{name}</b></MDBCardTitle>
-                        <MDBCardText className="truncate-size truncate-text"><b>Size:</b> {size.join(', ')}
-                        </MDBCardText>
-                        <MDBCardText className="truncate-tint truncate-text"><b>Màu sắc:</b>{tint.join(', ')}
-                        </MDBCardText>
-                    </MDBCardBody>
-                    <div className="card-footer">
-                        <span className="text-price">{formattedPrice}</span>
-                        <button className="custom-button-pl" onClick={(e) => {
-                            e.stopPropagation();
-                            handlePopUp();
-                        }}>Thêm
-                        </button>
-                    </div>
-                </MDBCard>
+            <MDBCol md="6" lg="3" xl="3" className="product-column">
+                <motion.div
+                    initial={shouldAnimate ? { x: "100%", opacity: 0, scale: 0.7 } : false}
+                    animate={{ x: 0, opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: index * 0.2, ease: "easeIn" }}
+                >
+                <NavLink to={`/product/${id}`} style={{ display: 'block', overflow: 'hidden' }}>
+                    <MDBCard className="product-card-pl" onClick={handleViewDetail} style={{ cursor: 'pointer' }}>
+                            <MDBCardImage
+                                src={img}
+                                alt={name}
+                                className="img-fluid w-100"
+                                style={{ transition: 'transform 0.3s ease' }}
+                                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.15)'}
+                                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)' }
+                            />
+
+                        <MDBCardBody>
+                            <MDBCardTitle className="truncate-name truncate-text"><b>{name}</b></MDBCardTitle>
+                            <MDBCardText className="truncate-size truncate-text"><b>Size:</b> {size.join(', ')}
+                            </MDBCardText>
+                            <MDBCardText className="truncate-tint truncate-text"><b>Màu sắc:</b>{tint.join(', ')}
+                            </MDBCardText>
+                        </MDBCardBody>
+                        <div className="card-footer">
+                            <span className="text-price">{formattedPrice}</span>
+                            <button className="custom-button-pl" onClick={(e) => {
+                                e.stopPropagation();
+                                handlePopUp();
+                            }}>Thêm
+                            </button>
+                        </div>
+                    </MDBCard>
+                </NavLink>
             </motion.div>
         </MDBCol>
 
