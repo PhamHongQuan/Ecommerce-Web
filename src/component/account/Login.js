@@ -8,12 +8,15 @@ import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCa
 import Navbar from "../Navigation/navbar";
 import Footers from "../Footer/Footers";
 import "../Styles/Register.css"
+import axios from 'axios';
 
 const Login = () => {
     const [user, setUser] = useState({ username: '', email: '',password: '' });
     const dispatch = useDispatch();
     const logging = useSelector((state) => state.logging);
-    const error = useSelector((state) => state.error);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
     const navigate = useNavigate();
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,30 +25,35 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(login(user));
+      //  dispatch(login(user));
         try {
-            const response = await fakeApiLogin(user);
-            dispatch(loginSuccess(response));
-            navigate('/');
-        } catch (err) {
-            dispatch(loginFail(err.message));
+            const response = await axios.post('http://localhost:5000/api/login', {
+                username: user.username,
+                password: user.password,
+            });
+            if (response.status === 200) {
+                const { user, cart } = response.data; // Destructure user and cart from response.data
+                console.log('User:', user);
+                console.log('Cart:', cart); // Log cart to verify its content
+
+                dispatch(loginSuccess(user, cart)); // Dispatch login success action with user and cart
+                setMessage('Đăng nhập thành công!');
+
+                // Redirect or navigate to home page
+                navigate('/');
+            } else {
+                setMessage('Đăng nhập thất bại. Vui lòng thử lại.');
+            }
+        } catch (error) {
+            if (error.response && error.response.data) {
+                setMessage(error.response.data.message);
+            } else {
+                setMessage('Đăng nhập thất bại. Vui lòng thử lại.');
+            }
         }
     };
 
-    const fakeApiLogin = (user) => {
-        let users = JSON.parse(localStorage.getItem('users')) || [];
-        const existUser = users.findIndex(item => item.username === user.username && item.password === user.password);
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                if (existUser>=0) {
-                    const indexUser = users[existUser];
-                    resolve(indexUser);
-                } else {
-                    reject(new Error('Username sai or password sai'));
-                }
-            }, 1000);
-        });
-    };
+
 
     return (
         <div className="page-wrapper">
@@ -61,7 +69,8 @@ const Login = () => {
                             type="text"
                             name="username"
                             value={user.username}
-                            onChange={handleChange}/>
+                            onChange={handleChange}
+                        />
                     </div>
                     <div>
                         <label>Password</label>
@@ -73,10 +82,10 @@ const Login = () => {
                             value={user.password}
                             onChange={handleChange}/>
                     </div>
-                    <button className="button-submit" style={{marginLeft:'-10px'}} type="submit" disabled={logging}>
-                        {logging ? 'Logging...' : 'Login'}
+                    <button className="button-submit" style={{marginLeft:'-10px'}} type="submit" >
+                       Đ
                     </button>
-                    {error && <p className="error-mess">{error}</p>}
+                    {message && <p className="error-mess">{message}</p>}
                     <br/>
                     <p>
                         <Link to="/forgot-password" className="register-link">Quên mật khẩu</Link>
