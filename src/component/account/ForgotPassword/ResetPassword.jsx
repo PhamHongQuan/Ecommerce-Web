@@ -10,6 +10,8 @@ import {
 } from 'mdb-react-ui-kit';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
+import {loginSuccess} from "../../../store/Action";
 
 function ResetPasswordPage() {
     const { username } = useParams();
@@ -17,32 +19,41 @@ function ResetPasswordPage() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+    const [message, setMessage] = useState('');
 
-    const updatePassword = (newPassword) => {
-        const currentUserString = localStorage.getItem('currentUser');
+    const updatePassword = async (newPassword) => {
+        const currentUserString = sessionStorage.getItem('currentUser');
         let currentUser = JSON.parse(currentUserString);
 
-        const usersString = localStorage.getItem('users');
-        let users = JSON.parse(usersString);
 
         if (typeof currentUser !== 'object' || Array.isArray(currentUser)) {
             return false;
         }
-        if (!Array.isArray(users)) {
-            return false;
-        }
 
         currentUser.password = newPassword;
-
-        users = users.map(user => {
-            if (user.username === currentUser.username || user.email === currentUser.email) {
-                return { ...user, password: newPassword };
+        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+        try {
+            const response = await axios.post('http://localhost:5000/api/user/resetpassword', {
+                username: currentUser.username,
+                newPassword: newPassword
+            });
+            if (response.status === 200) {
+                setErrorMessage('');
+            } else {
+                setErrorMessage('Đặt lại mật khẩu thất bại. Vui lòng thử lại.');
             }
-            return user;
-        });
+        } catch (error) {
+            if (error.response && error.response.data) {
+                toast.error(error.response.data.message, { autoClose: 3000 });
 
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        localStorage.setItem('users', JSON.stringify(users));
+                setMessage(error.response.data.message);
+            } else {
+                toast.error(error.response.data.message, { autoClose: 3000 });
+
+                setErrorMessage('Đặt lại mật khẩu thất bại. Vui lòng thử lại.');
+
+            }
+        }
 
         return true;
     };
@@ -54,7 +65,6 @@ function ResetPasswordPage() {
             setErrorMessage('Mật khẩu không khớp.');
             return;
         }
-
         const updated = updatePassword(password);
 
         if (updated) {
