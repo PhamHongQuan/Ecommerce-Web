@@ -8,6 +8,7 @@ import { Button } from 'react-bootstrap';
 import '../../Styles/ProductListStyles.css'
 import '../../Styles/PaginationInProduct.css';
 import { addCart } from "../../../store/Action";
+import axios from "axios";
 
 
 const ITEMS_PER_PAGE = 8;
@@ -143,10 +144,7 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
     const currentUser = useSelector(state => state.currentUser);
     const [buttonColors, setButtonColors] = useState({});
 
-    if(currentUser != null){
-        const userCart = cart.find(item => item.username === currentUser.username);
-        const productsOfCart = userCart.products;
-    }
+
 
 
     const handleViewDetail = () => {
@@ -213,8 +211,42 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
         const value = Math.max(1, Math.min(parseInt(event.target.value, 10) || 1, 9999));
         setQuantity(value);
     };
-    const handleAddToCart = () => {
-        dispatch(addCart({id, name, img, des, price,size:selectedSize,color:selectedColor,quantity:selectedQuantity}));
+    const handleAddToCart = async () => {
+        const product = {
+            id,
+            name,
+            img,
+            des,
+            price,
+            size: selectedSize,
+            color: selectedColor,
+            quantity: selectedQuantity
+        };
+        dispatch(addCart({
+            id,
+            name,
+            img,
+            des,
+            price,
+            size: selectedSize,
+            color: selectedColor,
+            quantity: selectedQuantity
+        }));
+        try {
+            const response = await axios.post('http://localhost:5000/api/cart/add', {
+                username: currentUser.username,
+                product
+            });
+
+            if (response.status === 200) {
+                console.log('Thêm sản phẩm vào giỏ hàng thành công');
+                // Các xử lý khác nếu cần
+            } else {
+                console.error('Thêm sản phẩm vào giỏ hàng thất bại');
+            }
+        } catch (error) {
+            console.error('Lỗi khi thêm sản phẩm vào giỏ hàng:', error);
+        }
     };
     return (
         <>
@@ -224,9 +256,10 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
                     animate={{ x: 0, opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, delay: index * 0.2, ease: "easeIn" }}
                 >
-                <NavLink to={`/product/${id}`} style={{ display: 'block', overflow: 'hidden' }}>
                     <MDBCard className="product-card-pl" onClick={handleViewDetail} style={{ cursor: 'pointer' }}>
-                            <MDBCardImage
+                        <NavLink to={`/product/${id}`} style={{ display: 'block', overflow: 'hidden' }}>
+
+                        <MDBCardImage
                                 src={img}
                                 alt={name}
                                 className="img-fluid w-100"
@@ -234,6 +267,7 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
                                 onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.15)'}
                                 onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)' }
                             />
+                         </NavLink>
 
                         <MDBCardBody>
                             <MDBCardTitle className="truncate-name truncate-text"><b>{name}</b></MDBCardTitle>
@@ -251,7 +285,6 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
                             </button>
                         </div>
                     </MDBCard>
-                </NavLink>
             </motion.div>
         </MDBCol>
 
@@ -308,6 +341,8 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
                                 if(currentUser != null) {
                                     if(selectedSize != null && selectedColor != null){
                                         handleAddToCart();
+                                        alert("Đã thêm sản phẩm vào giỏ hàng");
+
                                     }else {
                                         alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
                                     }

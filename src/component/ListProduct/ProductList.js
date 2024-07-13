@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import '../Styles/ProductListStyles.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { addCart } from "../../store/Action";
+import axios from 'axios';
 
 export default function ProductList() {
     const [products, setProducts] = useState([]);
@@ -46,8 +47,7 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
     const [buttonColors, setButtonColors] = useState({});
 
     if(currentUser != null){
-        const userCart = cart.find(item => item.username === currentUser.username);
-        const productsOfCart = userCart.products;
+        const productsOfCart = cart.products;
     }
     const handleClosePopup = () => {
         setShowPopup(false);
@@ -60,8 +60,35 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
         setQuantity(1);
     }
 
-    const handleAddToCart = () => {
-        dispatch(addCart({ id, name, img, des, price, size: selectedSize, color: selectedColor, quantity: selectedQuantity }));
+    const handleAddToCart = async () => {
+        const product = {
+            id,
+            name,
+            img,
+            des,
+            price,
+            size: selectedSize,
+            color: selectedColor,
+            quantity: selectedQuantity
+        };
+        dispatch(addCart(product));
+
+        try {
+            const response = await axios.post('http://localhost:5000/api/cart/add', {
+                username: currentUser.username,
+                product
+            });
+
+            if (response.status === 200) {
+                console.log('Thêm sản phẩm vào giỏ hàng thành công');
+                // Các xử lý khác nếu cần
+            } else {
+                console.error('Thêm sản phẩm vào giỏ hàng thất bại');
+            }
+        } catch (error) {
+            console.error('Lỗi khi thêm sản phẩm vào giỏ hàng:', error);
+        }
+
     };
 
     const handleViewDetail = () => {
@@ -122,9 +149,10 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
                     animate={{ x: 0, opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3, delay: index * 0.2, linear: "linear" }}
                 >
-                    <Link to={`/product/${id}`} style={{ display: 'block', overflow: 'hidden' }}>
                         <MDBCard className="product-card-pl" style={{ cursor: 'pointer' }}>
-                                <MDBCardImage
+                            <Link to={`/product/${id}`} style={{ display: 'block', overflow: 'hidden' }}>
+
+                            <MDBCardImage
                                     src={img}
                                     alt={name}
                                     className="img-fluid w-100"
@@ -132,6 +160,7 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
                                     onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.15)'}
                                     onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)' }
                                 />
+                            </Link>
 
                             <MDBCardBody>
                                 <MDBCardTitle className="truncate-name truncate-text">{name}</MDBCardTitle>
@@ -147,7 +176,7 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
                                 </button>
                             </div>
                         </MDBCard>
-                    </Link>
+
                 </motion.div>
             </MDBCol>
             {showPopup && (
