@@ -25,21 +25,19 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-      //  dispatch(login(user));
         try {
             const response = await axios.post('http://localhost:5000/api/login', {
                 username: user.username,
                 password: user.password,
             });
             if (response.status === 200) {
-                const { user, cart } = response.data; // Destructure user and cart from response.data
+                const { user, cart } = response.data;
                 console.log('User:', user);
-                console.log('Cart:', cart); // Log cart to verify its content
+                console.log('Cart:', cart);
 
-                dispatch(loginSuccess(user, cart)); // Dispatch login success action with user and cart
+                dispatch(loginSuccess(user, cart));
                 setMessage('Đăng nhập thành công!');
 
-                // Redirect or navigate to home page
                 navigate('/');
             } else {
                 setMessage('Đăng nhập thất bại. Vui lòng thử lại.');
@@ -83,7 +81,7 @@ const Login = () => {
                             onChange={handleChange}/>
                     </div>
                     <button className="button-submit" style={{marginLeft:'-10px'}} type="submit" >
-                       Đ
+                       Đăng nhập
                     </button>
                     {message && <p className="error-mess">{message}</p>}
                     <br/>

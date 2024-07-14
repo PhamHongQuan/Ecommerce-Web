@@ -9,11 +9,10 @@ const loadCurrentUser = ()=>{
 }
 const loadSelectedProduct =()=>{
     return JSON.parse(sessionStorage.getItem('selectedProduct'));
-
 }
 const initState={
     products:[],
-     cart:loadCart(),
+    cart:loadCart(),
     registering: false,
     logging: false,
     user:null,
@@ -205,6 +204,15 @@ export const root=(state= initState,action)=>{
                 ...state,
                 selectedProduct:    product
 
+            };
+        }
+        case "user/getEmail":{
+
+            const email = action.payload;
+           localStorage.setItem('email', JSON.stringify(email));
+            return {
+                ...state,
+                email
             };
         }
         case "pay/setOrder":{

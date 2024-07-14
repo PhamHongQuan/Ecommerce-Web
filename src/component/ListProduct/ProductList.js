@@ -212,11 +212,24 @@ const Product = ({ id, name, img, des, price, size, tint, index }) => {
                                 ))}
                             </div>
                         </div>
-                        <div className="d-flex">
-                            <div className="quantity buttons_added">
-                                <input type="button" value="-" className="minus button is-form" onClick={handleDecrement} />
-                                <input type="number" id="quantity" className="input-text qty text" step="1" min="1" max="9999" name="quantity" value={selectedQuantity} title="SL" size="4" inputMode="numeric" onChange={handleChange} style={{ textAlign: 'center' }} />
-                                <input type="button" value="+" className="plus button is-form" onClick={handleIncrement} />
+                        <div className="d-flex flex-column flex-lg-row align-items-center mt-lg-2">
+                            <p className="fw-bold mb-lg-0">Số Lượng</p>
+                            <div className="quantity buttons_added ms-3">
+                                <input type="button" value="-"
+                                       className="minus button is-form"
+                                       onClick={handleDecrement}/>
+                                <input type="number" id="quantity"
+                                       className="input-text qty text" step="1"
+                                       min="1" max="9999" name="quantity"
+                                       value={selectedQuantity} title="SL" size="4"
+                                       inputMode="numeric" onChange={handleChange}
+                                       style={{
+                                           textAlign: 'center',
+                                           marginLeft: '0px'
+                                       }}/>
+                                <input style={{marginLeft: '0px'}} type="button"
+                                       value="+" className="plus button is-form"
+                                       onClick={handleIncrement}/>
                             </div>
                         </div>
                         <div className="card-footer">

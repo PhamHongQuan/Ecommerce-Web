@@ -49,7 +49,6 @@ const Pay = () => {
             window.location.href = payUrl;
             if (res.status === 200) {
                 console.log('Thanh toán thành công');
-
                     handleRemoveFromCart(selectedProduct);
 
             } else {
