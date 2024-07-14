@@ -3,11 +3,12 @@ import { useDispatch } from "react-redux";
 import {Link, useParams} from 'react-router-dom';
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from 'mdb-react-ui-kit';
 import { useSelector } from 'react-redux';
-import { delCart, decreasement,increaseCart} from "../../store/Action";
+import { delCart, decreasement,increaseCart,selectedProduct} from "../../store/Action";
 import Navbar from '../Navigation/navbar';
 import Footers from "../Footer/Footers";
 import "../Styles/CartInfo.css";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const loadCart=()=>{
     return JSON.parse(localStorage.getItem('cart'))??[];
@@ -20,7 +21,7 @@ const Cart = () => {
     const dispatch = useDispatch();
     const cart = useSelector(state => state.cart);
     const currentUser = useSelector(state => state.currentUser);
-
+    const navigate = useNavigate();
     if(currentUser == null){
         return (
         <div className="page-wrapper">
@@ -98,6 +99,10 @@ const Cart = () => {
             console.error('Lỗi :', error);
         }
     };
+    const handleOrder = async (product) => {
+        dispatch(selectedProduct(product));
+        navigate('/pay');
+    };
 
 
     return (
@@ -149,6 +154,12 @@ const Cart = () => {
                                                     onClick={() => handleRemoveFromCart(product)}
                                                 >
                                                     Xóa
+                                                </button>
+                                                <button
+                                                    className="custom-button-order"
+                                                    onClick={() => handleOrder(product)}
+                                                >
+                                                    Đặt hàng
                                                 </button>
                                             </div>
 

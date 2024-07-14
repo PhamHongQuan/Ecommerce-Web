@@ -10,6 +10,7 @@ app.use(cors());
 
 let users = [];
 let carts =[];
+let orders =[];
 let products = [];
 app.post('/api/register', (req, res) => {
     const { username, email, password } = req.body;
@@ -156,6 +157,17 @@ app.post('/api/user/resetpassword', async (req, res) => {
 
 });
 
+app.post('/api/order/add', async (req, res) => {
+    const {username, order,product} = req.body;
+    orders.push({username:username, order_address:order, product: product});
+
+    console.log('Updated carts:', JSON.stringify(orders, null, 2));
+
+    console.log('Product:', product);
+    console.log('Order: ',order);
+    res.status(200).json({ message: 'Thêm sản phẩm vào giỏ hàng thành công' });
+
+});
 app.get('/', (req, res) => {
     res.send('Welcome to the server!');
 });
