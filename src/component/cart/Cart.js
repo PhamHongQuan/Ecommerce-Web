@@ -46,7 +46,7 @@ const Cart = () => {
         if (product.quantity > 1) {
             dispatch(decreasement(product));
         }
-        
+
     };
     const handleIncreasement = (product) => {
         dispatch(increaseCart(product));
