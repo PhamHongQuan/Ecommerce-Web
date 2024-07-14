@@ -77,6 +77,12 @@ export  const  selectedProduct=(product)=>{
         payload:product
     }
 }
+export const checkUserByEmail = (email) =>{
+    return{
+        type: 'user/getEmail',
+        payload:email
+    }
+}
 export  const selectOrder = (order)=>{
     return{
         type: 'pay/setOrder',

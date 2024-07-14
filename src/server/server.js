@@ -47,6 +47,17 @@ app.post('/api/login', (req, res) => {
     const cart = carts[userCartIndex];
     res.status(200).json({ message: 'Đăng nhập thành công!', user ,cart});
 });
+app.post('/api/getEmail', (req, res) => {
+    const {email } = req.body;
+
+
+    const user = users.find(user => user.email === email);
+    if (!user) {
+        return res.status(401).json({ message: 'Email không tồn tại' });
+    }
+    res.status(200).json({ message: 'Email tồn tại!',email});
+});
+
 
 app.post('/api/cart/add', (req, res) => {
     const { username, product } = req.body;
@@ -156,7 +167,29 @@ app.post('/api/user/resetpassword', async (req, res) => {
     console.log('Updated carts:', JSON.stringify(users));
 
 });
+app.post('/api/user/resetpasswordEmail', async (req, res) => {
+    const {email, newPassword} = req.body;
+    const userIndex = users.findIndex(user => user.email === email);
+    if (userIndex != -1) {
+        const user = users[userIndex];
+        if (!user) {
+            return res.status(404).json({message: 'Không tìm thấy user'});
+        } else {
+            if (user.password === newPassword) {
+                return res.status(400).json({message: 'Mật khẩu mới trùng với mật khẩu cũ!'});
+            } else {
+                try {
+                    users[userIndex].password = newPassword;
+                    res.status(200).json({message: 'Password updated successfully'});
+                } catch (error) {
+                    res.status(500).json({message: 'Failed to update password'});
+                }
+            }
+        }
+    }
+    console.log('Updated carts:', JSON.stringify(users));
 
+});
 app.post('/api/order/add', async (req, res) => {
     const {username, order,product} = req.body;
     orders.push({username:username, order_address:order, product: product});

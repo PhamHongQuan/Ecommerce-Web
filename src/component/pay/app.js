@@ -23,7 +23,8 @@ app.post("/payment", async (req, res) => {
     var redirectUrl = 'http://localhost:3000/';
     var ipnUrl = 'https://d2fc-115-76-48-234.ngrok-free.app/callback';
     var requestType = "captureWallet";
-    var amount = '1000';
+    const { amount } = req.body;
+
     var orderId = partnerCode + new Date().getTime();
     var requestId = orderId;
     var extraData ='';
