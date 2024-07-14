@@ -21,11 +21,22 @@
     /*position: absolute;*/
 }
 .custom-button-remove{
-    margin-left: 150px;
+    margin-left: 100px;
     height: 30px;
     position: absolute;
     border: 0 solid gray;
     background-color: white;
+}
+.custom-button-order{
+    margin-left: 180px;
+    height: 30px;
+    position: absolute;
+    border: 0 solid gray;
+    background-color: white;
+}
+
+.custom-button-order:hover{
+    color: orange;
 }
 .custom-button-remove:hover{
     color: red;

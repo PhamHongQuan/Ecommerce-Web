@@ -7,6 +7,10 @@ const  loadUsers =()=>{
 const loadCurrentUser = ()=>{
     return JSON.parse(sessionStorage.getItem('currentUser'));
 }
+const loadSelectedProduct =()=>{
+    return JSON.parse(sessionStorage.getItem('selectedProduct'));
+
+}
 const initState={
     products:[],
      cart:loadCart(),
@@ -14,6 +18,7 @@ const initState={
     logging: false,
     user:null,
     currentUser: loadCurrentUser(),
+    selectedProduct: loadSelectedProduct(),
     users: loadUsers(),
     error: null,
 }
@@ -189,6 +194,27 @@ export const root=(state= initState,action)=>{
                 currentUser: action.payload,
                 cart: action.payload
 
+            };
+        }
+        case "cart/selectedProduct":{
+            const product = action.payload;
+
+            sessionStorage.setItem('selectedProduct', JSON.stringify(product));
+
+            return {
+                ...state,
+                selectedProduct:    product
+
+            };
+        }
+        case "pay/setOrder":{
+            const order = action.payload;
+
+            sessionStorage.setItem('setOrder', JSON.stringify(order));
+
+            return {
+                ...state,
+                order
             };
         }
         default: return state;

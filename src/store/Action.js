@@ -71,3 +71,15 @@ export  const logout =() =>{
         type: 'user/logout'
     }
 }
+export  const  selectedProduct=(product)=>{
+    return{
+        type: 'cart/selectedProduct',
+        payload:product
+    }
+}
+export  const selectOrder = (order)=>{
+    return{
+        type: 'pay/setOrder',
+        payload:order
+    }
+}
