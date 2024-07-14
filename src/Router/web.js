@@ -21,6 +21,7 @@ import Warranty from "../component/ Policy/Warranty";
 import Security from "../component/ Policy/Security";
 import Rules from "../component/ Policy/Rules";
 import Introduce from "../component/ Policy/Introduce";
+import Pay from "../component/pay/Pay";
 
 
 const Router = () => (
@@ -46,6 +47,7 @@ const Router = () => (
             <Route path="warranty" element={<Warranty />} />
             <Route path="security" element={<Security/>} />
             <Route path="rules" element={<Rules/>} />
+            <Route path="pay" element={<Pay/>} />
             <Route path="introduce" element={<Introduce/>} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password/:username" element={<ResetPasswordPage />} />
