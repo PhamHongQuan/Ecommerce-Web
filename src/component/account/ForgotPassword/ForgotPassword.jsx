@@ -19,7 +19,7 @@ function ForgotPassword() {
             return;
         }
 
-        const currentUserString = localStorage.getItem('currentUser');
+        const currentUserString = sessionStorage.getItem('currentUser');
         if (!currentUserString) {
             setErrorMessage('Không tìm thấy người dùng.');
             return;

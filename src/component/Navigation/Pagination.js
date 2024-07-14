@@ -6,7 +6,8 @@ import {useSelector } from 'react-redux';
 import {addCart, delCart} from "../../store/Action";
 import {MDBContainer} from "mdb-react-ui-kit";
 import Navbar from "./navbar";
-import Footers from "../Footer/Footers"; // Đường dẫn đến tệp ProductData
+import Footers from "../Footer/Footers";
+import axios from "axios"; // Đường dẫn đến tệp ProductData
 
 const Products = ({product}) => {
     const [productList, setProductList] = useState([]);
@@ -22,8 +23,8 @@ const Products = ({product}) => {
     const [buttonColors, setButtonColors] = useState({});
 
     if(currentUser != null){
-        const userCart = cart.find(item => item.username === currentUser.username);
-        const productsOfCart = userCart.products;
+
+        const productsOfCart = cart.products;
     }
     useEffect(() => {
         // Lấy màu sắc từ localStorage khi component được render
@@ -47,11 +48,39 @@ const Products = ({product}) => {
 
 
     const [isAddedToCart, setIsAddedToCart] = useState(false);
-    const handleAddToCart =({id, name, img, des,price},selectedSize,selectedColor,selectedQuantity) =>{
+    const handleAddToCart =async ({id, name, img, des, price}, selectedSize, selectedColor, selectedQuantity) => {
 
         if (selectedColor !== null && selectedSize !== null) {
-            dispatch(addCart({  id,  name,  img,  des,  price,size: selectedSize, color: selectedColor,quantity: selectedQuantity
+            const product = {
+                id,
+                name,
+                img,
+                des,
+                price,
+                size: selectedSize,
+                color: selectedColor,
+                quantity: selectedQuantity
+            };
+            dispatch(addCart({
+                id, name, img, des, price, size: selectedSize, color: selectedColor, quantity: selectedQuantity
             }));
+
+            try {
+                const response = await axios.post('http://localhost:5000/api/cart/add', {
+                    username: currentUser.username,
+                    product
+                });
+
+                if (response.status === 200) {
+                    console.log('Thêm sản phẩm vào giỏ hàng thành công');
+                    // Các xử lý khác nếu cần
+                } else {
+                    console.error('Thêm sản phẩm vào giỏ hàng thất bại');
+                }
+            } catch (error) {
+                console.error('Lỗi khi thêm sản phẩm vào giỏ hàng:', error);
+            }
+
             alert("Đã thêm sản phẩm vào giỏ hàng");
 
 

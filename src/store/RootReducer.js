@@ -1,12 +1,11 @@
-import {useLocalStorage} from "../Hook/useLocalStorega";
 const loadCart=()=>{
-    return JSON.parse(localStorage.getItem('cart'))??[];
+    return JSON.parse(sessionStorage.getItem('cart'))??[];
 }
 const  loadUsers =()=>{
     return JSON.parse(localStorage.getItem('users'))??[];
 }
 const loadCurrentUser = ()=>{
-    return JSON.parse(localStorage.getItem('currentUser'));
+    return JSON.parse(sessionStorage.getItem('currentUser'));
 }
 const initState={
     products:[],
@@ -42,22 +41,20 @@ export const root=(state= initState,action)=>{
         case 'cart/add': {
             const product = action.payload;
             const cart = loadCart();
+            const productsUser = cart.products;
             const currentUser = loadCurrentUser();
-            const userCartIndex = cart.findIndex(item=>item.username===currentUser.username);
 
-
-            const productsUser = cart[userCartIndex].products;
             const existProductIndex = productsUser.findIndex(
                 item => item.id === product.id && item.size === product.size && item.color === product.color);
 
             if (existProductIndex >= 0) {
-                cart[userCartIndex].products[existProductIndex].quantity += product.quantity ;
+                cart.products[existProductIndex].quantity += product.quantity ;
             } else {
-                cart[userCartIndex].products.push({ ...product, quantity: product.quantity });
+                cart.products.push({ ...product, quantity: product.quantity });
             }
 
-            localStorage.setItem('cart', JSON.stringify(cart));
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
 
             return {
                 ...state,
@@ -69,16 +66,15 @@ export const root=(state= initState,action)=>{
             const product = action.payload;
             const cart = loadCart();
             const currentUser = loadCurrentUser();
-            const userCartIndex = cart.findIndex(item=>item.username===currentUser.username);
-            const productsUser = cart[userCartIndex].products;
+            const productsUser = cart.products;
 
             const existProductIndex = productsUser.findIndex(
                 item => item.id === product.id && item.size === product.size && item.color === product.color);
 
 
             if (existProductIndex >= 0) {
-                cart[userCartIndex].products[existProductIndex].quantity += 1;
-                localStorage.setItem('cart', JSON.stringify(cart));
+                cart.products[existProductIndex].quantity += 1;
+               sessionStorage.setItem('cart', JSON.stringify(cart));
 
             }
             return {
@@ -90,15 +86,15 @@ export const root=(state= initState,action)=>{
             const product = action.payload;
             const cart = loadCart();
             const currentUser = loadCurrentUser();
-            const userCartIndex = cart.findIndex(item=>item.username===currentUser.username);
-            const productsUser = cart[userCartIndex].products;
+
+            const productsUser = cart.products;
 
             const existProductIndex = productsUser.findIndex(
                 item => item.id === product.id && item.size === product.size && item.color === product.color);
-            if (existProductIndex >= 0 &&  cart[userCartIndex].products[existProductIndex].quantity>= 1) {
-                cart[userCartIndex].products[existProductIndex].quantity -= 1;
+            if (existProductIndex >= 0 &&  cart.products[existProductIndex].quantity>= 1) {
+                cart.products[existProductIndex].quantity -= 1;
 
-                localStorage.setItem('cart', JSON.stringify(cart));
+                sessionStorage.setItem('cart', JSON.stringify(cart));
             }
 
             return {
@@ -110,12 +106,11 @@ export const root=(state= initState,action)=>{
             const product = action.payload;
             const cart = loadCart();
             const currentUser = loadCurrentUser();
-            const userCartIndex = cart.findIndex(item=>item.username===currentUser.username);
 
-            const productsUser = cart[userCartIndex].products;
+            const productsUser = cart.products;
             const updatedProducts = productsUser.filter(item => !(item.id === product.id && item.color === product.color && item.size === product.size));
-            cart[userCartIndex].products = updatedProducts;
-            localStorage.setItem('cart', JSON.stringify(cart));
+            cart.products = updatedProducts;
+            sessionStorage.setItem('cart', JSON.stringify(cart));
             return {
                 ...state,
                 cart
@@ -162,15 +157,15 @@ export const root=(state= initState,action)=>{
             };
         }
         case "user/loginSuccess":{
-            const currentUser = action.payload;
-
-
-            localStorage.setItem("currentUser",JSON.stringify(currentUser))
+            const { user, cart } = action.payload;
+            sessionStorage.setItem("currentUser", JSON.stringify(user));
+            sessionStorage.setItem("cart",JSON.stringify(cart));
             return {
                 ...state,
                 logging: false,
-                currentUser: action.payload,
+                currentUser: user,
                 users: action.payload,
+                cart: cart,
                 error: null
             };
         }
@@ -184,13 +179,15 @@ export const root=(state= initState,action)=>{
             };
         }
         case "user/logout":{
-            localStorage.removeItem("currentUser")
+            sessionStorage.removeItem("currentUser");
+            sessionStorage.removeItem("cart");
             return {
                 ...state,
                 logging: true,
                 error: action.payload,
                 users: action.payload,
-                currentUser: action.payload
+                currentUser: action.payload,
+                cart: action.payload
 
             };
         }

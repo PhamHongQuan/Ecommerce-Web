@@ -12,6 +12,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import {Carousel} from "react-bootstrap";
 import {addCart} from "../../store/Action";
 import {flicker} from "../Styles/flicker.css"
+import axios from "axios";
 
 
 
@@ -27,8 +28,7 @@ const ProductDetails = () => {
     const currentUser = useSelector(state => state.currentUser);
 
     if(currentUser != null){
-        const userCart = cart.find(item => item.username === currentUser.username);
-        const productsOfCart = userCart.products;
+        const productsOfCart = cart.products;
     }
     useEffect(() => {
         // Lấy màu sắc từ localStorage khi component được render
@@ -136,10 +136,45 @@ const ProductDetails = () => {
         const handleColorClickSize = (size) => {
             setSelectedSize(size);
         };
-        const handleAddToCart =({id, name, img, des,price},selectedSize,selectedColor,selectedQuantity) =>{
+        const handleAddToCart =async ({id, name, img, des, price}, selectedSize, selectedColor, selectedQuantity) => {
 
             if (selectedColor !== null && selectedSize !== null) {
-                dispatch(addCart({ id,name, img,des, price,size: selectedSize,color: selectedColor,quantity: selectedQuantity }));
+                const product = {
+                    id,
+                    name,
+                    img,
+                    des,
+                    price,
+                    size: selectedSize,
+                    color: selectedColor,
+                    quantity: selectedQuantity
+                };
+                dispatch(addCart({
+                    id,
+                    name,
+                    img,
+                    des,
+                    price,
+                    size: selectedSize,
+                    color: selectedColor,
+                    quantity: selectedQuantity
+                }));
+                try {
+                    const response = await axios.post('http://localhost:5000/api/cart/add', {
+                        username: currentUser.username,
+                        product
+                    });
+
+                    if (response.status === 200) {
+                        console.log('Thêm sản phẩm vào giỏ hàng thành công');
+                        // Các xử lý khác nếu cần
+                    } else {
+                        console.error('Thêm sản phẩm vào giỏ hàng thất bại');
+                    }
+                } catch (error) {
+                    console.error('Lỗi khi thêm sản phẩm vào giỏ hàng:', error);
+                }
+
                 alert("Đã thêm sản phẩm vào giỏ hàng");
 
 

@@ -7,6 +7,7 @@ import { Button } from "react-bootstrap";
 import "../../Styles/PaginationInProduct.css";
 import '../../Styles/ProductListStyles.css'
 import { addCart } from "../../../store/Action";
+import axios from "axios";
 
 const ITEMS_PER_PAGE = 8;
 
@@ -147,10 +148,7 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
     const cart = useSelector(state => state.cart);
     const currentUser = useSelector(state => state.currentUser);
 
-    if(currentUser != null){
-        const userCart = cart.find(item => item.username === currentUser.username);
-        const productsOfCart = userCart.products;
-    }
+
     const handleViewDetail = () => {
         navigate(`/product/${id}`);
     };
@@ -215,8 +213,42 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
         const value = Math.max(1, Math.min(parseInt(event.target.value, 10) || 1, 9999));
         setQuantity(value);
     };
-    const handleAddToCart = () => {
-        dispatch(addCart({id, name, img, des, price,size:selectedSize,color:selectedColor,quantity:selectedQuantity}));
+    const handleAddToCart = async () => {
+        const product = {
+            id,
+            name,
+            img,
+            des,
+            price,
+            size: selectedSize,
+            color: selectedColor,
+            quantity: selectedQuantity
+        };
+        dispatch(addCart({
+            id,
+            name,
+            img,
+            des,
+            price,
+            size: selectedSize,
+            color: selectedColor,
+            quantity: selectedQuantity
+        }));
+        try {
+            const response = await axios.post('http://localhost:5000/api/cart/add', {
+                username: currentUser.username,
+                product
+            });
+
+            if (response.status === 200) {
+                console.log('Thêm sản phẩm vào giỏ hàng thành công');
+                // Các xử lý khác nếu cần
+            } else {
+                console.error('Thêm sản phẩm vào giỏ hàng thất bại');
+            }
+        } catch (error) {
+            console.error('Lỗi khi thêm sản phẩm vào giỏ hàng:', error);
+        }
     };
     return (
         <>
@@ -306,6 +338,8 @@ const Product = ({ id, name, img, des, price, size, gender, tint, index, sizeFil
                                 if(currentUser != null) {
                                     if(selectedSize != null && selectedColor != null){
                                         handleAddToCart();
+                                        alert("Đã thêm sản phẩm vào giỏ hàng");
+
                                     }else {
                                         alert("Bạn hãy chọn đầy đủ kích thước và màu sắc");
                                     }

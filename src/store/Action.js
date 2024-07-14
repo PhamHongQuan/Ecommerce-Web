@@ -54,10 +54,10 @@ export const login =(user) =>{
         payload: user
     }
 }
-export  const  loginSuccess =(user) => {
+export  const  loginSuccess =(user,cart) => {
     return {
         type:'user/loginSuccess',
-        payload: user
+        payload:  {user, cart}
     }
 }
 export  const  loginFail =(error) => {
